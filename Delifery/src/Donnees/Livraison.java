@@ -1,11 +1,16 @@
 package Donnees;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 public class Livraison {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
+
+    private Intersection adresse;
+
+    private Creneau creneau;
+
+    public Livraison(Long id, Intersection adresse, Creneau creneau) {
+        this.id = id;
+        this.adresse = adresse;
+        this.creneau = creneau;
+    }
 }

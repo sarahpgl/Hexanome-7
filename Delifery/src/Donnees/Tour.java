@@ -1,10 +1,42 @@
 package Donnees;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.ArrayList;
+
 public class Tour {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Long id;
+
+    private ArrayList<Livraison> livraisons;
+
+    private ArrayList<Intersection> trajet;
+
+    public Tour(Long id, ArrayList<Livraison> livraisons, ArrayList<Intersection> trajet) {
+        this.id = id;
+        this.livraisons = livraisons;
+        this.trajet = trajet;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public ArrayList<Livraison> getLivraisons() {
+        return livraisons;
+    }
+
+    public void setLivraisons(ArrayList<Livraison> livraisons) {
+        this.livraisons = livraisons;
+    }
+
+    public ArrayList<Intersection> getTrajet() {
+        return trajet;
+    }
+
+    public void setTrajet(ArrayList<Intersection> trajet) {
+        this.trajet = trajet;
+    }
 }
