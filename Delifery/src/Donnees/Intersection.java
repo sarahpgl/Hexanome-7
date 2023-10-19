@@ -2,13 +2,11 @@ package Donnees;
 
 public class Intersection {
     private Integer id;
-    private Float latitude;
-    private Float longitude;
+    private Coordonnees coordonnees;
 
-    public Intersection(Integer id, Float latitude, Float longitude) {
+    public Intersection(Integer id, Coordonnees coordonnees) {
         this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.coordonnees = coordonnees;
     }
 
     public Integer getId() {
@@ -19,19 +17,11 @@ public class Intersection {
         this.id = id;
     }
 
-    public Float getLatitude() {
-        return latitude;
+    public Coordonnees getCoordonnees() {
+        return coordonnees;
     }
 
-    public void setLatitude(Float latitude) {
-        this.latitude = latitude;
-    }
-
-    public Float getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Float longitude) {
-        this.longitude = longitude;
+    public void setCoordonnees(Coordonnees coordonnees) {
+        this.coordonnees = coordonnees;
     }
 }
