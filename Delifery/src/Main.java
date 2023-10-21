@@ -1,5 +1,9 @@
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
+import Service.FileSystemXML;
+import Donnees.Intersection;
+import Donnees.Section;
+import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         // Press Alt+Entrée with your caret at the highlighted text to see how
@@ -13,6 +17,16 @@ public class Main {
             // for you, but you can always add more by pressing Ctrl+F8.
             System.out.println("greg i = " + i);
         }
+        FileSystemXML fsxml;
+        fsxml = new FileSystemXML();
+        System.out.println("Voici le chemin du dossier courant : " + System.getProperty("user.dir"));
+        Object[] objects = fsxml.lireXML(System.getProperty("user.dir")+"/Delifery/fichiersXML2022/smallMap.xml");
+        Intersection[] intersections = (Intersection[]) objects[1];
+        Section[] sections = (Section[]) objects[2];
+        // Afficher le tableau d'objets Intersection en utilisant la méthode toString de la classe Arrays
+        System.out.println("Les intersections sont : " + Arrays.toString(intersections));
+        System.out.println("Les sections sont : " + Arrays.toString(sections));
+
 
     }
 }

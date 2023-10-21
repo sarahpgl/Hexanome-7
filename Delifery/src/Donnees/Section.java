@@ -1,19 +1,19 @@
 package Donnees;
 
 public class Section {
-    private Integer taille;
+    private double taille;
     private String nom;
     private Intersection origine;
     private Intersection destination;
 
-    public Section(Integer taille, String nom, Intersection origine, Intersection destination) {
+    public Section(double taille, String nom, Intersection origine, Intersection destination) {
         this.taille = taille;
         this.nom = nom;
         this.origine = origine;
         this.destination = destination;
     }
 
-    public Integer getTaille() {
+    public double getTaille() {
         return taille;
     }
 
@@ -43,5 +43,9 @@ public class Section {
 
     public void setDestination(Intersection destination) {
         this.destination = destination;
+    }
+
+    public String toString (){
+        return "Nom : " + nom + " ; Longueur : " +taille+ " ; Origine: ["+origine.toString()+"] ; Destination : ["+destination.toString()+"]";
     }
 }

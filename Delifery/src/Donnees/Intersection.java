@@ -1,19 +1,22 @@
 package Donnees;
 
+import java.math.BigInteger;
+import java.util.Objects;
+
 public class Intersection {
-    private Integer id;
+    private BigInteger id;
     private Coordonnees coordonnees;
 
-    public Intersection(Integer id, Coordonnees coordonnees) {
+    public Intersection(BigInteger id, Coordonnees coordonnees) {
         this.id = id;
         this.coordonnees = coordonnees;
     }
 
-    public Integer getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 
@@ -23,5 +26,13 @@ public class Intersection {
 
     public void setCoordonnees(Coordonnees coordonnees) {
         this.coordonnees = coordonnees;
+    }
+
+    public String toString (){
+        return "id :" + id + " ; Coordonnés :" + coordonnees.toString();
+    }
+
+    public boolean equals (Intersection i){
+        return Objects.equals(this.id, i.getId());
     }
 }
