@@ -25,4 +25,8 @@ public class Coordonnees {
     public void setLongitude(Integer longitude) {
         this.longitude = longitude;
     }
+
+    public String ToString () {
+        return "Longitude : " + this.getLongitude() + " ; Latitude " + getLongitude();
+    }
 }
