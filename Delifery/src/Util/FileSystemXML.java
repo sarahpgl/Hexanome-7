@@ -1,4 +1,4 @@
-package Service;
+package Util;
 
 import Donnees.Intersection;
 import Donnees.Coordonnees;
@@ -108,6 +108,21 @@ public class FileSystemXML {
                     Section section = new Section(Double.parseDouble(longueur), nom, intersectionOrigine,intersectionDestination);
                     sections[i] = section;
                     //System.out.println(section.toString());
+                }
+
+                for (int i = 0; i < listeWareHouse.getLength(); i++) {
+                    // Récupérer le i-ème élément <intersection> en utilisant la méthode item de l'objet NodeList
+                    Element elementSection = (Element) listeWareHouse.item(i);
+                    String idAdresse = elementSection.getAttribute("address");
+                    Intersection intersectionWH = null;
+                    for (Intersection inter : intersections) {
+                        if (inter.getId().equals(new BigInteger(idAdresse))) {
+                            intersectionWH = inter;
+                            break;
+                        }
+                    }
+                    Intersection WareHouse = new Intersection(intersectionWH);
+                    warehouse[i]=WareHouse;
                 }
             }
         } catch (Exception e) {

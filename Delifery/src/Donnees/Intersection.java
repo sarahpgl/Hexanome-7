@@ -12,6 +12,11 @@ public class Intersection {
         this.coordonnees = coordonnees;
     }
 
+    public Intersection(Intersection intersection) {
+        this.id = intersection.id;
+        this.coordonnees = intersection.coordonnees;
+    }
+
     public BigInteger getId() {
         return id;
     }
