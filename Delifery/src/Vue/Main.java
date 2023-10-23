@@ -20,9 +20,10 @@ public class Main {
         //TestOuvrirPageLancement();
         TesterDijkstra();
         //TestCreerCarte();
+        //TestLireXML();
     }
 
-    public void TestLireXML(){
+    public static void TestLireXML(){
         FileSystemXML fsxml;
         fsxml = new FileSystemXML();
         System.out.println("Voici le chemin du dossier courant : " + System.getProperty("user.dir"));
@@ -66,7 +67,8 @@ public class Main {
         Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
         Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
         Intersection destination3 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
-        List<Intersection> chemin = service.dijkstra(Entrepot,destination3,carte.getCarte());
+        Intersection destination4 = new Intersection(new BigInteger("975886496"),new Coordonnees(45.756874,4.8574047));
+        List<Intersection> chemin = service.dijkstra(Entrepot,destination4,carte.getCarte());
         if (chemin != null) {
             afficherChemin(chemin);
         } else {
