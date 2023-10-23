@@ -18,12 +18,25 @@ public class Main {
         System.out.println("Veuillez entrer le nom du ficher XML : ");
         String nomFichier = scanner.nextLine();
 
+
         Service service = new Service();
         DonneesCarte carte = service.creerDonneesCarte(nomFichier);
 
         // Créez une instance de la classe Vue
         MaVue maVue = new MaVue();
         maVue.ouvrirFenetre();
+
+        // Chemin d'accès fixe (à modifier selon vos besoins)
+        String cheminFixe = System.getProperty("user.dir")+"/Delifery/fichiersXML2022/";
+
+        // Combinez le chemin fixe et le nom du fichier
+        String cheminComplet = cheminFixe + nomFichier;
+
+        MaVue vue = new MaVue();
+        vue.ouvrirFenetre();
+        //Object[] objects = service.lireFichierXML(cheminComplet);
+
+
 
         /*FileSystemXML fsxml;
         fsxml = new FileSystemXML();

@@ -28,6 +28,11 @@ public class FileSystemXML {
         Intersection[] warehouse = null;
         Intersection[] intersections = null;
         Section[] sections = null;
+        float minLong = 100;
+        float minLat = 100;
+        float maxLong = 0;
+        float maxLat = 0;
+
 
         try {
 
@@ -68,7 +73,23 @@ public class FileSystemXML {
                     // Récupérer les attributs id, latitude et longitude de l'élément <intersection> en utilisant la méthode getAttribute de l'objet Element
                     String id = elementIntersection.getAttribute("id");
                     String latitude = elementIntersection.getAttribute("latitude");
+                    if(minLat> Float.parseFloat(latitude))
+                    {
+                      minLat = Float.parseFloat(latitude);
+                    }
+                    if (maxLat< Float.parseFloat(latitude)) {
+                        maxLat = Float.parseFloat(latitude);
+                    }
+
                     String longitude = elementIntersection.getAttribute("longitude");
+                    if(minLong> Float.parseFloat(longitude))
+                    {
+                        minLong = Float.parseFloat(longitude);
+                    }
+                    if (maxLong< Float.parseFloat(longitude)) {
+                        maxLong = Float.parseFloat(longitude);
+                    }
+
                     Coordonnees coord = new Coordonnees(Double.parseDouble(latitude),Double.parseDouble(longitude));
                     Intersection intersection = new Intersection(new BigInteger(id), coord);
                     intersections[i] = intersection;
@@ -132,7 +153,7 @@ public class FileSystemXML {
         }
 
         // Retourner un tableau d'objets contenant l'objet Warehouse, le tableau d'objets Intersection et le tableau d'objets Segment
-        return new Object[] {warehouse, intersections, sections};
+        return new Object[] {warehouse, intersections, sections, minLong, maxLong, minLat,maxLat};
     }
 
 }
