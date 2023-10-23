@@ -1,7 +1,6 @@
 package Util;
 
 import Donnees.Intersection;
-import Donnees.Coordonnees;
 import Donnees.Section;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -72,7 +71,7 @@ public class FileSystemXML {
                     Coordonnees coord = new Coordonnees(Double.parseDouble(latitude),Double.parseDouble(longitude));
                     Intersection intersection = new Intersection(new BigInteger(id), coord);
                     intersections[i] = intersection;
-                    System.out.println(intersection.toString());
+                    //System.out.println(intersection.toString());
                 }
 
 
