@@ -3,6 +3,7 @@ import Donnees.Intersection;
 import Donnees.Coordonnees;
 import Donnees.Section;
 import Util.FileSystemXML;
+import Vue.MaVue;
 public class Service {
     public Service(){
 
@@ -17,5 +18,11 @@ public class Service {
         Section[] sections = (Section[]) objects[2];
 
         return objects;
+    }
+
+    public void afficherMap() {
+        // Créez une instance de la classe Vue
+        MaVue maVue = new MaVue();
+        maVue.ouvrirFenetre();
     }
 }

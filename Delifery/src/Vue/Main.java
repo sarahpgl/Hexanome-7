@@ -1,4 +1,4 @@
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
+package Vue;// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 import Util.FileSystemXML;
 import Donnees.Intersection;
@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         // Press Alt+Entrée with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        /*System.out.printf("Hello and welcome!");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -21,10 +21,12 @@ public class Main {
         String cheminFixe = System.getProperty("user.dir")+"/Delifery/fichiersXML2022/";
 
         // Combinez le chemin fixe et le nom du fichier
-        String cheminComplet = cheminFixe + nomFichier;
+        String cheminComplet = cheminFixe + nomFichier;*/
 
         Service service = new Service();
-        Object[] objects = service.lireFichierXML(cheminComplet);
+        //Object[] objects = service.lireFichierXML(cheminComplet);
+
+        service.afficherMap();
 
         /*FileSystemXML fsxml;
         fsxml = new FileSystemXML();
