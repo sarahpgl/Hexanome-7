@@ -41,4 +41,12 @@ public class DonneesCarte {
     public void setCarte(Map<Intersection, Map<Intersection, Float>> carte) {
         this.carte = carte;
     }
+
+    public Intersection getEntrepot() {
+        return entrepot;
+    }
+
+    public void setEntrepot(Intersection entrepot) {
+        this.entrepot = entrepot;
+    }
 }

@@ -2,6 +2,7 @@ package Donnees;
 
 import java.math.BigInteger;
 import java.util.Objects;
+import Util.Coordonnees;
 
 public class Intersection {
     private BigInteger id;

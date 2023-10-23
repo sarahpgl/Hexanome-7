@@ -1,7 +1,7 @@
 package Util;
 
 import Donnees.Intersection;
-import Donnees.Coordonnees;
+import Util.Coordonnees;
 import Donnees.Section;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilderFactory;

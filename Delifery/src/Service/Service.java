@@ -3,9 +3,11 @@ import Donnees.DonneesCarte;
 import Donnees.Intersection;
 import Donnees.Section;
 import Util.FileSystemXML;
-import Vue.MaVue;
 import java.util.Map;
 import java.util.HashMap;
+import Vue.FenetreLancement;
+import Vue.MaVue;
+
 public class Service {
     public Service(){
 
@@ -33,8 +35,8 @@ public class Service {
         float maxLat = (float) objects[6];
         float longDiff = maxLong - minLong;
         float latDiff = maxLat - minLat;
-        float echelleX = latDiff/1920;
-        float echelleY = longDiff/1080;
+        float echelleX = 1920/latDiff ;
+        float echelleY = 1080/longDiff ;
 //1920//1080
 
         Intersection entrepotDepart = entrepot[0];
