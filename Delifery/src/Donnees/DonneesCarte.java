@@ -17,4 +17,8 @@ public class DonneesCarte {
         this.echelleX = 1;
         this.echelleY = 1;
     }
+
+    public Map<Intersection, Map <Intersection, Float>> getCarte(){
+        return  carte;
+    }
 }

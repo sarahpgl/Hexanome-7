@@ -9,11 +9,16 @@ import javafx.scene.shape.Rectangle;
 public class MaVue  extends Application{
     @Override
     public void start(Stage primaryStage) {
-
+        FenetreLancement fenetreLancement=new FenetreLancement();
+        fenetreLancement.show();
     }
 
     // Méthode pour ouvrir la fenêtre
-    public void ouvrirFenetre() {
+    public void ouvrirFenetreLancement() {
+        launch();
+    }
+
+    public void ouvrirFenetreVueApp() {
         launch();
     }
 
