@@ -6,27 +6,24 @@ import Donnees.Section;
 import java.util.Arrays;
 import Service.Service;
 import java.util.Scanner;
+import Donnees.DonneesCarte;
 public class Main {
     public static void main(String[] args) {
         // Press Alt+Entrée with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it.
-        /*System.out.printf("Hello and welcome!");
+        System.out.printf("Hello and welcome!");
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Veuillez entrer le nom du ficher XML : ");
         String nomFichier = scanner.nextLine();
 
-        // Chemin d'accès fixe (à modifier selon vos besoins)
-        String cheminFixe = System.getProperty("user.dir")+"/Delifery/fichiersXML2022/";
-
-        // Combinez le chemin fixe et le nom du fichier
-        String cheminComplet = cheminFixe + nomFichier;*/
-
         Service service = new Service();
-        //Object[] objects = service.lireFichierXML(cheminComplet);
+        DonneesCarte carte = service.creerDonneesCarte(nomFichier);
 
-        service.afficherMap();
+        // Créez une instance de la classe Vue
+        MaVue maVue = new MaVue();
+        maVue.ouvrirFenetre();
 
         /*FileSystemXML fsxml;
         fsxml = new FileSystemXML();
