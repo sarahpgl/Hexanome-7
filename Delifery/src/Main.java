@@ -4,20 +4,29 @@ import Util.FileSystemXML;
 import Donnees.Intersection;
 import Donnees.Section;
 import java.util.Arrays;
+import Service.Service;
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         // Press Alt+Entrée with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it.
         System.out.printf("Hello and welcome!");
 
-        // Press Maj+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
+        Scanner scanner = new Scanner(System.in);
 
-            // Press Maj+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("greg i = " + i);
-        }
-        FileSystemXML fsxml;
+        System.out.println("Veuillez entrer le nom du ficher XML : ");
+        String nomFichier = scanner.nextLine();
+
+        // Chemin d'accès fixe (à modifier selon vos besoins)
+        String cheminFixe = System.getProperty("user.dir")+"/Delifery/fichiersXML2022/";
+
+        // Combinez le chemin fixe et le nom du fichier
+        String cheminComplet = cheminFixe + nomFichier;
+
+        Service service = new Service();
+        Object[] objects = service.lireFichierXML(cheminComplet);
+
+        /*FileSystemXML fsxml;
         fsxml = new FileSystemXML();
         System.out.println("Voici le chemin du dossier courant : " + System.getProperty("user.dir"));
         Object[] objects = fsxml.lireXML(System.getProperty("user.dir")+"/Delifery/fichiersXML2022/smallMap.xml");
@@ -27,7 +36,7 @@ public class Main {
         // Afficher le tableau d'objets Intersection en utilisant la méthode toString de la classe Arrays
         System.out.println("Les intersections sont : " + Arrays.toString(intersections));
         System.out.println("Les sections sont : " + Arrays.toString(sections));
-        System.out.println("La WareHouse est : " + Arrays.toString(WareHouse));
+        System.out.println("La WareHouse est : " + Arrays.toString(WareHouse));*/
 
 
     }
