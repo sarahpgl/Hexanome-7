@@ -1,10 +1,10 @@
 package Service;
 import Donnees.Intersection;
-import Donnees.Coordonnees;
 import Donnees.Section;
 import Util.FileSystemXML;
-import Vue.FenetreAccueil;
+import Vue.FenetreLancement;
 import Vue.MaVue;
+
 public class Service {
     public Service(){
 
@@ -23,7 +23,7 @@ public class Service {
 
     public void afficherMap() {
         // Créez une instance de la classe Vue
-        FenetreAccueil fenetreAccueil = new FenetreAccueil();
-        fenetreAccueil.ouvrirFenetre();
+        MaVue maVue = new MaVue();
+        maVue.ouvrirFenetre();
     }
 }
