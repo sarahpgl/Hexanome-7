@@ -1,19 +1,26 @@
 package Vue;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class MaVue  extends Application{
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Ma Application JavaFX");
+        primaryStage.setTitle("Mon Application JavaFX");
 
         // Créez le contenu de votre fenêtre
-        VBox root = new VBox();
-        // Ajoutez des éléments à root
+        StackPane root = new StackPane();
 
-        Scene scene = new Scene(root, 400, 300);
+        // Créez un rectangle central (remplacez cela par votre carte)
+        Rectangle mapRectangle = new Rectangle(400, 300, Color.LIGHTGREY);
+
+        // Ajoutez le rectangle à la racine (ou à tout autre conteneur)
+        root.getChildren().add(mapRectangle);
+
+        Scene scene = new Scene(root, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -1,23 +1,23 @@
 package Donnees;
 
 public class Section {
-    private float taille;
+    private Float taille;
     private String nom;
     private Intersection origine;
     private Intersection destination;
 
-    public Section(float taille, String nom, Intersection origine, Intersection destination) {
+    public Section(Float taille, String nom, Intersection origine, Intersection destination) {
         this.taille = taille;
         this.nom = nom;
         this.origine = origine;
         this.destination = destination;
     }
 
-    public double getTaille() {
+    public Float getTaille() {
         return taille;
     }
 
-    public void setTaille(Integer taille) {
+    public void setTaille(Float taille) {
         this.taille = taille;
     }
 
