@@ -33,17 +33,21 @@ public class Service {
         float maxLong = (float) objects[4];
         float minLat = (float) objects[5];
         float maxLat = (float) objects[6];
+        float [] origin = {minLat, minLong};
         float longDiff = maxLong - minLong;
         float latDiff = maxLat - minLat;
-        float echelleX = 1920/latDiff ;
-        float echelleY = 1080/longDiff ;
-//1920//1080
+        System.out.println("latDiff : "+ latDiff);
+        System.out.println("longDiff : "+ longDiff);
+        float echelleX = 800/latDiff ;
+        float echelleY = 800/longDiff ;
+
 
         Intersection entrepotDepart = entrepot[0];
         Map<Intersection, Map<Intersection, Float>> carte = new HashMap<>();
 
 
         for (Section s : sections) {
+            if(s != null){
             Intersection origine = s.getOrigine();
             Intersection destination = s.getDestination();
             Float taille = s.getTaille();
@@ -53,9 +57,10 @@ public class Service {
                 carte.put(origine, new HashMap<>());
             }
             carte.get(origine).put(destination, taille);
+            }
         }
 
-        DonneesCarte carteCourante = new DonneesCarte(nomFichier, entrepotDepart, carte,echelleX,echelleY);
+        DonneesCarte carteCourante = new DonneesCarte(nomFichier, entrepotDepart, carte,echelleX,echelleY,origin);
         return carteCourante;
     }
 }

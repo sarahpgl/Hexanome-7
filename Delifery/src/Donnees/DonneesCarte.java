@@ -10,12 +10,15 @@ public class DonneesCarte {
     private float echelleX;
     private float echelleY;
 
-    public DonneesCarte(String idDonneesCarte, Intersection entrepot, Map<Intersection, Map<Intersection, Float>> carte, float x, float y) {
+    private float[] origine;
+
+    public DonneesCarte(String idDonneesCarte, Intersection entrepot, Map<Intersection, Map<Intersection, Float>> carte, float x, float y, float [] origin) {
         this.idDonneesCarte = idDonneesCarte;
         this.entrepot = entrepot;
         this.carte = carte;
         this.echelleX = x;
         this.echelleY = y;
+        this.origine = origin;
     }
 
     public float getEchelleX() {
@@ -48,5 +51,13 @@ public class DonneesCarte {
 
     public void setEntrepot(Intersection entrepot) {
         this.entrepot = entrepot;
+    }
+
+    public float[] getOrigine() {
+        return origine;
+    }
+
+    public void setOrigine(float[] origine) {
+        this.origine = origine;
     }
 }

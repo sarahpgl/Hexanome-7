@@ -93,7 +93,7 @@ public class FileSystemXML {
                     Coordonnees coord = new Coordonnees(Double.parseDouble(latitude),Double.parseDouble(longitude));
                     Intersection intersection = new Intersection(new BigInteger(id), coord);
                     intersections[i] = intersection;
-                    System.out.println(intersection.toString());
+
                 }
 
 
@@ -128,6 +128,7 @@ public class FileSystemXML {
                     }
                     Section section = new Section(Float.parseFloat(longueur), nom, intersectionOrigine,intersectionDestination);
                     sections[i] = section;
+                    System.out.println(section.toString());
                     //System.out.println(section.toString());
                 }
 

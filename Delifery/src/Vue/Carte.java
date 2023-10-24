@@ -21,82 +21,78 @@ public class Carte extends Application {
     private String chemin;
     @Override
     public void start(Stage primaryStage) {
+
         // Create a sample graph
-        float [] echelle= createSampleGraph();
-        System.out.println(echelle[1]);
+        DonneesCarte dc =createSampleGraph();
+        // Extraction de l'echelle pour plus de lisibilité
+        float [] echelle= {dc.getEchelleX(), dc.getEchelleY(), dc.getOrigine()[0], dc.getOrigine()[1]};
+
 
         // Create a container for the graph
         Pane graphContainer = new Pane();
 
+
+        // Création du point entrepôt
+        Intersection entrepot = dc.getEntrepot();
+        graphContainer.getChildren().add(createNode((entrepot.getCoordonnees().getLatitude()-echelle[2])*echelle[0],(entrepot.getCoordonnees().getLongitude()-echelle[3])*echelle[1],1));
+
         // Add nodes to the container
         for (Intersection inter : graph.keySet()) {
-            //System.out.println(inter);
-            graphContainer.getChildren().add(createNode(inter.getCoordonnees().getLatitude()*echelle[0],inter.getCoordonnees().getLongitude()*echelle[1]));
+            if (inter != null){
+                graphContainer.getChildren().add(createNode((inter.getCoordonnees().getLatitude()-echelle[2])*echelle[0],(inter.getCoordonnees().getLongitude()-echelle[3])*echelle[1],null));
+             }
         }
 
         // Add edges to the container
         for (Map.Entry<Intersection, Map<Intersection, Float>> entry : graph.entrySet()) {
             Intersection sourceNode = entry.getKey();
-            Map<Intersection, Float> edges = entry.getValue();
+            //test car sinon beug
+            if (sourceNode!= null) {
+                Map<Intersection, Float> edges = entry.getValue();
+                for (Map.Entry<Intersection, Float> edge : edges.entrySet()) {
 
-            for (Map.Entry<Intersection, Float> edge : edges.entrySet()) {
-                Intersection targetNode = edge.getKey();
-                float length = edge.getValue();
+                    Intersection targetNode = edge.getKey();
+                    float length = edge.getValue();
+                    graphContainer.getChildren().add(createEdge(createNode((sourceNode.getCoordonnees().getLatitude() - echelle[2]) * echelle[0], (sourceNode.getCoordonnees().getLongitude() - echelle[3]) * echelle[1], null), (createNode((targetNode.getCoordonnees().getLatitude() - echelle[2]) * echelle[0], (targetNode.getCoordonnees().getLongitude() - echelle[3]) * echelle[1],null)), length, 0));
 
-                graphContainer.getChildren().add(createEdge(createNode(sourceNode.getCoordonnees().getLatitude()*echelle[0],sourceNode.getCoordonnees().getLongitude()*echelle[1]), (createNode(targetNode.getCoordonnees().getLatitude()*echelle[0],targetNode.getCoordonnees().getLongitude()*echelle[1])), length));
+                }
             }
         }
 
         // Create a scene and set it in the stage
-        Scene scene = new Scene(graphContainer, 1920, 1080);
+        Scene scene = new Scene(graphContainer, 800, 800);
         primaryStage.setScene(scene);
 
         primaryStage.setTitle("Map Graph Visualization");
         primaryStage.show();
     }
 
-    private float[] createSampleGraph() {
+    private DonneesCarte createSampleGraph() {
         Service s = new Service();
-        DonneesCarte dc = s.creerDonneesCarte("smallMap.xml");
+        DonneesCarte dc = s.creerDonneesCarte("mediumMap.xml");
         graph = dc.getCarte();
         Intersection entrepot = dc.getEntrepot();
-        Coordonnees c = (entrepot.getCoordonnees());
-        Circle depart = createNode(entrepot.getCoordonnees().getLatitude() *dc.getEchelleX() ,entrepot.getCoordonnees().getLongitude()* dc.getEchelleY());
 
-        for (int i = 0; i<graph.size();i++){
-
-
-        }
-
-        Circle node1 = createNode(100, 600);
-        Circle node2 = createNode(200, 200);
-        Circle node3 = createNode(300, 100);
-
-       /* HashMap h1 = new HashMap<>();
-        h1.put(node2, 10);
-        h1.put(node3, 20);
-        HashMap h3 = new HashMap<>();
-        h3.put(node1, 10);
-        h3.put(node3, 5);
-        HashMap h2 = new HashMap<>();
-        h2.put(node1, 20);
-        h2.put(node2, 5);
-        graph.put(node1, h1);
-        graph.put(node2, h2);
-        graph.put(node3, h3);*/
-        return new float[]{dc.getEchelleX(), dc.getEchelleY()};
+        return dc;
     }
 
-    private Circle createNode(double x, double y) {
-        Circle node = new Circle(3); // Circle with radius 10
+    private Circle createNode(double x, double y, Integer color) {
+        Circle node = new Circle(); // Circle with radius 10
         node.setCenterX(x);
         node.setCenterY(y);
-        node.setStyle("-fx-fill: blue;");
-
+        if (color== null){
+            node.setStyle("-fx-fill: black;");
+            node.setRadius(3);
+        }
+        //pour colorer l'entrepôt en vert
+        else if (color ==1){
+            node.setStyle("-fx-fill: green;");
+            node.setRadius(6);
+        }
         return node;
     }
 
-    private Line createEdge(Circle source, Circle target, float length) {
+    private Line createEdge(Circle source, Circle target, float length, int color) {
         Line edge = new Line();
 
         edge.startXProperty().bind(source.centerXProperty());
@@ -106,6 +102,9 @@ public class Carte extends Application {
         edge.endYProperty().bind(target.centerYProperty());
 
         edge.setStyle("-fx-stroke: black; -fx-stroke-width: 2;");
+
+
+
         edge.setAccessibleText(String.valueOf(length));
         return edge;
     }
