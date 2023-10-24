@@ -13,25 +13,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import Donnees.DonneesCarte;
-import static javafx.application.Application.launch;
-
-
 public class Main {
     public static void main(String[] args) {
         // Press Alt+Entrée with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it
         //TestOuvrirPageLancement();
-        //TesterDijkstra();
+        TesterDijkstra();
         //TestCreerCarte();
-
-        //Carte c = new Carte();
-       // c.creerGraphe("smallMap.xml");
-
-        launch(FenetreLancement.class, args);
-
+        //TestLireXML();
     }
 
-    public void TestLireXML(){
+    public static void TestLireXML(){
         FileSystemXML fsxml;
         fsxml = new FileSystemXML();
         System.out.println("Voici le chemin du dossier courant : " + System.getProperty("user.dir"));
@@ -52,7 +44,6 @@ public class Main {
 
         System.out.println("Veuillez entrer le nom du ficher XML : ");
         String nomFichier = scanner.nextLine();
-
 
         Service service = new Service();
         DonneesCarte carte = service.creerDonneesCarte(nomFichier);
@@ -76,7 +67,8 @@ public class Main {
         Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
         Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
         Intersection destination3 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
-        List<Intersection> chemin = service.dijkstra(Entrepot,destination3,carte.getCarte());
+        Intersection destination4 = new Intersection(new BigInteger("975886496"),new Coordonnees(45.756874,4.8574047));
+        List<Intersection> chemin = service.dijkstra(Entrepot,destination4,carte.getCarte());
         if (chemin != null) {
             afficherChemin(chemin);
         } else {
