@@ -1,4 +1,4 @@
-package Donnees;
+package Util;
 
 public class Coordonnees {
 

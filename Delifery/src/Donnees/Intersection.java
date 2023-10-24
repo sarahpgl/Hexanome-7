@@ -2,6 +2,7 @@ package Donnees;
 
 import java.math.BigInteger;
 import java.util.Objects;
+import Util.Coordonnees;
 
 public class Intersection {
     private BigInteger id;
@@ -37,7 +38,17 @@ public class Intersection {
         return "id :" + id + " ; Coordonnés :" + coordonnees.toString();
     }
 
-    public boolean equals (Intersection i){
-        return Objects.equals(this.id, i.getId());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Intersection that = (Intersection) o;
+        return id.equals(that.id);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

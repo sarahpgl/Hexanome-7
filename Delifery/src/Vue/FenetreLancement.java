@@ -85,7 +85,7 @@ public class FenetreLancement extends Stage {
         this.setY(0);
 
         // Définissez l'image de fond
-        File file = new File("Delifery/ImageAccueil.png");
+        File file = new File("Delifery/image/ImageAccueil.png");
         String imageUrl = file.toURI().toString();
         Image image = new Image(imageUrl);
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -95,7 +95,7 @@ public class FenetreLancement extends Stage {
 
 
         // Créer une ImageView pour l'image
-        Image logoImage = new Image("file:Delifery/LogoDelifery.png");
+        Image logoImage = new Image("file:Delifery/image/LogoDelifery.png");
         ImageView logoImageView = new ImageView(logoImage);
 
         // Réduire la taille de l'image
