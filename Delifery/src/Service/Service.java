@@ -23,7 +23,7 @@ public class Service {
 
 
         // Chemin d'accès fixe (à modifier selon vos besoins)
-        String cheminFixe = System.getProperty("user.dir") + "/fichiersXML2022/";
+        String cheminFixe = System.getProperty("user.dir") + "/Delifery/fichiersXML2022/";
 
         // Combinez le chemin fixe et le nom du fichier
         String cheminComplet = cheminFixe + nomFichier;
@@ -50,7 +50,7 @@ public class Service {
         Intersection entrepotDepart = entrepot[0];
         Map<Intersection, Map<Intersection, Float>> carte = new HashMap<>();
 
-        for(Section s : sections){
+        for(Section s : sections) {
             Intersection origine = s.getOrigine();
             Intersection destination = s.getDestination();
             Float taille = s.getTaille();
@@ -60,7 +60,6 @@ public class Service {
                 carte.put(origine, new HashMap<>());
             }
             carte.get(origine).put(destination, taille);
-            }
         }
 
         DonneesCarte carteCourante = new DonneesCarte(nomFichier, entrepotDepart, carte,echelleX,echelleY,origin);

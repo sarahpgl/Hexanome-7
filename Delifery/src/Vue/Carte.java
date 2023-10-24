@@ -23,7 +23,7 @@ public class Carte extends Application {
     public void start(Stage primaryStage) {
 
         // Create a sample graph
-        DonneesCarte dc =createSampleGraph();
+        DonneesCarte dc = createSampleGraph();
         // Extraction de l'echelle pour plus de lisibilité
         float [] echelle= {dc.getEchelleX(), dc.getEchelleY(), dc.getOrigine()[0], dc.getOrigine()[1]};
 
