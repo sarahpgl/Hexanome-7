@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import Donnees.DonneesCarte;
+import static javafx.application.Application.launch;
+
+
 public class Main {
     public static void main(String[] args) {
         // Press Alt+Entrée with your caret at the highlighted text to see how
@@ -20,8 +23,12 @@ public class Main {
         //TestOuvrirPageLancement();
         //TesterDijkstra();
         //TestCreerCarte();
-        Carte c = new Carte();
-        c.creerGraphe("smallMap.xml");
+
+        //Carte c = new Carte();
+       // c.creerGraphe("smallMap.xml");
+
+        launch(FenetreLancement.class, args);
+
     }
 
     public void TestLireXML(){

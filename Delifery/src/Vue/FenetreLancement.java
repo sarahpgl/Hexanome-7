@@ -1,5 +1,6 @@
 package Vue;
 
+import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -14,26 +15,28 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-public class FenetreLancement extends Stage {
-
+public class FenetreLancement extends Application {
     private String cheminFichier;
-    private Label monLabel = new Label();
+    private final Label monLabel = new Label();
 
-    public FenetreLancement() {
-        this.setTitle("Mon écran d'accueil");
+    public void creerGraphe() {
+        launch();
+    }
 
-        // Créez le contenu de votre fenêtre
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Mon écran d'accueil");
+
+        // Create the content of your window
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
-        root.setSpacing(10); // Définir un espacement vertical entre les éléments
+        root.setSpacing(10); // Set vertical spacing between elements
 
-
-        // Ajoutez des éléments à root
+        // Add elements to the root
         Button boutonLancement = new Button("Lancer l'application");
         boutonLancement.setOnAction(this::lancementButtonAction);
-        root.getChildren().add(boutonLancement);
 
-        // Définir le style du bouton pour que les contours soient noirs
+        // Set the button style with black borders
         boutonLancement.setStyle("-fx-background-color: rgba(157, 157, 157, 0.5); -fx-background-radius: 15px; -fx-border-width: 0; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
         boutonLancement.setOnMouseEntered(event -> {
             boutonLancement.setStyle("-fx-background-color: rgba(157, 157, 157, 0.7); -fx-background-radius: 15px; -fx-border-width: 0; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
@@ -45,13 +48,13 @@ public class FenetreLancement extends Stage {
             boutonLancement.setStyle("-fx-background-color: black; -fx-background-radius: 15px; -fx-border-width: 0; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
         });
 
-
-        // Ajoutez des éléments à root
+        // Add elements to root
         Button boutonImportation = new Button("Importer la carte");
         boutonImportation.setOnAction(this::importButtonAction);
         root.getChildren().add(boutonImportation);
+        root.getChildren().add(boutonLancement);
 
-        // Définir le style du bouton pour que les contours soient noirs
+        // Set the button style with black borders
         boutonImportation.setStyle("-fx-background-color: rgba(125, 157, 165, 0.5); -fx-background-radius: 15px; -fx-border-width: 0; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
         boutonImportation.setOnMouseEntered(event -> {
             boutonImportation.setStyle("-fx-background-color: rgba(125, 157, 165, 0.7); -fx-background-radius: 15px; -fx-border-width: 0; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
@@ -63,28 +66,26 @@ public class FenetreLancement extends Stage {
             boutonImportation.setStyle("-fx-background-color: black; -fx-background-radius: 15px; -fx-border-width: 0; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
         });
 
-
         monLabel.setText("");
         monLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: black; -fx-background-color: rgba(255, 0, 0, 0.5);");
         root.getChildren().add(monLabel);
 
-
         Scene scene = new Scene(root);
 
-        // Obtenez les dimensions de l'écran
+        // Get screen dimensions
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 
-        // Définissez la taille de la fenêtre en conséquence
+        // Set window size accordingly
         double width = screenBounds.getWidth() * 0.8;
         double height = 1020.0 / 1080.0 * screenBounds.getHeight();
-        this.setWidth(width);
-        this.setHeight(height);
+        primaryStage.setWidth(width);
+        primaryStage.setHeight(height);
 
-        // Placez la fenêtre en haut à gauche de l'écran
-        this.setX(0);
-        this.setY(0);
+        // Place the window at the top-left of the screen
+        primaryStage.setX(0);
+        primaryStage.setY(0);
 
-        // Définissez l'image de fond
+        // Set the background image
         File file = new File("Delifery/image/ImageAccueil.png");
         String imageUrl = file.toURI().toString();
         Image image = new Image(imageUrl);
@@ -93,70 +94,59 @@ public class FenetreLancement extends Stage {
                 "-fx-background-position: top left; " +
                 "-fx-background-repeat: no-repeat;");
 
-
-        // Créer une ImageView pour l'image
+        // Create an ImageView for the image
         Image logoImage = new Image("file:Delifery/image/LogoDelifery.png");
         ImageView logoImageView = new ImageView(logoImage);
 
-        // Réduire la taille de l'image
-        double newWidth = this.getWidth() * 0.25; // Définissez la nouvelle largeur souhaitée
-        double newHeight = (logoImage.getHeight() / logoImage.getWidth()) * newWidth; // Calculer la nouvelle hauteur pour maintenir le ratio
+        // Resize the image
+        double newWidth = primaryStage.getWidth() * 0.25;
+        double newHeight = (logoImage.getHeight() / logoImage.getWidth()) * newWidth;
         logoImageView.setFitWidth(newWidth);
         logoImageView.setFitHeight(newHeight);
 
         root.getChildren().add(logoImageView);
 
-        this.setScene(scene);
-        this.show();
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
-        // Définir la largeur préférée du bouton après l'affichage de la fenêtre
-        boutonImportation.setPrefWidth(this.getWidth() * 0.18);
-        boutonImportation.setPrefHeight(this.getHeight() * 0.07);
+        // Set the preferred width of the "Import" button after the window is displayed
+        boutonImportation.setPrefWidth(primaryStage.getWidth() * 0.18);
+        boutonImportation.setPrefHeight(primaryStage.getHeight() * 0.07);
 
-        // Définir la largeur préférée du bouton après l'affichage de la fenêtre
-        boutonLancement.setPrefWidth(this.getWidth() * 0.2);
-        boutonLancement.setPrefHeight(this.getHeight() * 0.08);
-
-
+        // Set the preferred width of the "Launch" button after the window is displayed
+        boutonLancement.setPrefWidth(primaryStage.getWidth() * 0.2);
+        boutonLancement.setPrefHeight(primaryStage.getHeight() * 0.08);
     }
 
     private void importButtonAction(javafx.event.ActionEvent actionEvent) {
-        // Création d'un objet FileChooser pour ouvrir l'explorateur de fichiers
+        // Create a FileChooser to open the file explorer
         FileChooser fileChooser = new FileChooser();
-        // Définition du filtre pour n'accepter que les fichiers XML
-
+        // Set a filter to accept only XML files
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files", "*.xml", "*.XML", "*.Xml"));
-        // Affichage de la boîte de dialogue pour choisir un fichier
-        File file = fileChooser.showOpenDialog(this);
-        // Vérification que le fichier n'est pas null
+        // Display the file chooser dialog to select a file
+        File file = fileChooser.showOpenDialog(null);
+        // Check if the file is not null
         if (file != null) {
-            // Récupération du chemin du fichier choisi
+            // Get the path of the selected file
             String filePath = file.getAbsolutePath();
-            cheminFichier=filePath;
-            // Affichage du chemin du fichier dans la console
+            cheminFichier = filePath;
+            // Display the file path in the console
             System.out.println(filePath);
             monLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: black; -fx-background-color: rgba(0, 255, 0, 0.5);");
             monLabel.setText("Fichier importé !");
-
-        }else{
+        } else {
             monLabel.setText("Coucou");
         }
     }
 
     private void lancementButtonAction(javafx.event.ActionEvent actionEvent) {
-
-        if (cheminFichier!=null){
-            this.close();
-            // fenetreMap=new FenetreMap();
-            //fenetreMap.show();
-            System.out.println("coucou");
-        }else{
+        if (cheminFichier != null) {
+            Carte carte = new Carte(cheminFichier);
+            Stage carteStage = new Stage();
+            carte.start(carteStage);
+        } else {
             monLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: rgba(0, 0, 0, 0.5);");
             monLabel.setText("Aucun fichier importé...");
-
         }
-
     }
-
-
 }

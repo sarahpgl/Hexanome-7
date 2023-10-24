@@ -17,8 +17,12 @@ import Donnees.DonneesCarte;
 import Util.Coordonnees;
 
 public class Carte extends Application {
-    private Map<Intersection, Map<Intersection, Float>> graph;
-    private String chemin;
+    Map<Intersection, Map<Intersection, Float>> graph;
+    String chemin;
+
+    public Carte(String cheminFichier){
+        chemin=cheminFichier;
+    }
     @Override
     public void start(Stage primaryStage) {
 
@@ -69,7 +73,7 @@ public class Carte extends Application {
 
     private DonneesCarte createSampleGraph() {
         Service s = new Service();
-        DonneesCarte dc = s.creerDonneesCarte("mediumMap.xml");
+        DonneesCarte dc = s.creerDonneesCarte(chemin);
         graph = dc.getCarte();
         Intersection entrepot = dc.getEntrepot();
 
