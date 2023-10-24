@@ -18,8 +18,10 @@ public class Main {
         // Press Alt+Entrée with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it
         //TestOuvrirPageLancement();
-        TesterDijkstra();
+        //TesterDijkstra();
         //TestCreerCarte();
+        Carte c = new Carte();
+        c.creerGraphe("smallMap.xml");
     }
 
     public void TestLireXML(){
