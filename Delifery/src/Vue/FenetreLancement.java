@@ -149,6 +149,10 @@ public class FenetreLancement extends Stage {
             this.close();
             // fenetreMap=new FenetreMap();
             //fenetreMap.show();
+            VueApplication vueApp = new VueApplication(cheminFichier);
+
+            // Appelez la méthode start pour ouvrir la vue
+            vueApp.start(new Stage());
             System.out.println("coucou");
         }else{
             monLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: rgba(0, 0, 0, 0.5);");

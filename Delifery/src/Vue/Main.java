@@ -13,11 +13,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import Donnees.DonneesCarte;
+import Vue.FenetreLancement;
 public class Main {
     public static void main(String[] args) {
         // Press Alt+Entrée with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it
-        //TestOuvrirPageLancement();
+        TestOuvrirPageLancement();
         TesterDijkstra();
         //TestCreerCarte();
     }

@@ -11,6 +11,8 @@ public class MaVue  extends Application{
     public void start(Stage primaryStage) {
         FenetreLancement fenetreLancement=new FenetreLancement();
         fenetreLancement.show();
+        //VueApplication vue=new VueApplication();
+        //vue.ouvrirFenetre();
     }
 
     // Méthode pour ouvrir la fenêtre

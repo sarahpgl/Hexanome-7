@@ -1,4 +1,5 @@
 package Vue;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -6,10 +7,18 @@ import javafx.stage.Stage;
 
 public class VueApplication extends Application {
 
+    private String cheminCarte;
+
+    public VueApplication(String chemin) {
+        this.cheminCarte=chemin;
+    }
+
+    ;
+
     @Override
     public void start(Stage primaryStage) {
         GridPane gridPane = new GridPane();
-
+        System.out.println("ca marche"+cheminCarte);
         // Row 1: Header (takes full width)
         HBox header = new HBox();
         header.setStyle("-fx-background-color: lightblue;");
