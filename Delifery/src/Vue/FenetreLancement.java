@@ -141,9 +141,9 @@ public class FenetreLancement extends Application {
 
     private void lancementButtonAction(javafx.event.ActionEvent actionEvent) {
         if (cheminFichier != null) {
-            Carte carte = new Carte(cheminFichier);
-            Stage carteStage = new Stage();
-            carte.start(carteStage);
+            Stage appStage = new Stage();
+            VueApplication vueApplication = new VueApplication(cheminFichier);
+            vueApplication.start(appStage);
         } else {
             monLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: rgba(0, 0, 0, 0.5);");
             monLabel.setText("Aucun fichier importé...");

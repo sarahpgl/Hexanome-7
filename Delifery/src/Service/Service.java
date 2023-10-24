@@ -41,10 +41,8 @@ public class Service {
         float [] origin = {minLat, minLong};
         float longDiff = maxLong - minLong;
         float latDiff = maxLat - minLat;
-        System.out.println("latDiff : "+ latDiff);
-        System.out.println("longDiff : "+ longDiff);
-        float echelleX = 800/latDiff ;
-        float echelleY = 800/longDiff ;
+        float echelleX = 1/latDiff ;
+        float echelleY = 1/longDiff ;
 
 
         Intersection entrepotDepart = entrepot[0];

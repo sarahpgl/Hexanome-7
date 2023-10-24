@@ -5,7 +5,12 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 public class VueApplication extends Application {
+    public String chemin;
 
+    public VueApplication(String cheminFichier) {
+        super();
+        this.chemin = cheminFichier;
+    }
     @Override
     public void start(Stage primaryStage) {
         GridPane gridPane = new GridPane();
@@ -21,9 +26,8 @@ public class VueApplication extends Application {
         gridPane.add(section1, 0, 1);
 
         // Row 3: Section 2 (right side)
-        HBox section2 = new HBox();
-        section2.setStyle("-fx-background-color: lightcoral;");
-        gridPane.add(section2, 1, 1);
+        Carte c = new Carte(chemin, 300, 400);
+        gridPane.add(c, 1, 1);
 
         // Set column constraints to divide the width equally
         ColumnConstraints column1 = new ColumnConstraints();
@@ -41,7 +45,7 @@ public class VueApplication extends Application {
 
         // Make Section 1 and Section 2 equally growable
         HBox.setHgrow(section1, Priority.ALWAYS);
-        HBox.setHgrow(section2, Priority.ALWAYS);
+        HBox.setHgrow(c, Priority.ALWAYS);
 
         Scene scene = new Scene(gridPane, 600, 400);
         primaryStage.setTitle("Three Row GridPane Example");

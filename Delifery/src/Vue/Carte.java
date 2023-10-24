@@ -16,34 +16,38 @@ import Donnees.Intersection;
 import Donnees.DonneesCarte;
 import Util.Coordonnees;
 
-public class Carte extends Application {
-    Map<Intersection, Map<Intersection, Float>> graph;
-    String chemin;
+public class Carte extends Pane {
+    private Map<Intersection, Map<Intersection, Float>> graph;
+    private String chemin;
 
-    public Carte(String cheminFichier){
-        chemin=cheminFichier;
-    }
-    @Override
-    public void start(Stage primaryStage) {
+    public Carte(String chemin, Integer panelHeight, Integer panelWidth) {
+        super();
 
+        this.chemin = chemin;
         // Create a sample graph
         DonneesCarte dc = createSampleGraph();
-        // Extraction de l'echelle pour plus de lisibilité
-        float [] echelle= {dc.getEchelleX(), dc.getEchelleY(), dc.getOrigine()[0], dc.getOrigine()[1]};
 
-
-        // Create a container for the graph
-        Pane graphContainer = new Pane();
-
+        // Extraction des échelles et des origines pour plus de lisibilité
+        float echelleX = dc.getEchelleX()*panelHeight;
+        float echelleY = dc.getEchelleY()*panelWidth;
+        float originX = dc.getOrigine()[0];
+        float originY = dc.getOrigine()[1];
 
         // Création du point entrepôt
         Intersection entrepot = dc.getEntrepot();
-        graphContainer.getChildren().add(createNode((entrepot.getCoordonnees().getLatitude()-echelle[2])*echelle[0],(entrepot.getCoordonnees().getLongitude()-echelle[3])*echelle[1],1));
+        Circle entrepotLocation = createNode((entrepot.getCoordonnees().getLatitude()-originX)*echelleX,(entrepot.getCoordonnees().getLongitude()-originY)*echelleY,1);
+        this.getChildren().add(entrepotLocation);
 
         // Add nodes to the container
         for (Intersection inter : graph.keySet()) {
             if (inter != null){
-                graphContainer.getChildren().add(createNode((inter.getCoordonnees().getLatitude()-echelle[2])*echelle[0],(inter.getCoordonnees().getLongitude()-echelle[3])*echelle[1],null));
+                // Calcul des coordonnées x et y
+                double x = (inter.getCoordonnees().getLatitude()-originX)*echelleX;
+                double y = (inter.getCoordonnees().getLongitude()-originY) * echelleY;
+
+                // Ajout du point
+                Circle point = createNode(x,y,null);
+                this.getChildren().add(point);
              }
         }
 
@@ -57,18 +61,24 @@ public class Carte extends Application {
 
                     Intersection targetNode = edge.getKey();
                     float length = edge.getValue();
-                    graphContainer.getChildren().add(createEdge(createNode((sourceNode.getCoordonnees().getLatitude() - echelle[2]) * echelle[0], (sourceNode.getCoordonnees().getLongitude() - echelle[3]) * echelle[1], null), (createNode((targetNode.getCoordonnees().getLatitude() - echelle[2]) * echelle[0], (targetNode.getCoordonnees().getLongitude() - echelle[3]) * echelle[1],null)), length, 0));
 
+                    // Creation du point de départ
+                    double x1 = (sourceNode.getCoordonnees().getLatitude()-originX)*echelleX;
+                    double y1 = (sourceNode.getCoordonnees().getLongitude()-originY) * echelleY;
+                    Circle point1 = createNode(x1,y1,null);
+
+                    // Creation du point d'arrivée
+                    double x2 = (targetNode.getCoordonnees().getLatitude()-originX)*echelleX;
+                    double y2 = (targetNode.getCoordonnees().getLongitude()-originY) * echelleY;
+                    Circle point2 = createNode(x2,y2,null);
+
+                    // Creation de l'arête reliant les deux
+                    Line edgeToAdd = createEdge(point1, point2, length, 0);
+                    this.getChildren().add(edgeToAdd);
                 }
             }
         }
 
-        // Create a scene and set it in the stage
-        Scene scene = new Scene(graphContainer, 800, 800);
-        primaryStage.setScene(scene);
-
-        primaryStage.setTitle("Map Graph Visualization");
-        primaryStage.show();
     }
 
     private DonneesCarte createSampleGraph() {
@@ -107,13 +117,7 @@ public class Carte extends Application {
 
         edge.setStyle("-fx-stroke: black; -fx-stroke-width: 2;");
 
-
-
-        edge.setAccessibleText(String.valueOf(length));
         return edge;
     }
-    public void creerGraphe(String nomGraphe) {
-        this.chemin = nomGraphe;
-        launch();
-    }
+
 }
