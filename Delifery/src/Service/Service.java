@@ -27,7 +27,7 @@ public class Service {
 
         // Combinez le chemin fixe et le nom du fichier
         String cheminComplet = cheminFixe + nomFichier;
-        Object[] objects = fsxml.lireXML(nomFichier);
+        Object[] objects = fsxml.lireXML(cheminComplet);
 
         Intersection[] entrepot = (Intersection[]) objects[0];
 
