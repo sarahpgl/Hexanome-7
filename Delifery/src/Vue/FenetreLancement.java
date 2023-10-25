@@ -86,7 +86,7 @@ public class FenetreLancement extends Application {
         primaryStage.setY(0);
 
         // Set the background image
-        File file = new File("image/ImageAccueil.png");
+        File file = new File("Delifery/image/ImageAccueil.png");
         String imageUrl = file.toURI().toString();
         Image image = new Image(imageUrl);
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -95,7 +95,7 @@ public class FenetreLancement extends Application {
                 "-fx-background-repeat: no-repeat;");
 
         // Create an ImageView for the image
-        Image logoImage = new Image("file:image/LogoDelifery.png");
+        Image logoImage = new Image("file:Delifery/image/LogoDelifery.png");
         ImageView logoImageView = new ImageView(logoImage);
 
         // Resize the image
