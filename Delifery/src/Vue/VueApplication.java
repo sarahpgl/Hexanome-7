@@ -4,15 +4,21 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.util.Optional;
+
 public class VueApplication extends Application {
     public String chemin;
-
-    public VueApplication(String cheminFichier) {
+    public Integer windowWidth;
+    public Integer windowHeight;
+    public VueApplication(String cheminFichier, Integer width, Integer height) {
         super();
+        this.windowWidth = width;
+        this.windowHeight = height;
         this.chemin = cheminFichier;
     }
     @Override
     public void start(Stage primaryStage) {
+
         GridPane gridPane = new GridPane();
 
         // Row 1: Header (takes full width)
@@ -26,7 +32,7 @@ public class VueApplication extends Application {
         gridPane.add(section1, 0, 1);
 
         // Row 3: Section 2 (right side)
-        Carte c = new Carte(chemin, 300, 400);
+        Carte c = new Carte(chemin, windowWidth/2, windowHeight*8/10);
         gridPane.add(c, 1, 1);
 
         // Set column constraints to divide the width equally
@@ -47,7 +53,7 @@ public class VueApplication extends Application {
         HBox.setHgrow(section1, Priority.ALWAYS);
         HBox.setHgrow(c, Priority.ALWAYS);
 
-        Scene scene = new Scene(gridPane, 600, 400);
+        Scene scene = new Scene(gridPane, windowWidth, windowHeight);
         primaryStage.setTitle("Three Row GridPane Example");
         primaryStage.setScene(scene);
         primaryStage.show();

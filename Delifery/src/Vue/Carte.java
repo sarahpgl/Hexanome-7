@@ -21,7 +21,7 @@ public class Carte extends Pane {
     private Map<Intersection, Map<Intersection, Float>> graph;
     private String chemin;
 
-    public Carte(String chemin, Integer panelHeight, Integer panelWidth) {
+    public Carte(String chemin, Integer panelWidth, Integer panelHeight) {
         super();
 
         this.chemin = chemin;
@@ -29,8 +29,8 @@ public class Carte extends Pane {
         DonneesCarte dc = createSampleGraph();
 
         // Extraction des échelles et des origines pour plus de lisibilité
-        float echelleX = dc.getEchelleX()*panelHeight;
-        float echelleY = dc.getEchelleY()*panelWidth;
+        float echelleX = dc.getEchelleX()*panelWidth;
+        float echelleY = dc.getEchelleY()*panelHeight;
         float originX = dc.getOrigine()[0];
         float originY = dc.getOrigine()[1];
 
@@ -129,8 +129,6 @@ public class Carte extends Pane {
         Service s = new Service();
         DonneesCarte dc = s.creerDonneesCarte(chemin);
         graph = dc.getCarte();
-        Intersection entrepot = dc.getEntrepot();
-
         return dc;
     }
 
