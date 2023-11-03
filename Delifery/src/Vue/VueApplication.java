@@ -44,6 +44,7 @@ public class VueApplication extends Application {
         // Row 3: Section 2 (right side)
         Carte c = new Carte(chemin, (int)(height*0.8-10),(int)(width/2)+10);
         gridPane.add(c, 1, 1);
+        tabTours.setCarte(c);
 
         // Set column constraints to divide the width equally
         ColumnConstraints column1 = new ColumnConstraints();

@@ -17,6 +17,9 @@ import java.util.Random;
 
 
 public class TableauTours extends StackPane  {
+
+    Carte carteTab;
+
     public TableauTours() {
         int nbColonnes = 3; // Taille du tableau
         int nbLignes= 4;
@@ -45,19 +48,36 @@ public class TableauTours extends StackPane  {
 
                     int finalJ = j;
                     rectangle.setOnMouseClicked(event ->{
-                        System.out.println(String.valueOf(finalJ));
                         rectangle.setFill(Color.rgb(new Random().nextInt(256),new Random().nextInt(256),new Random().nextInt(256)));
                     });
 
                 }
                 else if(i==2 && j>0){
                     CheckBox caseCocher=new CheckBox();
+                    caseCocher.setText(String.valueOf(j));
                     tableau.add(cellule, i, j);
                     cellule.getChildren().add(caseCocher);
 
                     int finalJ = j;
-                    caseCocher.setOnMouseClicked(event ->{
+                    caseCocher.setOnAction(event -> {
+                        if (caseCocher.isSelected()) {
+                            carteTab.remettreLigne(caseCocher.getText());
+                        } else {
+                            carteTab.enleverLigne(caseCocher.getText());
+                        }
                     });
+
+                }
+                else if(i==1 && j==1){
+                    Text text = new Text("Tour Rouge");
+                    tableau.add(cellule, i, j);
+                    cellule.getChildren().add(text);
+
+                }
+                else if(i==1 && j==2){
+                    Text text = new Text("Tour Bleu");
+                    tableau.add(cellule, i, j);
+                    cellule.getChildren().add(text);
 
                 }else if(i==0 && j==0){
                     Text text = new Text("Tour N°");
@@ -99,4 +119,9 @@ public class TableauTours extends StackPane  {
 
 
     }
+    void setCarte(Carte car){
+        carteTab=car;
+    }
+
+
 }
