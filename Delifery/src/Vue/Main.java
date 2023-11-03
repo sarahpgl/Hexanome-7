@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import Donnees.DonneesCarte;
+
+import Util.Calculs;
 import static javafx.application.Application.launch;
 
 
@@ -24,7 +26,7 @@ public class Main {
         //TesterDijkstra();
         //TestCreerCarte();
         //TestLireXML();
-        launch(FenetreLancement.class, args);
+        //launch(FenetreLancement.class, args);
 
     }
 
@@ -67,15 +69,16 @@ public class Main {
 
         Service service = new Service();
         System.out.println("Nom du fichier xml : " +System.getProperty("user.dir")+"/Delifery/fichiersXML2022/smallMap.xml");
-        DonneesCarte carte = service.creerDonneesCarte("smallMap.xml");
+        DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
         Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
         Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
         Intersection destination3 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
         Intersection destination4 = new Intersection(new BigInteger("975886496"),new Coordonnees(45.756874,4.8574047));
-        List<Intersection> chemin = service.dijkstra(Entrepot,destination4,carte.getCarte());
+        List<Intersection> chemin = Calculs.dijkstra(Entrepot,destination1,carte.getCarte());
         if (chemin != null) {
             afficherChemin(chemin);
+            System.out.println("Distance : " + Calculs.getDistanceChemin(chemin)+ " m ");
         } else {
             System.out.print("Le chemin est null");
         }
@@ -114,7 +117,7 @@ public class Main {
             if(i==0){
                 System.out.print("Intersection "+i+" : " + intersection.getId());
             }else {
-                System.out.print(" | Intersection "+i+" : " + intersection.getId());
+                System.out.println(" | Intersection "+i+" : " + intersection.getId());
             }
             i++;
             // Vous pouvez également afficher d'autres informations si nécessaire, par exemple les coordonnées.

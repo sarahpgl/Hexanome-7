@@ -16,6 +16,11 @@ public class Tour {
         this.trajet = trajet;
     }
 
+    public Tour(Long id, ArrayList<Livraison> livraisons) {
+        this.id = id;
+        this.livraisons = livraisons;
+    }
+
     public Long getId() {
         return id;
     }
@@ -39,4 +44,7 @@ public class Tour {
     public void setTrajet(ArrayList<Intersection> trajet) {
         this.trajet = trajet;
     }
+
 }
+
+
