@@ -23,7 +23,6 @@ public class Carte extends Pane {
 
     public Carte(String chemin, Integer panelHeight, Integer panelWidth) {
         super();
-
         this.chemin = chemin;
         // Create a sample graph
         DonneesCarte dc = createSampleGraph();
@@ -54,6 +53,7 @@ public class Carte extends Pane {
                     // Ajout du point
                     Circle entrepot1 = createNode(inter,util, 2);
                     this.getChildren().add(entrepot1);
+
                 }
              }
         }
@@ -123,9 +123,9 @@ public class Carte extends Pane {
         ArrayList<Intersection> sectionAColorier = new ArrayList<Intersection>();
         sectionAColorier.add(destination3);
         for(Intersection i : monChemin){
-            if(i != destination3 && i != Entrepot){
+            //if(i != destination3 && i != Entrepot){
                 sectionAColorier.add(i);
-            }
+            //}
         }
         return sectionAColorier;
     }

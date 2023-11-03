@@ -119,23 +119,26 @@ public class FenetreLancement extends Application {
     }
 
     private void importButtonAction(javafx.event.ActionEvent actionEvent) {
+        /*
         // Create a FileChooser to open the file explorer
         FileChooser fileChooser = new FileChooser();
         // Set a filter to accept only XML files
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files", "*.xml", "*.XML", "*.Xml"));
         // Display the file chooser dialog to select a file
         File file = fileChooser.showOpenDialog(null);
+        */
         // Check if the file is not null
-        if (file != null) {
+        if (null == null) {
             // Get the path of the selected file
-            String filePath = file.getAbsolutePath();
+            //String filePath = file.getAbsolutePath();
+            String filePath="Delifery/fichiersXML2022/mediumMap.xml";
             cheminFichier = filePath;
             // Display the file path in the console
             System.out.println(filePath);
             monLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: black; -fx-background-color: rgba(0, 255, 0, 0.5);");
             monLabel.setText("Fichier importé !");
         } else {
-            monLabel.setText("Coucou");
+            //monLabel.setText("");
         }
     }
 
