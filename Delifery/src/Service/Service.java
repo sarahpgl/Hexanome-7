@@ -62,21 +62,40 @@ public class Service {
         return carteCourante;
     }
 
-    public Tour calculerTour (Tour tour){
+    public Tour calculerTour (Tour tour, Integer vitesse, DonneesCarte carte, Intersection entrepot){
         final int creneau8=8;
         final int creneau9=9;
         final int creneau10=10;
         final int creneau11=11;
 
-        ArrayList<Intersection> livraisons8 = new ArrayList<>();
-        ArrayList<Intersection> livraisons9 = new ArrayList<>();
-        ArrayList<Intersection> livraisons10 = new ArrayList<>();
-        ArrayList<Intersection> livraisons11 = new ArrayList<>();
+        ArrayList<Livraison> livraisons8 = new ArrayList<>();
+        ArrayList<Livraison> livraisons9 = new ArrayList<>();
+        ArrayList<Livraison> livraisons10 = new ArrayList<>();
+        ArrayList<Livraison> livraisons11 = new ArrayList<>();
 
         List<Intersection> chemin8 = new ArrayList<>();
         List<Intersection> chemin9 = new ArrayList<>();
         List<Intersection> chemin10 = new ArrayList<>();
         List<Intersection> chemin11 = new ArrayList<>();
+
+        ArrayList<Livraison> livraisons = tour.getLivraisons();
+
+        for (Livraison l: livraisons) {
+            if (l.getCreneau().getValeur()==8){
+                livraisons8.add(l);
+            } else if (l.getCreneau().getValeur()==9){
+                livraisons9.add(l);
+            } else if (l.getCreneau().getValeur()==10){
+                livraisons10.add(l);
+            } else if (l.getCreneau().getValeur()==11){
+                livraisons11.add(l);
+            }
+        }
+
+
+
+
+
 
         return tour;
     }

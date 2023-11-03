@@ -1,5 +1,7 @@
 package Donnees;
 
+import Util.Coordonnees;
+
 import java.time.LocalTime;
 
 public class Livraison {
@@ -24,10 +26,12 @@ public class Livraison {
         this.id = id;
         this.adresse = adresse;
         this.creneau = creneau;
-        this.heureDebut = heureDebut;
-        this.heureFin = heureFin;
     }
 
+    public Livraison(Long id, Intersection adresse) {
+        this.id = id;
+        this.adresse = adresse;
+    }
     public Long getId() {
         return id;
     }
@@ -67,4 +71,13 @@ public class Livraison {
     public void setHeureFin(LocalTime heureFin) {
         this.heureFin = heureFin;
     }
+
+    public double getDistanceTo(Livraison livraison){
+        return this.getAdresse().getDistanceTo(livraison.getAdresse());
+    }
+
+    public double getDistanceTo(Coordonnees coordonnees){
+        return this.getAdresse().getCoordonnees().getDistanceTo(coordonnees);
+    }
+
 }

@@ -1,17 +1,16 @@
 package Vue;// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
+import Donnees.Livraison;
 import Util.Coordonnees;
 import Util.FileSystemXML;
 import Donnees.Intersection;
 import Donnees.Section;
 
 import java.math.BigInteger;
-import java.util.Arrays;
+import java.util.*;
+
 import Service.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
 import Donnees.DonneesCarte;
 
 import Util.Calculs;
@@ -27,7 +26,7 @@ public class Main {
         //TestCreerCarte();
         //TestLireXML();
         //launch(FenetreLancement.class, args);
-
+        TesterTrie();
     }
 
     public static void TestLireXML(){
@@ -79,6 +78,7 @@ public class Main {
         if (chemin != null) {
             afficherChemin(chemin);
             System.out.println("Distance : " + Calculs.getDistanceChemin(chemin)+ " m ");
+            System.out.println("Distance : " + Entrepot.getDistanceTo(destination1)+ " m ");
         } else {
             System.out.print("Le chemin est null");
         }
@@ -121,6 +121,41 @@ public class Main {
             }
             i++;
             // Vous pouvez également afficher d'autres informations si nécessaire, par exemple les coordonnées.
+        }
+    }
+
+    public static void TesterTrie(){
+
+        Service service = new Service();
+        System.out.println("Nom du fichier xml : " +System.getProperty("user.dir")+"/Delifery/fichiersXML2022/smallMap.xml");
+        DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
+        Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
+        Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
+        Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
+        Intersection destination3 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
+        Intersection destination4 = new Intersection(new BigInteger("975886496"),new Coordonnees(45.756874,4.8574047));
+        Livraison livraison1 = new Livraison((long) 1,destination1);
+        Livraison livraison2 = new Livraison((long) 2,destination2);
+        Livraison livraison3 = new Livraison((long) 3,destination3);
+        Livraison livraison4 = new Livraison((long) 4,destination4);
+        ArrayList<Livraison> livraisons = new ArrayList<>();
+        livraisons.add(livraison4);
+        livraisons.add(livraison2);
+        livraisons.add(livraison1);
+        livraisons.add(livraison3);
+
+        System.out.println();
+        System.out.println("Livraisons non triées :");
+        for (Livraison l: livraisons) {
+            System.out.println(l.getAdresse().toString());
+        }
+
+        List<Livraison> livraisonsTriees = Calculs.trierLivraisons(livraisons,Entrepot);
+
+        System.out.println();
+        System.out.println("Livraisons triées :");
+        for (Livraison l: livraisonsTriees) {
+            System.out.println(l.getAdresse().toString());
         }
     }
 }

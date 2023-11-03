@@ -1,6 +1,7 @@
 package Util;
 
 import Donnees.Intersection;
+import Donnees.Livraison;
 
 import java.util.*;
 
@@ -88,4 +89,35 @@ public class Calculs {
         }
         return distance;
     }
+
+    // Définir la méthode trierLivraisons qui prend en paramètre une liste de livraisons et une intersection de départ
+    // /!\ Cette méthode vide la liste rentrée en paramètre
+    public static ArrayList<Livraison> trierLivraisons(ArrayList<Livraison> livraisons, Intersection depart) {
+
+        ArrayList<Livraison> livraisonsTriees = new ArrayList<Livraison>();
+        Intersection courante = depart;
+
+        while (!livraisons.isEmpty()) {
+            Livraison plusProche = null;
+            double distanceMin = Double.MAX_VALUE;
+
+            for (Livraison livraison : livraisons) {
+                // Calculer la distance entre l'intersection courante et l'intersection de la livraison
+                double distance = courante.getDistanceTo(livraison.getAdresse());
+
+                if (distance < distanceMin) {
+                    // Mettre à jour la livraison la plus proche et la distance minimale
+                    plusProche = livraison;
+                    distanceMin = distance;
+                }
+            }
+            // Ajouter la livraison la plus proche à la liste des livraisons triées et supprimer la livraison la plus proche de la liste des livraisons
+            livraisonsTriees.add(plusProche);
+            livraisons.remove(plusProche);
+
+            courante = plusProche.getAdresse();
+        }
+        return livraisonsTriees;
+    }
+
 }

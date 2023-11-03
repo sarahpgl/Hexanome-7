@@ -38,6 +38,10 @@ public class Intersection {
         return "id :" + id + " ; Coordonnés :" + coordonnees.toString();
     }
 
+    public double getDistanceTo (Intersection intersection){
+        return this.getCoordonnees().getDistanceTo(intersection.getCoordonnees());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
