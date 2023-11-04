@@ -35,16 +35,17 @@ public class VueApplication extends Application {
         header.setStyle("-fx-background-color: lightblue;");
         gridPane.add(header, 0, 0, 2, 1); // Span 2 columns
 
-        // Row 2: Section 1 (left side)
-        TableauTours tabTours = new TableauTours();
-        gridPane.add(tabTours, 0, 1);
-        gridPane.requestLayout();
+
 
 
         // Row 3: Section 2 (right side)
         Carte c = new Carte(chemin, (int)(height*0.8-10),(int)(width/2)+10);
         gridPane.add(c, 1, 1);
-        tabTours.setCarte(c);
+
+        // Row 2: Section 1 (left side)
+        TableauTours tabTours = new TableauTours(c);
+        gridPane.add(tabTours, 0, 1);
+        gridPane.requestLayout();
 
         // Set column constraints to divide the width equally
         ColumnConstraints column1 = new ColumnConstraints();

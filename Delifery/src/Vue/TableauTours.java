@@ -20,9 +20,10 @@ public class TableauTours extends StackPane  {
 
     Carte carteTab;
 
-    public TableauTours() {
+    public TableauTours(Carte carte) {
+        carteTab=carte;
         int nbColonnes = 3; // Taille du tableau
-        int nbLignes= 4;
+        int nbLignes= carteTab.getNbTours()+1;
 
         GridPane tableau = new GridPane();
         tableau.setAlignment(Pos.CENTER);
@@ -48,6 +49,7 @@ public class TableauTours extends StackPane  {
 
                     int finalJ = j;
                     rectangle.setOnMouseClicked(event ->{
+                        //carteTab.ouvrirDetails(1);
                         rectangle.setFill(Color.rgb(new Random().nextInt(256),new Random().nextInt(256),new Random().nextInt(256)));
                     });
 
@@ -120,9 +122,6 @@ public class TableauTours extends StackPane  {
         setAlignment(Pos.CENTER); // Centre le VBox dans le StackPane
 
 
-    }
-    void setCarte(Carte car){
-        carteTab=car;
     }
 
 
