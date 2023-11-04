@@ -1,7 +1,10 @@
 package Service;
 
 import Donnees.*;
+import Util.Calculs;
 import Util.FileSystemXML;
+
+import java.time.LocalTime;
 import java.util.Map;
 import java.util.HashMap;
 import Vue.FenetreLancement;
@@ -62,7 +65,7 @@ public class Service {
         return carteCourante;
     }
 
-    public Tour calculerTour (Tour tour, Integer vitesse, DonneesCarte carte, Intersection entrepot){
+    public Tour calculerTour (Tour tour, Double vitesse, DonneesCarte carte, Intersection entrepot){
         final int creneau8=8;
         final int creneau9=9;
         final int creneau10=10;
@@ -81,21 +84,80 @@ public class Service {
         ArrayList<Livraison> livraisons = tour.getLivraisons();
 
         for (Livraison l: livraisons) {
-            if (l.getCreneau().getValeur()==8){
+            if (l.getCreneau().getValeur()==creneau8){
                 livraisons8.add(l);
-            } else if (l.getCreneau().getValeur()==9){
+            } else if (l.getCreneau().getValeur()==creneau9){
                 livraisons9.add(l);
-            } else if (l.getCreneau().getValeur()==10){
+            } else if (l.getCreneau().getValeur()==creneau10){
                 livraisons10.add(l);
-            } else if (l.getCreneau().getValeur()==11){
+            } else if (l.getCreneau().getValeur()==creneau11){
                 livraisons11.add(l);
             }
         }
 
+        //On trie les listes de livraison
+        Intersection interCourante = entrepot;
+        tour.ajouterIntersection(entrepot);
+        LocalTime tempsCourant = LocalTime.of(8,0,0);
+        double distance;
 
 
+        livraisons8= Calculs.trierLivraisons(livraisons8,interCourante);
+        for (Livraison l: livraisons8) {
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,l.getAdresse(),carte.getCarte());
+            distance = Calculs.getDistanceChemin(chemin);
+            l.mettreAJourHeure(tempsCourant,distance,vitesse);
+            if(l.getHeureArrivee().getHour()<(l.getCreneau().getValeur()+1) && chemin!=null){
+                tour.ajouterListeAuTrajet(chemin);
+                interCourante = l.getAdresse();
+                tempsCourant=l.getHeureDepart();
+            } else {
+                l.livraisonNonLivree();
+            }
+        }
 
+        livraisons9= Calculs.trierLivraisons(livraisons9,interCourante);
+        for (Livraison l: livraisons9) {
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,l.getAdresse(),carte.getCarte());
+            distance = Calculs.getDistanceChemin(chemin);
+            l.mettreAJourHeure(tempsCourant,distance,vitesse);
+            if(l.getHeureArrivee().getHour()<(l.getCreneau().getValeur()+1) && chemin!=null){
+                tour.ajouterListeAuTrajet(chemin);
+                interCourante = l.getAdresse();
+                tempsCourant=l.getHeureDepart();
+            } else {
+                l.livraisonNonLivree();
+            }
+        }
 
+        livraisons10= Calculs.trierLivraisons(livraisons10,interCourante);
+
+        for (Livraison l: livraisons10) {
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,l.getAdresse(),carte.getCarte());
+            distance = Calculs.getDistanceChemin(chemin);
+            l.mettreAJourHeure(tempsCourant,distance,vitesse);
+            if(l.getHeureArrivee().getHour()<(l.getCreneau().getValeur()+1) && chemin!=null){
+                tour.ajouterListeAuTrajet(chemin);
+                interCourante = l.getAdresse();
+                tempsCourant=l.getHeureDepart();
+            } else {
+                l.livraisonNonLivree();
+            }
+        }
+
+        livraisons11= Calculs.trierLivraisons(livraisons11,interCourante);
+        for (Livraison l: livraisons11) {
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,l.getAdresse(),carte.getCarte());
+            distance = Calculs.getDistanceChemin(chemin);
+            l.mettreAJourHeure(tempsCourant,distance,vitesse);
+            if(l.getHeureArrivee().getHour()<(l.getCreneau().getValeur()+1) && chemin!=null){
+                tour.ajouterListeAuTrajet(chemin);
+                interCourante = l.getAdresse();
+                tempsCourant=l.getHeureDepart();
+            } else {
+                l.livraisonNonLivree();
+            }
+        }
 
         return tour;
     }

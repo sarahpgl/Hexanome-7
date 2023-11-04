@@ -67,7 +67,7 @@ public class Calculs {
                 chemin.add(0, intersection);
                 intersection = predecesseurs.get(intersection);
             }
-            System.out.println("Distance du chemin : "+distances.get(arrivee));
+            System.out.println("Distance du chemin : " + distances.get(arrivee));
             return chemin;
         } else {
             // Sinon, retour de null pour indiquer qu'aucun chemin n'existe
@@ -76,15 +76,15 @@ public class Calculs {
     }
 
     //Cette méthode renvoie la distance nécessaire pour parcourir la liste d'intersection rentrée en paramètre
-    public static double getDistanceChemin (List<Intersection> chemin){
-        double distance=0;
-        if(chemin!=null){
+    public static double getDistanceChemin(List<Intersection> chemin) {
+        double distance = 0;
+        if (chemin != null) {
             Intersection interCourante = chemin.get(0);
-            for(Intersection inter: chemin) {
-                if (!inter.equals(interCourante)){
+            for (Intersection inter : chemin) {
+                if (!inter.equals(interCourante)) {
                     distance = distance + inter.getCoordonnees().getDistanceTo(interCourante.getCoordonnees());
                 }
-                interCourante=inter;
+                interCourante = inter;
             }
         }
         return distance;
@@ -120,4 +120,18 @@ public class Calculs {
         return livraisonsTriees;
     }
 
+    // Fonction qui prend en paramètre une liste de livraisons et qui la trie par ordre croissant des heures de départ
+    public static void trierLivraisons(ArrayList<Livraison> livraisons) {
+        // Création d'un comparateur qui compare deux livraisons selon leur heure de départ
+        Comparator<Livraison> comparateur = new Comparator<Livraison>() {
+            @Override
+            public int compare(Livraison o1, Livraison o2) {
+                // Utilisation de la méthode compareTo de la classe LocalTime qui renvoie un entier négatif, nul ou positif selon que l'heure de o1 est avant, égale ou après l'heure de o2
+                return o1.getHeureDepart().compareTo(o2.getHeureDepart());
+            }
+        };
+
+        // Utilisation de la méthode sort de la classe Collections qui trie la liste selon le comparateur
+        Collections.sort(livraisons, comparateur);
+    }
 }
