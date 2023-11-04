@@ -55,12 +55,14 @@ public class TableauTours extends StackPane  {
                 else if(i==2 && j>0){
                     CheckBox caseCocher=new CheckBox();
                     caseCocher.setText(String.valueOf(j));
+                    caseCocher.setSelected(true);
                     tableau.add(cellule, i, j);
                     cellule.getChildren().add(caseCocher);
 
                     int finalJ = j;
                     caseCocher.setOnAction(event -> {
                         if (caseCocher.isSelected()) {
+                            System.out.println(caseCocher.getText());
                             carteTab.remettreLigne(caseCocher.getText());
                         } else {
                             carteTab.enleverLigne(caseCocher.getText());

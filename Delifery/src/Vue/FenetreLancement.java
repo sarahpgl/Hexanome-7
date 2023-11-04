@@ -3,6 +3,7 @@ package Vue;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -144,6 +145,9 @@ public class FenetreLancement extends Application {
 
     private void lancementButtonAction(javafx.event.ActionEvent actionEvent) {
         if (cheminFichier != null) {
+            Node source = (Node)actionEvent.getSource();
+            Stage stage= (Stage)source.getScene().getWindow();
+            stage.close();
             Stage appStage = new Stage();
             VueApplication vueApplication = new VueApplication(cheminFichier);
             vueApplication.start(appStage);
