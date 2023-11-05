@@ -20,6 +20,14 @@ public class Livraison {
         this.heureFin = heureFin;
     }
 
+    public Livraison(Long id, Intersection adresse, Creneau creneau) {
+        this.id = id;
+        this.adresse = adresse;
+        this.creneau = creneau;
+        this.heureDebut = heureDebut;
+        this.heureFin = heureFin;
+    }
+
     public Long getId() {
         return id;
     }
