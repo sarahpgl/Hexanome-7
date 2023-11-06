@@ -2,13 +2,16 @@ package Service;
 
 import Donnees.*;
 import Util.Calculs;
+import Util.Coordonnees;
 import Util.FileSystemXML;
 
+import java.math.BigInteger;
 import java.time.LocalTime;
 import java.util.Map;
 import java.util.HashMap;
 import Vue.FenetreLancement;
 import Vue.MaVue;
+import java.time.LocalTime;
 
 import java.util.*;
 
@@ -65,6 +68,21 @@ public class Service {
         return carteCourante;
     }
 
+    public Tour creerTour(Long id,ArrayList<Livraison> livraisons, ArrayList<Intersection> intersections){
+
+        Tour tour = new Tour(id, livraisons, intersections);
+
+        return tour;
+    }
+
+    public Livraison creerLivraison(Long id, Intersection adresse, Creneau creneau, LocalTime heureDebut, LocalTime heureFin){
+        Livraison l = new Livraison(id,adresse,  creneau,  heureDebut,  heureFin);
+        return l;
+    }
+    public Intersection creerIntersection(BigInteger id, Coordonnees coordonnees){
+        Intersection i = new Intersection(id, coordonnees);
+        return i ;
+    }
     public Tour calculerTour (Tour tour, Double vitesse, DonneesCarte carte, Intersection entrepot){
         final int creneau8=8;
         final int creneau9=9;
