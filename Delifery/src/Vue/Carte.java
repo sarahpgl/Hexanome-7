@@ -362,10 +362,9 @@ public class Carte extends Pane {
 
 
     void ouvrirDetails(Long id){
-        /*Service service = Service.getInstance();
-        Tour tour = service.getTourById(id);
+        Tour tour = Service.getInstance().getCatalogueTours().getTourById(id);
         DetailsTour fenetreDetails = new DetailsTour(this.cheminFichier, tour, 800, 550);
-        fenetreDetails.show();*/
+        fenetreDetails.ouvrirFenetre();
     }
 
     int getNbTours(){
