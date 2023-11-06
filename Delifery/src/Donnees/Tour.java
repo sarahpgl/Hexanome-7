@@ -108,6 +108,10 @@ public class Tour {
         return mes;
     }
 
+    public void reinitialiserTrajet(){
+        trajet.clear();
+    }
+
 }
 
 
