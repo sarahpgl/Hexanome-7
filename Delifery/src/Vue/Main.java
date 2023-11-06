@@ -52,15 +52,10 @@ public class Main {
 
         Service service = new Service();
         DonneesCarte carte = service.creerDonneesCarte(nomFichier);
-
-        // Créez une instance de la classe Vue
-        MaVue maVue = new MaVue();
-        maVue.ouvrirFenetreVueApp();
     }
 
     public static void TestOuvrirPageLancement() {
-        MaVue maVue = new MaVue();
-        maVue.ouvrirFenetreLancement();
+
     }
 
     public static void TesterDijkstra(){
