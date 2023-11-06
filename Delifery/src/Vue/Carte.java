@@ -2,6 +2,7 @@ package Vue;
 
 import Donnees.*;
 import Service.Service;
+import Util.Calculs;
 import Util.Coordonnees;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Tooltip;
@@ -135,9 +136,11 @@ public class Carte extends Pane {
 
     private ArrayList<Intersection> testCalculChemin(Intersection dest1,Intersection dest2) {
         Service service = new Service();
-        Intersection Entrepot = new Intersection(new BigInteger("25303831"), new Coordonnees(45.74979, 4.87572));
-
-        List<Intersection> chemin = service.dijkstra(dest1, dest2, graph);
+        Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
+        Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
+        Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
+        Intersection destination3 = new Intersection(new BigInteger("27362284"), new Coordonnees(45.728672,4.876898));
+        List<Intersection> chemin2 = Calculs.dijkstra(Entrepot,destination3,graph);
 
         ArrayList<Intersection> monChemin = new ArrayList<Intersection>(chemin);
 
