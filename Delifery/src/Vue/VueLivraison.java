@@ -2,7 +2,7 @@ package Vue;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Rectangle2D;
-import javafx.geometry.VPos;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -10,7 +10,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
@@ -28,6 +27,8 @@ public class VueLivraison extends Application {
     public void start(Stage primaryStage) {
 
         GridPane gridPane = new GridPane();
+        gridPane.setVgap(10); // Espacement vertical entre les lignes
+        gridPane.setHgap(10);
 
         // Get screen dimensions
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -76,7 +77,7 @@ public class VueLivraison extends Application {
         Button button2 = new Button("9h-10h");
         Button button3 = new Button("10h-11h");
         Button button4 = new Button("11h-12h");
-        HBox buttonsRow3 = new HBox(10); // Espace de 10 pixels entre les boutons
+        HBox buttonsRow3 = new HBox(20); // Espace de 10 pixels entre les boutons
         buttonsRow3.getChildren().addAll(label3, button1, button2, button3, button4);
 
         // Ajouter le style aux boutons de la ligne 3
@@ -92,16 +93,18 @@ public class VueLivraison extends Application {
         // Row 4: Buttons with increased size (aligned in a row)
         boutonAnnuler = new Button("Annuler");
         boutonValider = new Button("Valider");
-        boutonAnnuler.setPrefSize(100, 40); // Ajuster la taille du bouton Annuler
-        boutonValider.setPrefSize(100, 40); // Ajuster la taille du bouton Valider
-        HBox buttonsRow4 = new HBox(10); // Espace de 10 pixels entre les boutons
+        boutonAnnuler.setPrefSize(100, 50); // Ajustez la taille du bouton Annuler
+        boutonValider.setPrefSize(100, 50); // Ajustez la taille du bouton Valider
+        HBox buttonsRow4 = new HBox(20); // Espace de 20 pixels entre les boutons
         buttonsRow4.getChildren().addAll(boutonAnnuler, boutonValider);
+        buttonsRow4.setAlignment(Pos.CENTER);
 
         boutonAnnuler.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
         boutonValider.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
 
         // Ajoutez les boutons à la grille (alignés dans la même ligne)
         gridPane.add(buttonsRow4, 0, 4, 2, 1);
+
 
         // Set row constraints to take the full page
         RowConstraints row1 = new RowConstraints();
@@ -112,7 +115,7 @@ public class VueLivraison extends Application {
         row1.setPercentHeight(20);
         row2.setPercentHeight(20); // Ajustez la hauteur de la deuxième rangée selon vos besoins
         row3.setPercentHeight(20); // Ajustez la hauteur de la troisième rangée selon vos besoins
-        row4.setPercentHeight(20); // Ajustez la hauteur de la troisième rangée selon vos besoins
+        row4.setPercentHeight(20);
         row5.setPercentHeight(20);
         gridPane.getRowConstraints().addAll(row1, row2, row3);
 
@@ -126,4 +129,5 @@ public class VueLivraison extends Application {
     public void ouvrirFenetre() {
         launch();
     }
+
 }
