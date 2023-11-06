@@ -55,10 +55,6 @@ public class Main {
         DonneesCarte carte = service.creerDonneesCarte(nomFichier);
     }
 
-    public static void TestOuvrirPageLancement() {
-
-    }
-
     public static void TesterDijkstra(){
 
         Service service = new Service();
