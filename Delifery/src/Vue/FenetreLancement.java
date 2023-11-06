@@ -149,7 +149,7 @@ public class FenetreLancement extends Application {
             Stage stage= (Stage)source.getScene().getWindow();
             stage.close();
             Stage appStage = new Stage();
-            VueApplication vueApplication = new VueApplication(cheminFichier, 800, 550);
+            VueApplication vueApplication = new VueApplication(cheminFichier, (int)(source.getScene().getWidth()), (int)(source.getScene().getHeight()));
             vueApplication.start(appStage);
         } else {
             monLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-background-color: rgba(0, 0, 0, 0.5);");

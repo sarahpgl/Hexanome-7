@@ -37,9 +37,8 @@ public class VueApplication extends Application {
         primaryStage.setY(0);
 
         // Row 1: Header (takes full width)
-        HBox header = new HBox();
-        header.setStyle("-fx-background-color: lightblue;");
-        gridPane.add(header, 0, 0, 2, 1); // Span 2 columns
+        Entete entete=new Entete();
+        gridPane.add(entete, 0, 0, 2, 1); // Span 2 columns
 
 
 
