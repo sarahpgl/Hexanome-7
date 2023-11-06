@@ -14,8 +14,25 @@ import java.util.*;
 
 
 public class Service {
-    public Service() {
 
+    private static volatile Service instance;
+    private DonneesCarte donneesCarte;
+    private CatalogueTours catalogueTours;
+
+
+    public Service() {
+        this.catalogueTours = new CatalogueTours();
+    }
+
+    public static Service getInstance() {
+        if (instance == null) {
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new Service();
+                }
+            }
+        }
+        return instance;
     }
 
     public DonneesCarte creerDonneesCarte(String nomFichier) {
@@ -62,6 +79,7 @@ public class Service {
         }
 
         DonneesCarte carteCourante = new DonneesCarte(nomFichier, entrepotDepart, carte,echelleX,echelleY,origin);
+        this.donneesCarte = carteCourante;
         return carteCourante;
     }
 
@@ -160,5 +178,13 @@ public class Service {
         }
 
         return tour;
+    }
+
+    public DonneesCarte getDonneesCarte() {
+        return donneesCarte;
+    }
+
+    public CatalogueTours getCatalogueTours() {
+        return catalogueTours;
     }
 }

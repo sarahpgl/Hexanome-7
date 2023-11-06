@@ -10,17 +10,19 @@ public class Tour {
     private Long id;
 
     private ArrayList<Livraison> livraisons;
-
+    private Livreur livreur;
     private ArrayList<Intersection> trajet;
 
     public Tour(Long id, ArrayList<Livraison> livraisons, ArrayList<Intersection> trajet) {
         this.id = id;
+        this.livreur = new Livreur(this.id.intValue());
         this.livraisons = livraisons;
         this.trajet = trajet;
     }
 
     public Tour(Long id, ArrayList<Livraison> livraisons) {
         this.id = id;
+        this.livreur = new Livreur(this.id.intValue());
         this.livraisons = livraisons;
         trajet=new ArrayList<Intersection>();
     }
@@ -28,6 +30,8 @@ public class Tour {
     public Long getId() {
         return id;
     }
+
+    public String getNomLivreur() { return livreur.getNom(); }
 
     public void setId(Long id) {
         this.id = id;
