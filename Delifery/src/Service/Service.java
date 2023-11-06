@@ -43,11 +43,18 @@ public class Service {
         // Chemin d'accès fixe (à modifier selon vos besoins)
         String cheminFixe = System.getProperty("user.dir") + "/Delifery/fichiersXML2022/";
 
-        // Combinez le chemin fixe et le nom du fichier
         String cheminComplet = cheminFixe + nomFichier;
+
+        System.out.println("Chemin Fixe (Methode creerDonneesCarte dans Service) : "+cheminComplet);
+
         Object[] objects = fsxml.lireXML(nomFichier);
 
         Intersection[] entrepot = (Intersection[]) objects[0];
+
+        if(entrepot==null){
+            objects = fsxml.lireXML(cheminComplet);
+            entrepot = (Intersection[]) objects[0];
+        }
 
 
         Intersection[] intersections = (Intersection[]) objects[1];

@@ -22,10 +22,11 @@ public class Main {
         //TesterDijkstra();
         //TestCreerCarte();
         //TestLireXML();
-        launch(FenetreLancement.class, args);
+        //launch(FenetreLancement.class, args);
         //TesterTrie();
         //testerHeureLivraison();
         //testerCalculTour();
+        //getInterById();
     }
 
     public static void TestLireXML(){
@@ -192,5 +193,11 @@ public class Main {
         Tour tour = new Tour((long) 1, livraisons);
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         System.out.println(tour.toString());
+    }
+
+    public static void getInterById(){
+        Service service = new Service();
+        DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
+        System.out.println(carte.findIntersectionById("975886496").toString());
     }
 }
