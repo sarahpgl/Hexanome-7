@@ -140,9 +140,9 @@ public class Carte extends Pane {
         Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
         Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
         Intersection destination3 = new Intersection(new BigInteger("27362284"), new Coordonnees(45.728672,4.876898));
-        List<Intersection> chemin2 = Calculs.dijkstra(Entrepot,destination3,graph);
+        List<Intersection> chemin2 = Calculs.dijkstra(dest1,dest2,graph);
 
-        ArrayList<Intersection> monChemin = new ArrayList<Intersection>(chemin);
+        ArrayList<Intersection> monChemin = new ArrayList<Intersection>(chemin2);
 
         //recuperer les sections de mon chemin qui ne sont pas des livraisons
         ArrayList<Intersection> sectionAColorier = new ArrayList<Intersection>();
