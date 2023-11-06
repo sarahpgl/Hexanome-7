@@ -23,10 +23,6 @@ public class Carte extends Pane {
     //nb de tours au total à afficher
     int nbTours=2;
 
-
-
-
-
     List<ElementListe> listeCouleurs=new ArrayList<>();
 
     Intersection entrepot;
@@ -47,20 +43,8 @@ public class Carte extends Pane {
         float originY = dc.getOrigine()[1];
         util = new float[]{originX, originY, echelleX, echelleY};
 
-        List<Line> redLines = new ArrayList<>();
-        Circle redDot=new Circle();
-        boolean redActivated=true;
 
-        ElementListe elementListeRed=new ElementListe(redLines,redDot,redActivated);
-
-        List<Line> blueLines = new ArrayList<>();
-        Circle blueDot=new Circle();
-        boolean blueActivated=true;
-
-        ElementListe elementListeBlue=new ElementListe(blueLines,blueDot,blueActivated);
-
-        listeCouleurs.add(elementListeRed);
-        listeCouleurs.add(elementListeBlue);
+        listeCouleurs=createElementListe(nbTours);
 
 
         dessinerCarte();
@@ -136,10 +120,6 @@ public class Carte extends Pane {
 
     private ArrayList<Intersection> testCalculChemin(Intersection dest1,Intersection dest2) {
         Service service = new Service();
-        Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
-        Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
-        Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
-        Intersection destination3 = new Intersection(new BigInteger("27362284"), new Coordonnees(45.728672,4.876898));
         List<Intersection> chemin2 = Calculs.dijkstra(dest1,dest2,graph);
 
         ArrayList<Intersection> monChemin = new ArrayList<Intersection>(chemin2);
@@ -366,6 +346,18 @@ public class Carte extends Pane {
             listeCouleurs.get(index).getDot().setVisible(true);
             listeCouleurs.get(index).setEtat(true);
         }
+    }
+
+    List<ElementListe> createElementListe(int nbTours){
+        List<ElementListe> listeElement = new ArrayList<>();
+        for (int i=0;i<nbTours;i++){
+            List<Line> lines = new ArrayList<>();
+            Circle dot =new Circle();
+            boolean state =true;
+            ElementListe elementListe=new ElementListe(lines,dot ,state);
+            listeElement.add(elementListe);
+        }
+        return listeElement;
     }
 
 
