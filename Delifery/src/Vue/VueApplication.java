@@ -1,7 +1,11 @@
 package Vue;
 import javafx.application.Application;
+import javafx.geometry.HPos;
+import javafx.geometry.Rectangle2D;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.Optional;
@@ -21,19 +25,33 @@ public class VueApplication extends Application {
 
         GridPane gridPane = new GridPane();
 
+        // Get screen dimensions
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        // Set window size accordingly
+        double width = screenBounds.getWidth() * 0.8;
+        double height = 1020.0 / 1080.0 * screenBounds.getHeight();
+        primaryStage.setWidth(width);
+        primaryStage.setHeight(height);
+        // Place the window at the top-left of the screen
+        primaryStage.setX(0);
+        primaryStage.setY(0);
+
         // Row 1: Header (takes full width)
         HBox header = new HBox();
         header.setStyle("-fx-background-color: lightblue;");
         gridPane.add(header, 0, 0, 2, 1); // Span 2 columns
 
-        // Row 2: Section 1 (left side)
-        HBox section1 = new HBox();
-        section1.setStyle("-fx-background-color: lightgreen;");
-        gridPane.add(section1, 0, 1);
+
+
 
         // Row 3: Section 2 (right side)
         Carte c = new Carte(chemin, windowWidth/2, windowHeight*8/10);
         gridPane.add(c, 1, 1);
+
+        // Row 2: Section 1 (left side)
+        TableauTours tabTours = new TableauTours(c);
+        gridPane.add(tabTours, 0, 1);
+        gridPane.requestLayout();
 
         // Set column constraints to divide the width equally
         ColumnConstraints column1 = new ColumnConstraints();
@@ -50,11 +68,11 @@ public class VueApplication extends Application {
         gridPane.getRowConstraints().addAll(row1, row2);
 
         // Make Section 1 and Section 2 equally growable
-        HBox.setHgrow(section1, Priority.ALWAYS);
+        HBox.setHgrow(tabTours, Priority.ALWAYS);
         HBox.setHgrow(c, Priority.ALWAYS);
 
         Scene scene = new Scene(gridPane, windowWidth, windowHeight);
-        primaryStage.setTitle("Three Row GridPane Example");
+        primaryStage.setTitle("Fenetre Application");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
