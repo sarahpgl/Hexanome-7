@@ -89,6 +89,7 @@ public class Service {
     }
 
     public Tour calculerTour (Tour tour, Double vitesse, DonneesCarte carte, Intersection entrepot){
+        tour.reinitialiserTrajet();
         final int creneau8=8;
         final int creneau9=9;
         final int creneau10=10;
