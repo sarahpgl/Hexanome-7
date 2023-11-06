@@ -47,6 +47,7 @@ public class VueApplication extends Application {
         Carte c = new Carte(chemin, windowWidth/2, windowHeight*8/10);
         gridPane.add(c, 1, 1);
 
+
         // Row 2: Section 1 (left side)
         TableauTours tabTours = new TableauTours(c);
         gridPane.add(tabTours, 0, 1);

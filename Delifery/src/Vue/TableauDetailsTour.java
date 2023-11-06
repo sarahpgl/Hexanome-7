@@ -1,6 +1,7 @@
 package Vue;
 
 import Donnees.Livraison;
+import Util.Coordonnees;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -15,6 +16,7 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.Random;
 import Donnees.Tour;
+import Donnees.Intersection;
 import Donnees.Livraison;
 public class TableauDetailsTour extends StackPane {
 
@@ -51,6 +53,8 @@ public class TableauDetailsTour extends StackPane {
         VBox labelsVBox = new VBox(livreurLabel, identifiantTourLabel);
 
         for (int i = 0; i < nbColonnes; i++) {
+            Livraison livCourante = livraisonsDetails.get(i);
+
             for (int j = 0; j < nbLignes; j++) {
                 Rectangle rectangle = new Rectangle(140, 70);
                 rectangle.setStroke(Color.BLACK);
@@ -58,6 +62,32 @@ public class TableauDetailsTour extends StackPane {
 
                 StackPane cellule = new StackPane();
                 cellule.getChildren().add(rectangle);
+
+                if (j == 0) {
+                    // Affiche le numéro de colis dans la première ligne
+                    Label colisNumeroLabel = new Label(String.valueOf(livCourante.getId()));
+                    colisNumeroLabel.setAlignment(Pos.CENTER);
+                    cellule.getChildren().add(colisNumeroLabel);
+                } else if (j == 1) {
+                    // Affiche les coordonnees dans la deuxième ligne
+                    Intersection inter = livCourante.getAdresse();
+                    Coordonnees coordonnees = inter.getCoordonnees();
+                    String coordonneesStr = "(" + coordonnees.getLatitude() + ", " + coordonnees.getLongitude() + ")";
+                    Label coordonneesLabel = new Label(coordonneesStr);
+                    coordonneesLabel.setAlignment(Pos.CENTER);
+                    cellule.getChildren().add(coordonneesLabel);
+                } else if (j == 2) {
+                    // Affiche l'heure d'arrivée dans la troisième ligne
+                    Label heure1Label = new Label(livCourante.getHeureArrivee().toString());
+                    heure1Label.setAlignment(Pos.CENTER);
+                    cellule.getChildren().add(heure1Label);
+                } else if (j == 3) {
+                    // Affiche l'heure de départ dans la quatrième ligne
+                    Label heure2Label = new Label(livCourante.getHeureDepart().toString());
+                    heure2Label.setAlignment(Pos.CENTER);
+                    cellule.getChildren().add(heure2Label);
+                }
+
                 tableau.add(cellule, i, j); // Ajoutez la cellule au tableau
             }
         }
