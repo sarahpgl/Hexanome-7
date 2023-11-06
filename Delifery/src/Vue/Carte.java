@@ -29,6 +29,7 @@ public class Carte extends Pane {
     float[] util;
     private Map<Intersection, Map<Intersection, Float>> graph;
     private String cheminFichier;
+    Service service = new Service();
 
     public Carte(String cheminFich, Integer panelWidth, Integer panelHeight) {
         super();
@@ -37,12 +38,7 @@ public class Carte extends Pane {
         DonneesCarte dc = createSampleGraph();
         entrepot = dc.getEntrepot();
         // Extraction des échelles et des origines pour plus de lisibilité
-        float echelleX = dc.getEchelleX() * panelWidth;
-        float echelleY = dc.getEchelleY() * panelHeight;
-        float originX = dc.getOrigine()[0];
-        float originY = dc.getOrigine()[1];
-        util = new float[]{originX, originY, echelleX, echelleY};
-
+        float [] util =calculerUtil(dc, panelWidth, panelHeight);
 
         listeCouleurs=createElementListe(nbTours);
 
@@ -51,10 +47,10 @@ public class Carte extends Pane {
 
 
         //test de recupere un tour
-        Intersection destination3 = new Intersection(new BigInteger("27362284"), new Coordonnees(45.728672, 4.876898));
-        Intersection destination4 = new Intersection(new BigInteger("1345284783"), new Coordonnees(45.752106, 4.8660784));
-        Intersection destination5 = new Intersection(new BigInteger("459797866"), new Coordonnees(45.75379, 4.874625));
-        Intersection destination6 = new Intersection(new BigInteger("9214919"), new Coordonnees(45.74021, 4.864795));
+        Intersection destination3 = service.creerIntersection(new BigInteger("27362284"), new Coordonnees(45.728672, 4.876898));
+        Intersection destination4 = service.creerIntersection(new BigInteger("1345284783"), new Coordonnees(45.752106, 4.8660784));
+        Intersection destination5 = service.creerIntersection(new BigInteger("459797866"), new Coordonnees(45.75379, 4.874625));
+        Intersection destination6 = service.creerIntersection(new BigInteger("9214919"), new Coordonnees(45.74021, 4.864795));
 
         this.getChildren().add(createNode(destination3,util,0,"3"));
         this.getChildren().add(createNode(destination4,util,0,"4"));
@@ -68,11 +64,11 @@ public class Carte extends Pane {
         ArrayList<Intersection> section1Tour2 = testCalculChemin(entrepot,destination4);
         ArrayList<Intersection> section2Tour2 = testCalculChemin(destination4,destination6);
 
-        Livraison livr1=new Livraison(1L ,destination3,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
-        Livraison livr2=new Livraison(1L ,destination4,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
+        Livraison livr1=service.creerLivraison(1L ,destination3,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
+        Livraison livr2=service.creerLivraison(1L ,destination4,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
 
-        Livraison livr3=new Livraison(1L ,destination5,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
-        Livraison livr4=new Livraison(1L ,destination6,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
+        Livraison livr3=service.creerLivraison(1L ,destination5,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
+        Livraison livr4=service.creerLivraison(1L ,destination6,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
 
         ArrayList<Livraison> livraisons1 = new ArrayList<>();
         livraisons1.add(livr1);
@@ -88,11 +84,11 @@ public class Carte extends Pane {
 
 
         ArrayList<Intersection> cheminTotal = new ArrayList<>();
-        Tour tour1=new Tour(1L,livraisons1 ,section3Tour1);
-        dessinerTour(tour1.getTrajet(), 1, destination3);
+        Tour tour1=service.creerTour(1L,livraisons1 ,section3Tour1);
+        dessinerTour(tour1.getTrajet(), 1);
 
-        Tour tour2=new Tour(1L,livraisons1 ,section2Tour2);
-        dessinerTour(tour2.getTrajet(), 2, destination3);
+        Tour tour2=service.creerTour(1L,livraisons1 ,section2Tour2);
+        dessinerTour(tour2.getTrajet(), 2);
 
         section2Tour1.remove(0);
         section1Tour1.remove(0);
@@ -118,8 +114,19 @@ public class Carte extends Pane {
         return dc;
     }
 
+    private float[] calculerUtil(DonneesCarte dc, Integer panelWidth, Integer panelHeight){
+        float echelleX = dc.getEchelleX() * panelWidth;
+        float echelleY = dc.getEchelleY() * panelHeight;
+        float originX = dc.getOrigine()[0];
+        float originY = dc.getOrigine()[1];
+        util = new float[]{originX, originY, echelleX, echelleY};
+        return util ;
+    }
+
+
+
     private ArrayList<Intersection> testCalculChemin(Intersection dest1,Intersection dest2) {
-        Service service = new Service();
+
         List<Intersection> chemin2 = Calculs.dijkstra(dest1,dest2,graph);
 
         ArrayList<Intersection> monChemin = new ArrayList<Intersection>(chemin2);
@@ -137,8 +144,8 @@ public class Carte extends Pane {
         return sectionAColorier;
     }
 
-    void dessinerTour(ArrayList<Intersection> cheminTour, int id, Intersection destination) {
-
+    void dessinerTour(ArrayList<Intersection> cheminTour, int id) {
+        Intersection destination =  cheminTour.getLast();
         // Ajout des points de destination
         for (Intersection inter : cheminTour) {
             if (inter != null) {
