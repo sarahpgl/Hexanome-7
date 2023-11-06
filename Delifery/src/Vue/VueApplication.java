@@ -37,9 +37,8 @@ public class VueApplication extends Application {
         primaryStage.setY(0);
 
         // Row 1: Header (takes full width)
-        HBox header = new HBox();
-        header.setStyle("-fx-background-color: lightblue;");
-        gridPane.add(header, 0, 0, 2, 1); // Span 2 columns
+        Entete entete=new Entete();
+        gridPane.add(entete, 0, 0, 2, 1); // Span 2 columns
 
 
 
@@ -47,6 +46,7 @@ public class VueApplication extends Application {
         // Row 3: Section 2 (right side)
         Carte c = new Carte(chemin, windowWidth/2, windowHeight*8/10);
         gridPane.add(c, 1, 1);
+
 
         // Row 2: Section 1 (left side)
         TableauTours tabTours = new TableauTours(c);
