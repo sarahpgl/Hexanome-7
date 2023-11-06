@@ -51,7 +51,7 @@ public class Carte extends Pane {
 
 
         //test de recupere un tour
-        Intersection destination3 = new Intersection(new BigInteger("27362284"), new Coordonnees(45.728672, 4.876898));
+        /*Intersection destination3 = new Intersection(new BigInteger("27362284"), new Coordonnees(45.728672, 4.876898));
         Intersection destination4 = new Intersection(new BigInteger("1345284783"), new Coordonnees(45.752106, 4.8660784));
         Intersection destination5 = new Intersection(new BigInteger("459797866"), new Coordonnees(45.75379, 4.874625));
         Intersection destination6 = new Intersection(new BigInteger("9214919"), new Coordonnees(45.74021, 4.864795));
@@ -95,7 +95,7 @@ public class Carte extends Pane {
         dessinerTour(tour2.getTrajet(), 2, destination3);
 
         section2Tour1.remove(0);
-        section1Tour1.remove(0);
+        section1Tour1.remove(0);*/
 
         Circle entrepotLocation = createNode(entrepot, util, 3,"Entrepot");
         this.getChildren().add(entrepotLocation);
@@ -361,9 +361,11 @@ public class Carte extends Pane {
     }
 
 
-    void ouvrirDetails(int id){
-        DetailsTour fenetreDetails=new DetailsTour(null);
-        fenetreDetails.show();
+    void ouvrirDetails(Long id){
+        /*Service service = Service.getInstance();
+        Tour tour = service.getTourById(id);
+        DetailsTour fenetreDetails = new DetailsTour(this.cheminFichier, tour, 800, 550);
+        fenetreDetails.show();*/
     }
 
     int getNbTours(){
