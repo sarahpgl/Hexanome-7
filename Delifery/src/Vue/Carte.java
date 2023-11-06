@@ -360,17 +360,17 @@ public class Carte extends Pane {
         return listeElement;
     }
 
-
-    void ouvrirDetails(Long id){
-        Tour tour = Service.getInstance().getCatalogueTours().getTourById(id);
-        DetailsTour fenetreDetails = new DetailsTour(this.cheminFichier, tour, 800, 550);
-        fenetreDetails.ouvrirFenetre();
-    }
-
     int getNbTours(){
         return nbTours;
     }
 
+    public String getCheminFichier() {
+        return cheminFichier;
+    }
+
+    public void setCheminFichier(String cheminFichier) {
+        this.cheminFichier = cheminFichier;
+    }
 }
 
 class ElementListe {

@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 import java.util.Optional;
 
 public class VueApplication extends Application {
@@ -49,9 +48,9 @@ public class VueApplication extends Application {
 
 
         // Row 2: Section 1 (left side)
-        TableauTours tabTours = new TableauTours(c);
-        gridPane.add(tabTours, 0, 1);
-        gridPane.requestLayout();
+        //TableauTours tabTours = new TableauTours(c);
+        //gridPane.add(tabTours, 0, 1);
+        //gridPane.requestLayout();
 
         // Set column constraints to divide the width equally
         ColumnConstraints column1 = new ColumnConstraints();
@@ -68,7 +67,7 @@ public class VueApplication extends Application {
         gridPane.getRowConstraints().addAll(row1, row2);
 
         // Make Section 1 and Section 2 equally growable
-        HBox.setHgrow(tabTours, Priority.ALWAYS);
+        //HBox.setHgrow(tabTours, Priority.ALWAYS);
         HBox.setHgrow(c, Priority.ALWAYS);
 
         Scene scene = new Scene(gridPane, windowWidth, windowHeight);

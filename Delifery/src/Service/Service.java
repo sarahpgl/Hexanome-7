@@ -1,13 +1,13 @@
 package Service;
 
 import Donnees.*;
+import Vue.*;
 import Util.Calculs;
 import Util.FileSystemXML;
 
 import java.time.LocalTime;
 import java.util.Map;
 import java.util.HashMap;
-
 import java.util.*;
 
 
@@ -184,6 +184,12 @@ public class Service {
         }
 
         return tour;
+    }
+
+    public void ouvrirDetails(String chemin, Long id){
+        Tour t = catalogueTours.getTourById(id);
+        DetailsTour fenetreDeatils = new DetailsTour(chemin, t, 800, 550);
+        fenetreDeatils.ouvrirFenetre();
     }
 
     public DonneesCarte getDonneesCarte() {

@@ -1,5 +1,8 @@
 package Vue;
 
+import Donnees.CatalogueTours;
+import Donnees.Tour;
+import Service.Service;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -13,17 +16,21 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
 public class TableauTours extends StackPane  {
+    private CatalogueTours catalogueTours;
+    private Carte carteTab;
 
-    Carte carteTab;
+    public TableauTours(CatalogueTours catalogueTours, Carte carteTab) {
+        this.catalogueTours = catalogueTours;
+        this.carteTab = carteTab;
 
-    public TableauTours(Carte carte) {
-        carteTab=carte;
         int nbColonnes = 3; // Taille du tableau
-        int nbLignes= carteTab.getNbTours()+1;
+        ArrayList<Tour> tours = catalogueTours.getCatalogue();
+        int nbLignes = tours.size()+1;
 
         GridPane tableau = new GridPane();
         tableau.setAlignment(Pos.CENTER);
@@ -49,7 +56,7 @@ public class TableauTours extends StackPane  {
 
                     Long finalJ = (long) j;
                     rectangle.setOnMouseClicked(event ->{
-                        carteTab.ouvrirDetails(finalJ);
+                        Service.getInstance().ouvrirDetails(carteTab.getCheminFichier(), finalJ);
                         rectangle.setFill(Color.rgb(new Random().nextInt(256),new Random().nextInt(256),new Random().nextInt(256)));
                     });
 
@@ -124,5 +131,19 @@ public class TableauTours extends StackPane  {
 
     }
 
+    public CatalogueTours getCatalogueTours() {
+        return catalogueTours;
+    }
 
+    public void setCatalogueTours(CatalogueTours catalogueTours) {
+        this.catalogueTours = catalogueTours;
+    }
+
+    public Carte getCarteTab() {
+        return carteTab;
+    }
+
+    public void setCarteTab(Carte carteTab) {
+        this.carteTab = carteTab;
+    }
 }
