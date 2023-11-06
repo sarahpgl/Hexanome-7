@@ -61,13 +61,12 @@ public class TableauTours extends StackPane  {
                     cellule.getChildren().add(text);
 
                     Long finalJ = (long) j;
-                    rectangle.setOnMouseClicked(event ->{
+                    /*rectangle.setOnMouseClicked(event ->{
                         Service.getInstance().ouvrirDetails(chemin,finalJ);
                         rectangle.setFill(Color.rgb(new Random().nextInt(256),new Random().nextInt(256),new Random().nextInt(256)));
-                    });
+                    });*/
 
-                }
-                else if(i==2 && j>0){
+                }else if(i==2 && j>0){
                     CheckBox caseCocher=new CheckBox();
                     caseCocher.setText(String.valueOf(j));
                     caseCocher.setSelected(true);
@@ -85,7 +84,7 @@ public class TableauTours extends StackPane  {
                     });
 
                 }
-                else if(i==1){
+                if(i==1){
 
                     String nomLivreur = tourCourant.getNomLivreur();
                     Text text = new Text(nomLivreur);
@@ -97,14 +96,12 @@ public class TableauTours extends StackPane  {
                     rectangle.setFill(Color.WHITE);
                     tableau.add(cellule, i, j);
                     cellule.getChildren().add(text);
-                }
-                else if(i==2 && j==0){
+                }else if(i==2 && j==0){
                     Text text = new Text("Visible sur la map");
                     rectangle.setFill(Color.WHITE);
                     tableau.add(cellule, i, j);
                     cellule.getChildren().add(text);
-                }
-                else{
+                }else{
                     tableau.add(cellule, i, j);
 
                 }
