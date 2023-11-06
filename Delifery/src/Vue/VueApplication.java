@@ -1,4 +1,6 @@
 package Vue;
+import Donnees.CatalogueTours;
+import Service.Service;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Rectangle2D;
@@ -47,9 +49,10 @@ public class VueApplication extends Application {
         Carte c = new Carte(chemin, windowWidth/2, windowHeight*8/10);
         gridPane.add(c, 1, 1);
 
+        CatalogueTours catalogueTours = Service.getInstance().getCatalogueTours();
 
         // Row 2: Section 1 (left side)
-        TableauTours tabTours = new TableauTours(c);
+        TableauTours tabTours = new TableauTours(catalogueTours, chemin);
         gridPane.add(tabTours, 0, 1);
         gridPane.requestLayout();
 

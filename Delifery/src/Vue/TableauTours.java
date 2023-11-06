@@ -1,5 +1,8 @@
 package Vue;
 
+import Donnees.CatalogueTours;
+import Donnees.Livreur;
+import Donnees.Tour;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -13,17 +16,25 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
 import java.util.Random;
+import Service.Service;
 
 
 public class TableauTours extends StackPane  {
 
-    Carte carteTab;
+    private CatalogueTours catalogueTour;
+    private String chemin;
 
-    public TableauTours(Carte carte) {
-        carteTab=carte;
+    public TableauTours(CatalogueTours catalogueTour, String chemin) {
+
+        this.catalogueTour = catalogueTour;
+        this.chemin = chemin;
+
         int nbColonnes = 3; // Taille du tableau
-        int nbLignes= carteTab.getNbTours()+1;
+
+        ArrayList<Tour> tours = catalogueTour.getCatalogue();
+        int nbLignes= tours.size()+1;
 
         GridPane tableau = new GridPane();
         tableau.setAlignment(Pos.CENTER);
@@ -38,6 +49,8 @@ public class TableauTours extends StackPane  {
                 rectangle.setStroke(Color.BLACK);
                 rectangle.setFill(Color.LIGHTGREY);
 
+                Tour tourCourant = tours.get(j);
+
                 StackPane cellule = new StackPane();
                 cellule.getChildren().add(rectangle);
 
@@ -49,7 +62,7 @@ public class TableauTours extends StackPane  {
 
                     Long finalJ = (long) j;
                     rectangle.setOnMouseClicked(event ->{
-                        carteTab.ouvrirDetails(finalJ);
+                        Service.getInstance().ouvrirDetails(chemin,finalJ);
                         rectangle.setFill(Color.rgb(new Random().nextInt(256),new Random().nextInt(256),new Random().nextInt(256)));
                     });
 
@@ -65,32 +78,22 @@ public class TableauTours extends StackPane  {
                     caseCocher.setOnAction(event -> {
                         if (caseCocher.isSelected()) {
                             System.out.println(caseCocher.getText());
-                            carteTab.remettreLigne(caseCocher.getText());
+                            //carteTab.remettreLigne(caseCocher.getText());
                         } else {
-                            carteTab.enleverLigne(caseCocher.getText());
+                            //carteTab.enleverLigne(caseCocher.getText());
                         }
                     });
 
                 }
-                else if(i==1 && j==1){
-                    Text text = new Text("Tour Rouge");
-                    tableau.add(cellule, i, j);
-                    cellule.getChildren().add(text);
+                else if(i==1){
 
-                }
-                else if(i==1 && j==2){
-                    Text text = new Text("Tour Bleu");
+                    String nomLivreur = tourCourant.getNomLivreur();
+                    Text text = new Text(nomLivreur);
                     tableau.add(cellule, i, j);
                     cellule.getChildren().add(text);
 
                 }else if(i==0 && j==0){
                     Text text = new Text("Tour N°");
-                    rectangle.setFill(Color.WHITE);
-                    tableau.add(cellule, i, j);
-                    cellule.getChildren().add(text);
-                }
-                else if(i==1 && j==0){
-                    Text text = new Text("Livreur");
                     rectangle.setFill(Color.WHITE);
                     tableau.add(cellule, i, j);
                     cellule.getChildren().add(text);
