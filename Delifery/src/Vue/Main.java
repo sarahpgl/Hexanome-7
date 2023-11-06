@@ -25,7 +25,7 @@ public class Main {
         //launch(FenetreLancement.class, args);
         //TesterTrie();
         //testerHeureLivraison();
-        testerCalculTour();
+        //testerCalculTour();
     }
 
     public static void TestLireXML(){
