@@ -150,7 +150,7 @@ public class FileSystemXML {
         } catch (Exception e) {
             // Afficher le message d'erreur en cas d'exception
             System.out.println(e.getMessage());
-            System.out.println("PROUT");
+            System.out.println("Erreur");
         }
 
         // Retourner un tableau d'objets contenant l'objet Warehouse, le tableau d'objets Intersection et le tableau d'objets Segment

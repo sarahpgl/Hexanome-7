@@ -1,6 +1,9 @@
 package Donnees;
 
+import Util.Calculs;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Tour {
 
@@ -14,6 +17,12 @@ public class Tour {
         this.id = id;
         this.livraisons = livraisons;
         this.trajet = trajet;
+    }
+
+    public Tour(Long id, ArrayList<Livraison> livraisons) {
+        this.id = id;
+        this.livraisons = livraisons;
+        trajet=new ArrayList<Intersection>();
     }
 
     public Long getId() {
@@ -39,4 +48,55 @@ public class Tour {
     public void setTrajet(ArrayList<Intersection> trajet) {
         this.trajet = trajet;
     }
+
+    //Méthode qui concaténe au trajet une liste d'intersection. On vérifie à ne pas introduire de doublon à la suite avant d'ajouter le sous trajet au trajet
+    public void ajouterListeAuTrajet(List<Intersection> liste) {
+        if (!liste.isEmpty()) {
+            Intersection dernier = trajet.get(trajet.size() - 1);
+            Intersection premier = liste.get(0);
+            if (dernier.equals(premier)) {
+                // Si les deux éléments sont égaux, on supprime le premier de la liste à ajouter
+                liste.remove(0);
+            }
+            trajet.addAll(liste);
+        }
+    }
+
+    public void ajouterIntersection(Intersection intersection){
+        trajet.add(intersection);
+    }
+
+    public String toString(){
+        String mes= "Tour numéro "+this.id+"\n";
+        mes= mes +"Livraisons effectuées :\n";
+        Calculs.trierLivraisons(livraisons);
+        for (Livraison l: livraisons) {
+            if(l.livree()==true){
+                mes = mes + l.toString() +"\n";
+            }
+        }
+        mes = mes + "\n";
+        mes = mes + "Trajet parcouru : \n";
+
+        int i=0;
+        for (Intersection intersection : trajet) {
+            if(i==0){
+                mes = mes + "Intersection "+i+" : " + intersection.getId();
+            }else {
+                mes = mes + " | Intersection "+i+" : " + intersection.getId();
+            }
+            i++;
+        }
+
+        mes= mes +"\n"+"Livraisons non effectuées :\n";
+        for (Livraison l: livraisons) {
+            if(l.livree()!=true){
+                mes = mes + l.toString() +"\n";
+            }
+        }
+        return mes;
+    }
+
 }
+
+

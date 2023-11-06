@@ -1,9 +1,10 @@
 package Service;
 
-import Donnees.DonneesCarte;
-import Donnees.Intersection;
-import Donnees.Section;
+import Donnees.*;
+import Util.Calculs;
 import Util.FileSystemXML;
+
+import java.time.LocalTime;
 import java.util.Map;
 import java.util.HashMap;
 import Vue.FenetreLancement;
@@ -64,70 +65,100 @@ public class Service {
         return carteCourante;
     }
 
-    // Méthode qui calcule le plus court chemin entre deux intersections, en utilisant l'algorithme de Dijkstra
-    public List<Intersection> dijkstra(Intersection depart, Intersection arrivee, Map<Intersection, Map<Intersection, Float>> graphe) {
-        if (!graphe.containsKey(depart) || !graphe.containsKey(arrivee)) {
-            System.out.println("Le départ ou l'arrivée n'est pas dans le graphe");
-            return null;
-        }
+    public Tour calculerTour (Tour tour, Double vitesse, DonneesCarte carte, Intersection entrepot){
+        final int creneau8=8;
+        final int creneau9=9;
+        final int creneau10=10;
+        final int creneau11=11;
 
-        // Création d'une liste pour stocker le chemin final
-        List<Intersection> chemin = new ArrayList<>();
+        ArrayList<Livraison> livraisons8 = new ArrayList<>();
+        ArrayList<Livraison> livraisons9 = new ArrayList<>();
+        ArrayList<Livraison> livraisons10 = new ArrayList<>();
+        ArrayList<Livraison> livraisons11 = new ArrayList<>();
 
-        // Création d'un tableau pour stocker les distances minimales entre chaque nœud et le nœud de départ
-        Map<Intersection, Float> distances = new HashMap<>();
-        // Initialisation des distances à l'infini pour tous les nœuds sauf le nœud de départ
-        for (Intersection intersection : graphe.keySet()) {
-            distances.put(intersection, Float.MAX_VALUE);
-        }
-        distances.put(depart, 0f);
+        List<Intersection> chemin8 = new ArrayList<>();
+        List<Intersection> chemin9 = new ArrayList<>();
+        List<Intersection> chemin10 = new ArrayList<>();
+        List<Intersection> chemin11 = new ArrayList<>();
 
-        // Création d'un tableau pour stocker les prédécesseurs de chaque nœud dans le chemin optimal
-        Map<Intersection, Intersection> predecesseurs = new HashMap<>();
+        ArrayList<Livraison> livraisons = tour.getLivraisons();
 
-        // Création d'une file de priorité pour stocker les nœuds à visiter, triés par ordre croissant de distance au nœud de départ
-        PriorityQueue<Intersection> file = new PriorityQueue<>(Comparator.comparingDouble(intersection -> distances.get(intersection)));
-
-        // Ajout du nœud de départ à la file
-        file.add(depart);
-
-        // Tant que la file n'est pas vide et que le nœud d'arrivée n'a pas été atteint
-        while (!file.isEmpty() && !file.peek().equals(arrivee)) {
-            // Récupération et suppression du nœud le plus proche du nœud de départ dans la file
-            Intersection courant = file.poll();
-            // Pour chaque voisin du nœud courant
-            Map<Intersection, Float> voisins = graphe.get(courant);
-            if (voisins != null) {
-                for (Map.Entry<Intersection, Float> voisin : voisins.entrySet()) {
-                    // Calcul de la distance entre le nœud courant et le voisin
-                    float distance = distances.get(courant) + voisin.getValue();
-                    // Si la distance est inférieure à la distance minimale actuelle entre le voisin et le nœud de départ
-                    Float distanceToVoisin = distances.get(voisin.getKey());
-                    if (distanceToVoisin == null || distance < distanceToVoisin) {
-                        // Mise à jour de la distance minimale pour le voisin
-                        distances.put(voisin.getKey(), distance);
-                        // Mise à jour du prédécesseur du voisin
-                        predecesseurs.put(voisin.getKey(), courant);
-                        // Ajout du voisin à la file
-                        file.add(voisin.getKey());
-                    }
-                }
+        for (Livraison l: livraisons) {
+            if (l.getCreneau().getValeur()==creneau8){
+                livraisons8.add(l);
+            } else if (l.getCreneau().getValeur()==creneau9){
+                livraisons9.add(l);
+            } else if (l.getCreneau().getValeur()==creneau10){
+                livraisons10.add(l);
+            } else if (l.getCreneau().getValeur()==creneau11){
+                livraisons11.add(l);
             }
         }
 
-        // Si le nœud d'arrivée a été atteint
-        if (distances.containsKey(arrivee) && distances.get(arrivee) != Float.MAX_VALUE) {
-            // Reconstruction du chemin en partant du nœud d'arrivée et en remontant les prédécesseurs
-            Intersection intersection = arrivee;
-            while (intersection != null) {
-                chemin.add(0, intersection);
-                intersection = predecesseurs.get(intersection);
+        //On trie les listes de livraison
+        Intersection interCourante = entrepot;
+        tour.ajouterIntersection(entrepot);
+        LocalTime tempsCourant = LocalTime.of(8,0,0);
+        double distance;
+
+
+        livraisons8= Calculs.trierLivraisons(livraisons8,interCourante);
+        for (Livraison l: livraisons8) {
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,l.getAdresse(),carte.getCarte());
+            distance = Calculs.getDistanceChemin(chemin);
+            l.mettreAJourHeure(tempsCourant,distance,vitesse);
+            if(l.getHeureArrivee().getHour()<(l.getCreneau().getValeur()+1) && chemin!=null){
+                tour.ajouterListeAuTrajet(chemin);
+                interCourante = l.getAdresse();
+                tempsCourant=l.getHeureDepart();
+            } else {
+                l.livraisonNonLivree();
             }
-            System.out.println("Distance du chemin : "+distances.get(arrivee));
-            return chemin;
-        } else {
-            // Sinon, retour de null pour indiquer qu'aucun chemin n'existe
-            return null;
         }
+
+        livraisons9= Calculs.trierLivraisons(livraisons9,interCourante);
+        for (Livraison l: livraisons9) {
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,l.getAdresse(),carte.getCarte());
+            distance = Calculs.getDistanceChemin(chemin);
+            l.mettreAJourHeure(tempsCourant,distance,vitesse);
+            if(l.getHeureArrivee().getHour()<(l.getCreneau().getValeur()+1) && chemin!=null){
+                tour.ajouterListeAuTrajet(chemin);
+                interCourante = l.getAdresse();
+                tempsCourant=l.getHeureDepart();
+            } else {
+                l.livraisonNonLivree();
+            }
+        }
+
+        livraisons10= Calculs.trierLivraisons(livraisons10,interCourante);
+
+        for (Livraison l: livraisons10) {
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,l.getAdresse(),carte.getCarte());
+            distance = Calculs.getDistanceChemin(chemin);
+            l.mettreAJourHeure(tempsCourant,distance,vitesse);
+            if(l.getHeureArrivee().getHour()<(l.getCreneau().getValeur()+1) && chemin!=null){
+                tour.ajouterListeAuTrajet(chemin);
+                interCourante = l.getAdresse();
+                tempsCourant=l.getHeureDepart();
+            } else {
+                l.livraisonNonLivree();
+            }
+        }
+
+        livraisons11= Calculs.trierLivraisons(livraisons11,interCourante);
+        for (Livraison l: livraisons11) {
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,l.getAdresse(),carte.getCarte());
+            distance = Calculs.getDistanceChemin(chemin);
+            l.mettreAJourHeure(tempsCourant,distance,vitesse);
+            if(l.getHeureArrivee().getHour()<(l.getCreneau().getValeur()+1) && chemin!=null){
+                tour.ajouterListeAuTrajet(chemin);
+                interCourante = l.getAdresse();
+                tempsCourant=l.getHeureDepart();
+            } else {
+                l.livraisonNonLivree();
+            }
+        }
+
+        return tour;
     }
 }
