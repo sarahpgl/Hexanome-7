@@ -23,10 +23,6 @@ public class Carte extends Pane {
     //nb de tours au total à afficher
     int nbTours=2;
 
-
-
-
-
     List<ElementListe> listeCouleurs=new ArrayList<>();
 
     Intersection entrepot;
@@ -47,27 +43,15 @@ public class Carte extends Pane {
         float originY = dc.getOrigine()[1];
         util = new float[]{originX, originY, echelleX, echelleY};
 
-        List<Line> redLines = new ArrayList<>();
-        Circle redDot=new Circle();
-        boolean redActivated=true;
 
-        ElementListe elementListeRed=new ElementListe(redLines,redDot,redActivated);
-
-        List<Line> blueLines = new ArrayList<>();
-        Circle blueDot=new Circle();
-        boolean blueActivated=true;
-
-        ElementListe elementListeBlue=new ElementListe(blueLines,blueDot,blueActivated);
-
-        listeCouleurs.add(elementListeRed);
-        listeCouleurs.add(elementListeBlue);
+        listeCouleurs=createElementListe(nbTours);
 
 
         dessinerCarte();
 
 
         //test de recupere un tour
-        Intersection destination3 = new Intersection(new BigInteger("27362284"), new Coordonnees(45.728672, 4.876898));
+        /*Intersection destination3 = new Intersection(new BigInteger("27362284"), new Coordonnees(45.728672, 4.876898));
         Intersection destination4 = new Intersection(new BigInteger("1345284783"), new Coordonnees(45.752106, 4.8660784));
         Intersection destination5 = new Intersection(new BigInteger("459797866"), new Coordonnees(45.75379, 4.874625));
         Intersection destination6 = new Intersection(new BigInteger("9214919"), new Coordonnees(45.74021, 4.864795));
@@ -111,7 +95,7 @@ public class Carte extends Pane {
         dessinerTour(tour2.getTrajet(), 2, destination3);
 
         section2Tour1.remove(0);
-        section1Tour1.remove(0);
+        section1Tour1.remove(0);*/
 
         Circle entrepotLocation = createNode(entrepot, util, 3,"Entrepot");
         this.getChildren().add(entrepotLocation);
@@ -136,10 +120,6 @@ public class Carte extends Pane {
 
     private ArrayList<Intersection> testCalculChemin(Intersection dest1,Intersection dest2) {
         Service service = new Service();
-        Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
-        Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
-        Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
-        Intersection destination3 = new Intersection(new BigInteger("27362284"), new Coordonnees(45.728672,4.876898));
         List<Intersection> chemin2 = Calculs.dijkstra(dest1,dest2,graph);
 
         ArrayList<Intersection> monChemin = new ArrayList<Intersection>(chemin2);
@@ -368,10 +348,23 @@ public class Carte extends Pane {
         }
     }
 
+    List<ElementListe> createElementListe(int nbTours){
+        List<ElementListe> listeElement = new ArrayList<>();
+        for (int i=0;i<nbTours;i++){
+            List<Line> lines = new ArrayList<>();
+            Circle dot =new Circle();
+            boolean state =true;
+            ElementListe elementListe=new ElementListe(lines,dot ,state);
+            listeElement.add(elementListe);
+        }
+        return listeElement;
+    }
 
-    void ouvrirDetails(int id){
-        DetailsTour fenetreDetails=new DetailsTour(null);
-        fenetreDetails.show();
+
+    void ouvrirDetails(Long id){
+        Tour tour = Service.getInstance().getCatalogueTours().getTourById(id);
+        DetailsTour fenetreDetails = new DetailsTour(this.cheminFichier, tour, 800, 550);
+        fenetreDetails.ouvrirFenetre();
     }
 
     int getNbTours(){
