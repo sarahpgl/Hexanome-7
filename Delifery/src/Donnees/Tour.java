@@ -40,7 +40,9 @@ public class Tour {
     public void setLivraisons(ArrayList<Livraison> livraisons) {
         this.livraisons = livraisons;
     }
-
+    public void addLivraisonsTour(Livraison livraison) {
+        livraisons.add(livraison);
+    }
     public ArrayList<Intersection> getTrajet() {
         return trajet;
     }

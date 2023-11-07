@@ -17,6 +17,7 @@ import java.util.*;
 
 
 public class Service {
+
     public Service() {
 
     }
@@ -74,7 +75,14 @@ public class Service {
 
         return tour;
     }
-
+    public Boolean essaieAjoutLivraisonAuTour(Intersection adresse, Creneau creneau, Livreur Livreur){
+        Livraison l = new Livraison((long)(Math.random()*1000),adresse,  creneau);
+        // chercher le tour auquel correspond le livreur
+        // essayer de calculer le tour (modifier dans la fonction qui calcule le tour pour renvoyer l'état de l'opération)
+        // si ok
+        return true;
+        // si non return false
+    }
     public Livraison creerLivraison(Long id, Intersection adresse, Creneau creneau, LocalTime heureDebut, LocalTime heureFin){
         Livraison l = new Livraison(id,adresse,  creneau,  heureDebut,  heureFin);
         return l;
@@ -82,6 +90,27 @@ public class Service {
     public Intersection creerIntersection(BigInteger id, Coordonnees coordonnees){
         Intersection i = new Intersection(id, coordonnees);
         return i ;
+    }
+    public ArrayList<Intersection> creerIntersectionsPourLivrer(){
+        Intersection destination3 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
+        Intersection destination4 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
+        Intersection destination5 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
+        Intersection destination6 = new Intersection(new BigInteger("975886496"),new Coordonnees(45.756874,4.8574047));
+        ArrayList<Intersection> list = new ArrayList<Intersection>();
+        list.add((destination5));
+        list.add(destination3);
+        list.add(destination4);
+        list.add((destination6));
+        return list;
+    }
+
+    public ArrayList<Livraison> creerListeLivraisons(ArrayList<Intersection> listeIntersections, long id, Creneau c){
+        ArrayList<Livraison> listeLivraison= new ArrayList<Livraison>();
+        for (Intersection i : listeIntersections){
+            Livraison l =new Livraison((long)id, i, c);
+            listeLivraison.add(l);
+        }
+        return listeLivraison;
     }
     public Tour calculerTour (Tour tour, Double vitesse, DonneesCarte carte, Intersection entrepot){
         final int creneau8=8;
