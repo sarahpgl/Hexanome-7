@@ -45,78 +45,55 @@ public class Carte extends Pane {
 
         dessinerCarte();
 
+        ArrayList<Intersection> listeInterPourLivrer= service.creerIntersectionsPourLivrer();
 
-        //test de recupere un tour
-        /*Intersection destination3 = service.creerIntersection(new BigInteger("27362284"), new Coordonnees(45.728672, 4.876898));
-        Intersection destination4 = service.creerIntersection(new BigInteger("1345284783"), new Coordonnees(45.752106, 4.8660784));
-        Intersection destination5 = service.creerIntersection(new BigInteger("459797866"), new Coordonnees(45.75379, 4.874625));
-        Intersection destination6 = service.creerIntersection(new BigInteger("9214919"), new Coordonnees(45.74021, 4.864795));
-*/
-        Intersection destination3 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
-        Intersection destination4 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
-        Intersection destination5 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
-        //Intersection destination6 = new Intersection(new BigInteger("975886496"),new Coordonnees(45.756874,4.8574047));
-        Livraison livraison1 = new Livraison((long) 1,destination3, Creneau.valueOf("HUIT_NEUF"));
-        Livraison livraison2 = new Livraison((long) 2,destination4, Creneau.valueOf("HUIT_NEUF"));
-        Livraison livraison3 = new Livraison((long) 3,destination5, Creneau.valueOf("HUIT_NEUF"));
-        this.getChildren().add(createNode(destination3,util,0,"3"));
-        this.getChildren().add(createNode(destination4,util,0,"4"));
-        this.getChildren().add(createNode(destination5,util,0,"5"));
-        //this.getChildren().add(createNode(destination6,util,0,"6"));
-
-       /* ArrayList<Intersection> section1Tour1 = testCalculChemin(entrepot,destination5);
-        ArrayList<Intersection> section2Tour1 = testCalculChemin(destination5,destination3);
-        ArrayList<Intersection> section3Tour1 = testCalculChemin(destination3,entrepot);
-
-        ArrayList<Intersection> section1Tour2 = testCalculChemin(entrepot,destination4);
-        ArrayList<Intersection> section2Tour2 = testCalculChemin(destination4,destination6);*/
-
-        Livraison livr1=service.creerLivraison(1L ,destination3,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
-        Livraison livr2=service.creerLivraison(1L ,destination4,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
-
-        Livraison livr3=service.creerLivraison(1L ,destination5,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
-        //Livraison livr4=service.creerLivraison(1L ,destination6,Creneau.HUIT_NEUF,LocalTime.MIDNIGHT,LocalTime.MIDNIGHT);
-
-        ArrayList<Livraison> livraisons1 = new ArrayList<>();
-        livraisons1.add(livr1);
-
-        ArrayList<Livraison> livraisons2 = new ArrayList<>();
-        livraisons2.add(livr2);
+        ArrayList<Livraison> livraisons = new ArrayList<Livraison>();
+        long id  = 0;
+        for(Intersection l : listeInterPourLivrer){
+            livraisons.add(service.creerLivraison(id, l, Creneau.valueOf("HUIT_NEUF"),LocalTime.MIDNIGHT,LocalTime.MIDNIGHT));
+            id++;
+        }
 
 
-        //dessinerTour(sectionAColorier2, 2, destination5);
+        this.getChildren().add(createNode(listeInterPourLivrer.get(0),util,0,"3"));
+        this.getChildren().add(createNode(listeInterPourLivrer.get(1),util,0,"4"));
+        this.getChildren().add(createNode(listeInterPourLivrer.get(2),util,0,"5"));
 
-        /*section2Tour1.addAll(section1Tour1);
-        section3Tour1.addAll(section2Tour1);
 
-        section2Tour2.addAll(section1Tour2);*/
-
+        ArrayList<Livraison> livraisons1 = new ArrayList<>(livraisons);
+        livraisons1.remove(0);
+        livraisons1.remove(1);
+        ArrayList<Livraison> livraisons2 = new ArrayList<>(livraisons);
+        livraisons2.remove(3);
+        livraisons2.remove(2);
 
         ArrayList<Intersection> cheminTotal = new ArrayList<>();
 
-        cheminTotal.add(destination3);
-        cheminTotal.add(destination4);
-        cheminTotal.add(destination5);
-       // cheminTotal.add(destination6);
+
         Tour tour1=service.creerTour(1L,livraisons1 ,cheminTotal);
         tour1 = tourAColorier(tour1, dc, entrepot);
-        dessinerTour(tour1, 1);
+
 
 
         ArrayList<Intersection> cheminTotal2 = new ArrayList<>();
-        cheminTotal2.add(destination3);
-        cheminTotal2.add(destination4);
-        Tour tour2=service.creerTour(1L,livraisons1 ,cheminTotal2);
+
+        Tour tour2=service.creerTour(1L,livraisons2 ,cheminTotal2);
         tour2 =tourAColorier(tour2,dc, entrepot);
         System.out.println(tour2.toString());
+
+        Circle entrepotLocation = createNode(entrepot, util, 3,"Entrepot");
+        this.getChildren().add(entrepotLocation);
+
+        dessinerTour(tour1, 1);
         dessinerTour(tour2, 2);
+
+
 
 
         //section2Tour1.remove(0);
         //section1Tour1.remove(0);
 
-        Circle entrepotLocation = createNode(entrepot, util, 3,"Entrepot");
-        this.getChildren().add(entrepotLocation);
+
 
 
        /* enleverLigne("1");
@@ -208,7 +185,9 @@ public class Carte extends Pane {
                         Line edgeToAdd = createEdge(depart, arrivee, length, id);
                         edgeToAdd.setStrokeWidth(2);
                         int index = id - 1;
+                        System.out.println("hello index = "+ index);
                         if (index >= 0 && index < listeCouleurs.size()) {
+                            System.out.println("hello id = "+ id);
                             listeCouleurs.get(index).getLines().add(edgeToAdd);
                         }
 
@@ -222,7 +201,9 @@ public class Carte extends Pane {
                         rect.setFill(Color.TRANSPARENT);
 
                         Tooltip tooltip = new Tooltip();
+                        System.out.println("hello listecoleur = "+ listeCouleurs.size());
                         if (index >= 0 && index < listeCouleurs.size()) {
+
                             rect.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET, event -> {
                                 if (listeCouleurs.get(index).getEtat()){
                                     for (Line line : listeCouleurs.get(index).getLines()) {
