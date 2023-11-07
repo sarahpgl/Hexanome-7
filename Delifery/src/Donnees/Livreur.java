@@ -28,5 +28,7 @@ public class Livreur {
         return this.nom;
     }
 
-
+    public double getVitesse() {
+        return VITESSE;
+    }
 }

@@ -1,24 +1,26 @@
 package Util;
 
-import Donnees.CatalogueTours;
-import Donnees.Intersection;
+import Donnees.*;
 import Util.Coordonnees;
-import Donnees.Section;
+
 import java.io.File;
 import javax.xml.parsers.DocumentBuilderFactory;
-// Importer la classe DocumentBuilder pour construire un document XML
 import javax.xml.parsers.DocumentBuilder;
-// Importer la classe Document pour représenter le document XML
 import org.w3c.dom.Document;
-// Importer la classe Element pour représenter les éléments XML
 import org.w3c.dom.Element;
-// Importer la classe NodeList pour représenter les listes de nœuds XML
 import org.w3c.dom.NodeList;
-//Importer la classe Node pour représenter les nœuds XML
 import org.w3c.dom.Node;
-// Importer la classe Exception pour gérer les éventuelles erreurs
 import java.lang.Exception;
 import java.math.BigInteger;
+
+import java.io.IOException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 public class FileSystemXML {
 
@@ -158,8 +160,101 @@ public class FileSystemXML {
         return new Object[] {warehouse, intersections, sections, minLong, maxLong, minLat,maxLat};
     }
 
-    public static void EcrireCatalogueXML(CatalogueTours c, String chemin){
+    // Une méthode pour écrire un catalogue de tours dans un fichier XML
+    public static void EcrireCatalogueXML(CatalogueTours c, String chemin, String nom) {
+        try {
+            // Créer un fichier XML avec le chemin et le nom spécifiés
+            File file = new File(chemin + "/" + nom +".xml");
 
+            // Créer un résultat de type fichier
+            StreamResult result = new StreamResult(file);
+
+            // Créer un document XML vide
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.newDocument();
+
+            // Créer l'élément racine <catalogue>
+            Element catalogue = doc.createElement("catalogue");
+            doc.appendChild(catalogue);
+
+            // Parcourir la liste des tours du catalogue
+            for (Tour t : c.getCatalogue()) {
+                // Créer un élément <tour> avec l'id du tour comme attribut
+                Element tour = doc.createElement("tour");
+                tour.setAttribute("id", t.getId().toString());
+                catalogue.appendChild(tour);
+
+                // Créer un élément <livreur> avec le nom et la vitesse du livreur comme attributs
+                Element livreur = doc.createElement("livreur");
+                livreur.setAttribute("nom", t.getLivreur().getNom());
+                livreur.setAttribute("vitesse", String.valueOf(t.getLivreur().getVitesse()));
+                tour.appendChild(livreur);
+
+                // Créer un élément <livraisons>
+                Element livraisons = doc.createElement("livraisons");
+                tour.appendChild(livraisons);
+
+                // Parcourir la liste des livraisons du tour
+                for (Livraison l : t.getLivraisons()) {
+                    // Créer un élément <livraison> avec l'id, l'adresse, le créneau, l'heure d'arrivée et l'heure de départ de la livraison comme attributs
+                    Element livraison = doc.createElement("livraison");
+                    livraison.setAttribute("id", l.getId().toString());
+                    livraison.setAttribute("idIntersection", l.getAdresse().getId().toString());
+                    livraison.setAttribute("creneau", l.getCreneau().toString());
+                    livraison.setAttribute("heureArrivee", l.getHeureArrivee().toString());
+                    livraison.setAttribute("heureDepart", l.getHeureDepart().toString());
+                    livraisons.appendChild(livraison);
+                }
+
+                // Créer un élément <trajet>
+                Element trajet = doc.createElement("trajet");
+                tour.appendChild(trajet);
+
+                // Parcourir la liste des intersections du trajet
+                for (Intersection i : t.getTrajet()) {
+                    // Créer un élément <intersection> avec l'id, la latitude et la longitude de l'intersection comme attributs
+                    Element intersection = doc.createElement("intersection");
+                    intersection.setAttribute("id", i.getId().toString());
+                    intersection.setAttribute("latitude", i.getCoordonnees().getLatitude().toString());
+                    intersection.setAttribute("longitude", i.getCoordonnees().getLongitude().toString());
+                    trajet.appendChild(intersection);
+                }
+            }
+
+            // Transformer le document XML en source DOM
+            DOMSource source = new DOMSource(doc);
+
+            try {
+                // Créer un transformateur XML
+                TransformerFactory tf = TransformerFactory.newInstance();
+                Transformer transformer = tf.newTransformer();
+
+                // Définir les propriétés du fichier XML (indentation, encodage, etc.)
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
+                try {
+                    // Transformer la source DOM en résultat fichier
+                    transformer.transform(source, result);
+
+                    // Afficher un message de succès
+                    System.out.println("Le fichier XML a été créé avec succès.");
+                } catch (TransformerException e) {
+                    // Afficher un message d'erreur
+                    System.out.println("Une erreur est survenue lors de la transformation du document XML.");
+                    e.printStackTrace();
+                }
+            } catch (TransformerException e) {
+                // Afficher un message d'erreur
+                System.out.println("Une erreur est survenue lors de la création du transformateur XML.");
+                e.printStackTrace();
+            }
+        } catch (ParserConfigurationException e) {
+            // Afficher un message d'erreur
+            System.out.println("Une erreur est survenue lors de la configuration du parseur XML.");
+            e.printStackTrace();
+        }
     }
-
 }
