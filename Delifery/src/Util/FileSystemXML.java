@@ -1,5 +1,6 @@
 package Util;
 
+import Donnees.CatalogueTours;
 import Donnees.Intersection;
 import Util.Coordonnees;
 import Donnees.Section;
@@ -155,6 +156,10 @@ public class FileSystemXML {
 
         // Retourner un tableau d'objets contenant l'objet Warehouse, le tableau d'objets Intersection et le tableau d'objets Segment
         return new Object[] {warehouse, intersections, sections, minLong, maxLong, minLat,maxLat};
+    }
+
+    public static void EcrireCatalogueXML(CatalogueTours c, String chemin){
+
     }
 
 }

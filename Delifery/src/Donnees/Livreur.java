@@ -18,7 +18,7 @@ public class Livreur {
     };
 
     private String nom;
-    private static Integer VITESSE = 15;
+    private static double VITESSE = 15;
 
     public Livreur(Integer tourNumber) {
         this.nom = names[tourNumber + 1];

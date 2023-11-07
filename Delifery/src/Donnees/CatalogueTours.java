@@ -18,6 +18,10 @@ public class CatalogueTours {
         return null;
     }
 
+    public List<Tour> getCatalogue(){
+        return catalogue;
+    }
+
     public void ajouterTour(Tour tour){
         catalogue.add(tour);
     }
