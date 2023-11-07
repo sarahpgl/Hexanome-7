@@ -193,4 +193,8 @@ public class Service {
     public CatalogueTours getCatalogueTours() {
         return catalogueTours;
     }
+
+    public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String chemin, String nomFichier){
+        FileSystemXML.EcrireCatalogueXML(Ctour,chemin,nomFichier);
+    }
 }
