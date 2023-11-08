@@ -14,23 +14,24 @@ public class Tour {
     private Livreur livreur;
     private ArrayList<Intersection> trajet;
 
-    public Tour(Long id, ArrayList<Livraison> livraisons, ArrayList<Intersection> trajet) {
-        this.id = id;
-        this.livreur = new Livreur(this.id.intValue());
+    public Tour (ArrayList<Livraison> livraisons, ArrayList<Intersection> trajet, Livreur livreur) {
+        this.livreur = livreur;
+        this.id = this.livreur.getId();
         this.livraisons = livraisons;
         this.trajet = trajet;
     }
 
-    public Tour(Long id, ArrayList<Livraison> livraisons) {
-        this.id = id;
-        this.livreur = new Livreur(this.id.intValue());
+    public Tour(ArrayList<Livraison> livraisons,Livreur livreur) {
+        this.livreur = livreur;
+        this.id = this.livreur.getId();
         this.livraisons = livraisons;
         trajet=new ArrayList<Intersection>();
     }
 
-    public Tour(Long id) {
-        this.id = id;
-        this.livreur = new Livreur(this.id.intValue());
+    public Tour(Livreur livreur) {
+
+        this.livreur = livreur;
+        this.id = this.livreur.getId();
         this.livraisons = new ArrayList<Livraison>();
         trajet=new ArrayList<Intersection>();
     }

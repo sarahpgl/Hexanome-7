@@ -22,12 +22,12 @@ public class Main {
         //TesterDijkstra();
         //TestCreerCarte();
         //TestLireXML();
-        //launch(FenetreLancement.class, args);
+        launch(FenetreLancement.class, args);
         //TesterTrie();
         //testerHeureLivraison();
         //testerCalculTour();
         //getInterById();
-        TesterCreationXMLCatalogueTour();
+        //TesterCreationXMLCatalogueTour();
     }
 
     public static void TestLireXML(){
@@ -165,7 +165,7 @@ public class Main {
         System.out.println("Heure de départ :"+livraison1.getHeureDepart());
     }
 
-    public static void testerCalculTour(){
+    /*public static void testerCalculTour(){
         Service service = new Service();
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
@@ -185,7 +185,7 @@ public class Main {
         Tour tour = new Tour((long) 1, livraisons);
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         System.out.println(tour.toString());
-    }
+    }*/
 
     public static void getInterById(){
         Service service = new Service();
@@ -210,7 +210,8 @@ public class Main {
         livraisons.add(livraison2);
         livraisons.add(livraison1);
         livraisons.add(livraison3);
-        Tour tour = new Tour((long) 1, livraisons);
+        Tour tour = new Tour(livraisons, service.initialisationLivreur("Maria"));
+        System.out.println("id tour = " +tour.getId());
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         CatalogueTours c = new CatalogueTours();
         c.ajouterTour(tour);
