@@ -95,6 +95,7 @@ public class Service {
     public Boolean essaieAjoutLivraisonAuTour(Intersection adresse, Creneau creneau, Livreur Livreur){
         Livraison l = new Livraison((long)(Math.random()*1000),adresse,  creneau);
         // chercher le tour auquel correspond le livreur
+
         // essayer de calculer le tour (modifier dans la fonction qui calcule le tour pour renvoyer l'état de l'opération)
         // si ok
         return true;
