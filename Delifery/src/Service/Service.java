@@ -15,8 +15,6 @@ import Vue.FenetreLancement;
 
 import java.time.LocalTime;
 
-
-
 import java.util.*;
 
 
@@ -103,13 +101,29 @@ public class Service {
 
         return tour;
     }
-    public Boolean essaieAjoutLivraisonAuTour(Intersection adresse, Creneau creneau, Livreur Livreur){
+    public Boolean essaieAjoutLivraisonAuTour(Intersection adresse, Creneau creneau, Livreur livreur){
         Livraison l = new Livraison((long)(Math.random()*1000),adresse,  creneau);
         // chercher le tour auquel correspond le livreur
+        CatalogueTours catalogueTours = this.catalogueTours;
+        Tour tour = catalogueTours.getTourByLivreur(livreur);
+        if (tour == null){
+            ArrayList<Intersection> intersections = new ArrayList<Intersection>();
+            ArrayList<Livraison> livraisons = new ArrayList<Livraison>();
+            livraisons.add(l);
+             tour = new Tour(livreur.getId(), livraisons, intersections);
+             catalogueTours.ajouterTour(tour);
+        }else {
+            tour.addLivraisonsTour((l));
+        }
+        DonneesCarte dc = this.donneesCarte;
+
+        tour = calculerTour( tour, 15.0, dc,  dc.getEntrepot());
+        if (!tour.toutesLivraisonsAcceptees()){
+            return false ;
+        }
         // essayer de calculer le tour (modifier dans la fonction qui calcule le tour pour renvoyer l'état de l'opération)
         // si ok
         return true;
-        // si non return false
     }
     public Livraison creerLivraison(Long id, Intersection adresse, Creneau creneau, LocalTime heureDebut, LocalTime heureFin){
         Livraison l = new Livraison(id,adresse,  creneau,  heureDebut,  heureFin);
@@ -254,5 +268,25 @@ public class Service {
 
     public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String chemin, String nomFichier){
         FileSystemXML.EcrireCatalogueXML(Ctour,chemin,nomFichier);
+    }
+
+    public ArrayList<Intersection> getAllIntersections() {
+        // On crée une liste vide pour stocker les intersections
+        ArrayList<Intersection> intersections = new ArrayList<>();
+        // On parcourt l'ensemble des clés de la carte
+        for (Intersection key : donneesCarte.getCarte().keySet()) {
+            // On ajoute chaque clé à la liste
+            intersections.add(key);
+        }
+        // On renvoie la liste
+        return intersections;
+    }
+
+    public ArrayList<Livreur> getListLivreur(){
+        ArrayList<Livreur> livreurs = new ArrayList<>();
+        for (Tour t: catalogueTours.catalogue) {
+            livreurs.add(t.getLivreur());
+        }
+        return livreurs;
     }
 }

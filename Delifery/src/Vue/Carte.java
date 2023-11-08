@@ -44,10 +44,10 @@ public class Carte extends Pane {
 
         listeCouleurs=createElementListe(nbTours);
 
+
         dessinerCarte();
 
         ArrayList<Intersection> listeInterPourLivrer= service.creerIntersectionsPourLivrer();
-
 
         ArrayList<Livraison> livraisons = new ArrayList<Livraison>();
         long id  = 0;
@@ -167,6 +167,7 @@ public class Carte extends Pane {
                         listeCouleurs.get(index).setDot(arrivee);
                         this.getChildren().add(listeCouleurs.get(index).getDot());
                     }
+
                 }
             }
         }

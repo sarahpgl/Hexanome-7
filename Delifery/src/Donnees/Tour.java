@@ -2,6 +2,7 @@ package Donnees;
 
 import Util.Calculs;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,6 +117,18 @@ public class Tour {
 
     public Livreur getLivreur() {
         return livreur;
+    }
+
+    public boolean toutesLivraisonsAcceptees() {
+
+        for (Livraison l : this.livraisons) {
+            if ((l.getHeureDepart() == LocalTime.of(0, 0, 0)) && (l.getHeureArrivee() == LocalTime.of(0, 0, 0))) {
+                return false;
+
+            }
+
+        }
+        return true;
     }
 }
 
