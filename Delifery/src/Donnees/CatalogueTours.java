@@ -6,9 +6,11 @@ public class CatalogueTours {
 
     public ArrayList<Tour> catalogue;
     public String mapName;
+    public Integer nbLivreurs;
 
     public CatalogueTours(){
         catalogue= new ArrayList<Tour>();
+        nbLivreurs = 0;
     }
 
     public CatalogueTours(String mapName) {
@@ -59,5 +61,11 @@ public class CatalogueTours {
 
     public ArrayList<Tour> getCatalogue() {
         return catalogue;
+    }
+    public void setNbLivreurs(Integer nb){
+        this.nbLivreurs = nb ;
+    }
+    public Integer getNbTour(){
+        return catalogue.size();
     }
 }

@@ -298,4 +298,13 @@ public class Service {
         }
         return livreurs;
     }
+
+    public Boolean changerNbLivreurs(Integer nombre){
+        if(nombre <=11 && catalogueTours.getNbTour()<= nombre){
+            catalogueTours.setNbLivreurs(nombre);
+        }else{
+            return false;
+        }
+        return true;
+    }
 }
