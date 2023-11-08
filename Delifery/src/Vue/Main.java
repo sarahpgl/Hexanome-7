@@ -23,6 +23,8 @@ public class Main {
         //TestCreerCarte();
         //TestLireXML();
         launch(FenetreLancement.class, args);
+        //testerDetailTour();
+
         //TesterTrie();
         //testerHeureLivraison();
         //testerCalculTour();
@@ -210,11 +212,36 @@ public class Main {
         livraisons.add(livraison2);
         livraisons.add(livraison1);
         livraisons.add(livraison3);
-        Tour tour = new Tour(livraisons, service.initialisationLivreur("Maria"));
-        System.out.println("id tour = " +tour.getId());
+        Tour tour = new Tour( livraisons, new Livreur("Maria"));
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         CatalogueTours c = new CatalogueTours();
         c.ajouterTour(tour);
         FileSystemXML.EcrireCatalogueXML(c,"Delifery/output","Test");
+    }
+
+    public static void testerDetailTour(){
+        Service service = Service.getInstance();
+        DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
+        Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
+        Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
+        Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
+        Intersection destination3 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
+        Intersection destination4 = new Intersection(new BigInteger("975886496"),new Coordonnees(45.756874,4.8574047));
+        Livraison livraison1 = new Livraison((long) 1,destination1, Creneau.valueOf("HUIT_NEUF"));
+        Livraison livraison2 = new Livraison((long) 2,destination2, Creneau.valueOf("HUIT_NEUF"));
+        Livraison livraison3 = new Livraison((long) 3,destination3, Creneau.valueOf("HUIT_NEUF"));
+        Livraison livraison4 = new Livraison((long) 4,destination4, Creneau.valueOf("HUIT_NEUF"));
+        ArrayList<Livraison> livraisons = new ArrayList<>();
+        livraisons.add(livraison4);
+        livraisons.add(livraison2);
+        livraisons.add(livraison1);
+        livraisons.add(livraison3);
+        Tour tour = new Tour( livraisons, new Livreur("Sophie"));
+        tour = service.calculerTour(tour,(double)15,carte,Entrepot);
+        CatalogueTours c = new CatalogueTours("mediumMap.xml");
+        ArrayList<Tour> toursTest = c.getCatalogue();
+        c.ajouterTour(tour);
+        //service.setCatalogueTours(c);
+
     }
 }

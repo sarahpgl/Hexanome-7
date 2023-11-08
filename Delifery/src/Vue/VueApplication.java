@@ -1,4 +1,6 @@
 package Vue;
+import Donnees.CatalogueTours;
+import Donnees.Tour;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Rectangle2D;
@@ -8,17 +10,19 @@ import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Optional;
+import Service.Service;
 
 public class VueApplication extends Application {
-    public String chemin;
+    public String cheminFichier;
     public Integer windowWidth;
     public Integer windowHeight;
     public VueApplication(String cheminFichier, Integer width, Integer height) {
         super();
         this.windowWidth = width;
         this.windowHeight = height;
-        this.chemin = cheminFichier;
+        this.cheminFichier = cheminFichier;
     }
     @Override
     public void start(Stage primaryStage) {
@@ -41,17 +45,19 @@ public class VueApplication extends Application {
         gridPane.add(entete, 0, 0, 2, 1); // Span 2 columns
 
 
-
-
         // Row 3: Section 2 (right side)
-        Carte c = new Carte(chemin, windowWidth/2, windowHeight*8/10);
+        Carte c = new Carte(cheminFichier, windowWidth/2, windowHeight*8/10);
         gridPane.add(c, 1, 1);
 
+        CatalogueTours ct = Service.getInstance().getCatalogueTours();
 
         // Row 2: Section 1 (left side)
-        TableauTours tabTours = new TableauTours(c);
+
+        TableauTours tabTours = new TableauTours(ct, this.cheminFichier);
         gridPane.add(tabTours, 0, 1);
         gridPane.requestLayout();
+        HBox.setHgrow(tabTours, Priority.ALWAYS);
+
 
         // Set column constraints to divide the width equally
         ColumnConstraints column1 = new ColumnConstraints();
@@ -68,7 +74,7 @@ public class VueApplication extends Application {
         gridPane.getRowConstraints().addAll(row1, row2);
 
         // Make Section 1 and Section 2 equally growable
-        HBox.setHgrow(tabTours, Priority.ALWAYS);
+
         HBox.setHgrow(c, Priority.ALWAYS);
 
         Scene scene = new Scene(gridPane, windowWidth, windowHeight);
@@ -78,7 +84,7 @@ public class VueApplication extends Application {
     }
 
     // Méthode pour ouvrir la fenêtre
-    public void ouvrirFenetre() {
+    /*public void ouvrirFenetre() {
         launch();
-    }
+    }*/
 }

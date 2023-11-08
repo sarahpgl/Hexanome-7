@@ -171,7 +171,6 @@ public class Carte extends Pane {
                         listeCouleurs.get(index).setDot(arrivee);
                         this.getChildren().add(listeCouleurs.get(index).getDot());
                     }
-
                 }
             }
         }

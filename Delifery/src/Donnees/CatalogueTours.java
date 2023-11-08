@@ -1,7 +1,6 @@
 package Donnees;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CatalogueTours {
 
@@ -12,8 +11,8 @@ public class CatalogueTours {
         catalogue= new ArrayList<Tour>();
     }
 
-    public CatalogueTours(String mapName) { 
-        this.mapName = mapName; 
+    public CatalogueTours(String mapName) {
+        this.mapName = mapName;
         catalogue = new ArrayList<Tour>();
         }
 
@@ -22,9 +21,6 @@ public class CatalogueTours {
             if(tour.getId() == id) return tour;
         }
         return null;
-    }
-    public List<Tour> getCatalogue(){
-        return catalogue;
     }
 
     public void ajouterTour(Tour tour){
@@ -59,5 +55,9 @@ public class CatalogueTours {
        }
        return null;
 
+    }
+
+    public ArrayList<Tour> getCatalogue() {
+        return catalogue;
     }
 }

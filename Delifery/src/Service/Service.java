@@ -1,6 +1,7 @@
 package Service;
 
 import Donnees.*;
+import Vue.*;
 import Util.Calculs;
 import Util.Coordonnees;
 import Util.FileSystemXML;
@@ -251,12 +252,22 @@ public class Service {
         return tour;
     }
 
+    public void ouvrirDetails(String chemin, Long id){
+        Tour t = catalogueTours.getTourById(id);
+        DetailsTour fenetreDeatils = new DetailsTour(chemin, t, 800, 550);
+        fenetreDeatils.ouvrirFenetre();
+    }
+
     public DonneesCarte getDonneesCarte() {
         return donneesCarte;
     }
 
     public CatalogueTours getCatalogueTours() {
         return catalogueTours;
+    }
+
+    public void setCatalogueTours(CatalogueTours catalogueTours) {
+        this.catalogueTours = catalogueTours;
     }
 
     public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String chemin, String nomFichier){
@@ -266,5 +277,25 @@ public class Service {
     public Livreur initialisationLivreur(String name){
         Livreur l = new Livreur(name);
         return l;
+    }
+
+    public ArrayList<Intersection> getAllIntersections() {
+        // On crée une liste vide pour stocker les intersections
+        ArrayList<Intersection> intersections = new ArrayList<>();
+        // On parcourt l'ensemble des clés de la carte
+        for (Intersection key : donneesCarte.getCarte().keySet()) {
+            // On ajoute chaque clé à la liste
+            intersections.add(key);
+        }
+        // On renvoie la liste
+        return intersections;
+    }
+
+    public ArrayList<Livreur> getListLivreur(){
+        ArrayList<Livreur> livreurs = new ArrayList<>();
+        for (Tour t: catalogueTours.catalogue) {
+            livreurs.add(t.getLivreur());
+        }
+        return livreurs;
     }
 }
