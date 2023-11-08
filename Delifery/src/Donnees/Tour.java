@@ -27,6 +27,13 @@ public class Tour {
         trajet=new ArrayList<Intersection>();
     }
 
+    public Tour(Long id) {
+        this.id = id;
+        this.livreur = new Livreur(this.id.intValue());
+        this.livraisons = new ArrayList<Livraison>();
+        trajet=new ArrayList<Intersection>();
+    }
+
     public Long getId() {
         return id;
     }
@@ -103,6 +110,13 @@ public class Tour {
         return mes;
     }
 
+    public void reinitialiserTrajet(){
+        trajet.clear();
+    }
+
+    public Livreur getLivreur() {
+        return livreur;
+    }
 }
 
 

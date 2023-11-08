@@ -22,10 +22,12 @@ public class Main {
         //TesterDijkstra();
         //TestCreerCarte();
         //TestLireXML();
-        launch(FenetreLancement.class, args);
+        //launch(FenetreLancement.class, args);
         //TesterTrie();
         //testerHeureLivraison();
         //testerCalculTour();
+        //getInterById();
+        TesterCreationXMLCatalogueTour();
     }
 
     public static void TestLireXML(){
@@ -52,15 +54,6 @@ public class Main {
 
         Service service = new Service();
         DonneesCarte carte = service.creerDonneesCarte(nomFichier);
-
-        // Créez une instance de la classe Vue
-        MaVue maVue = new MaVue();
-        maVue.ouvrirFenetreVueApp();
-    }
-
-    public static void TestOuvrirPageLancement() {
-        MaVue maVue = new MaVue();
-        maVue.ouvrirFenetreLancement();
     }
 
     public static void TesterDijkstra(){
@@ -192,5 +185,35 @@ public class Main {
         Tour tour = new Tour((long) 1, livraisons);
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         System.out.println(tour.toString());
+    }
+
+    public static void getInterById(){
+        Service service = new Service();
+        DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
+        System.out.println(carte.findIntersectionById("975886496").toString());
+    }
+
+    public static void TesterCreationXMLCatalogueTour(){
+        Service service = new Service();
+        DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
+        Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
+        Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
+        Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
+        Intersection destination3 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
+        Intersection destination4 = new Intersection(new BigInteger("975886496"),new Coordonnees(45.756874,4.8574047));
+        Livraison livraison1 = new Livraison((long) 1,destination1, Creneau.valueOf("HUIT_NEUF"));
+        Livraison livraison2 = new Livraison((long) 2,destination2, Creneau.valueOf("HUIT_NEUF"));
+        Livraison livraison3 = new Livraison((long) 3,destination3, Creneau.valueOf("HUIT_NEUF"));
+        Livraison livraison4 = new Livraison((long) 4,destination4, Creneau.valueOf("HUIT_NEUF"));
+        ArrayList<Livraison> livraisons = new ArrayList<>();
+        livraisons.add(livraison4);
+        livraisons.add(livraison2);
+        livraisons.add(livraison1);
+        livraisons.add(livraison3);
+        Tour tour = new Tour((long) 1, livraisons);
+        tour = service.calculerTour(tour,(double)15,carte,Entrepot);
+        CatalogueTours c = new CatalogueTours();
+        c.ajouterTour(tour);
+        FileSystemXML.EcrireCatalogueXML(c,"Delifery/output","Test");
     }
 }
