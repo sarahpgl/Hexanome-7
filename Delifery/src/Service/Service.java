@@ -9,17 +9,36 @@ import java.math.BigInteger;
 import java.time.LocalTime;
 import java.util.Map;
 import java.util.HashMap;
+
 import Vue.FenetreLancement;
-import Vue.MaVue;
+
 import java.time.LocalTime;
+
+
 
 import java.util.*;
 
 
 public class Service {
 
-    public Service() {
+    private static volatile Service instance;
+    private DonneesCarte donneesCarte;
+    private CatalogueTours catalogueTours;
 
+
+    public Service() {
+        this.catalogueTours = new CatalogueTours();
+    }
+
+    public static Service getInstance() {
+        if (instance == null) {
+            synchronized (Service.class) {
+                if (instance == null) {
+                    instance = new Service();
+                }
+            }
+        }
+        return instance;
     }
 
     public DonneesCarte creerDonneesCarte(String nomFichier) {
@@ -30,11 +49,18 @@ public class Service {
         // Chemin d'accès fixe (à modifier selon vos besoins)
         String cheminFixe = System.getProperty("user.dir") + "/Delifery/fichiersXML2022/";
 
-        // Combinez le chemin fixe et le nom du fichier
         String cheminComplet = cheminFixe + nomFichier;
+
+        System.out.println("Chemin Fixe (Methode creerDonneesCarte dans Service) : "+cheminComplet);
+
         Object[] objects = fsxml.lireXML(nomFichier);
 
         Intersection[] entrepot = (Intersection[]) objects[0];
+
+        if(entrepot==null){
+            objects = fsxml.lireXML(cheminComplet);
+            entrepot = (Intersection[]) objects[0];
+        }
 
 
         Intersection[] intersections = (Intersection[]) objects[1];
@@ -66,6 +92,7 @@ public class Service {
         }
 
         DonneesCarte carteCourante = new DonneesCarte(nomFichier, entrepotDepart, carte,echelleX,echelleY,origin);
+        this.donneesCarte = carteCourante;
         return carteCourante;
     }
 
@@ -113,6 +140,7 @@ public class Service {
         return listeLivraison;
     }
     public Tour calculerTour (Tour tour, Double vitesse, DonneesCarte carte, Intersection entrepot){
+        tour.reinitialiserTrajet();
         final int creneau8=8;
         final int creneau9=9;
         final int creneau10=10;
@@ -207,5 +235,17 @@ public class Service {
         }
 
         return tour;
+    }
+
+    public DonneesCarte getDonneesCarte() {
+        return donneesCarte;
+    }
+
+    public CatalogueTours getCatalogueTours() {
+        return catalogueTours;
+    }
+
+    public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String chemin, String nomFichier){
+        FileSystemXML.EcrireCatalogueXML(Ctour,chemin,nomFichier);
     }
 }

@@ -2,18 +2,45 @@ package Donnees;
 
 public class Livreur {
 
-    private Integer id;
-    private static Integer VITESSE = 15;
+    static String names[] = {
+            "Moïse",
+            "Adam Labrosse",
+            "Fatih",
+            "Sophie",
+            "Pierric",
+            "Jean Yves Duplantis",
+            "Judith",
+            "Nathalie",
+            "Abdel Karim",
+            "Maria",
+            "Virginie",
+            "Branda"
+    };
 
-    public Livreur(Integer id) {
-        this.id = id;
+    private Long id;
+    private String nom;
+    private static double VITESSE = 15;
+
+    public Livreur(Integer tourNumber) {
+        this.nom = names[tourNumber - 1];
     }
 
-    public Integer getId(){
-        return this.id;
+    public String getNom(){
+        return this.nom;
     }
 
-    public boolean equals(Livreur l){
-        return this.id.equals(l.getId());
+    public double getVitesse() {
+        return VITESSE;
+    }
+
+    public Long getId(){
+            // Parcourir le tableau à la recherche de la valeur
+        for (int i = 0; i < names.length; i++) {
+            // Comparer la valeur avec l’élément du tableau à l’indice i
+            if (names[i].equals(this.nom)) {
+                return (long)i;
+            }
+        }
+        return (long)-1;
     }
 }
