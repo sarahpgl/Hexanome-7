@@ -16,11 +16,15 @@ public class Livreur {
             "Virginie",
             "Branda"
     };
-
+    private static double VITESSE = 15;
     private Long id;
 
     private String nom;
-    private static double VITESSE = 15;
+
+    public Livreur(String name) {
+        this.nom = name;
+        this.id = getIdByName(name);
+    }
 
     public Livreur(String name){
         this.nom = name;
@@ -30,7 +34,7 @@ public class Livreur {
         this.nom = names[tourNumber - 1];
     }
 
-    public String getNom(){
+    public String getNom() {
         return this.nom;
     }
 
@@ -38,17 +42,20 @@ public class Livreur {
         return VITESSE;
     }
 
-    public Long getIdByName(String name){
-            // Parcourir le tableau à la recherche de la valeur
+
+    public Long getIdByName(String name) {
+        // Parcourir le tableau à la recherche de la valeur
         for (int i = 0; i < names.length; i++) {
             // Comparer la valeur avec l’élément du tableau à l’indice i
             if (names[i].equals(name)) {
-                return (long)i;
+                return (long) i;
             }
         }
-        return (long)(-1);
+        return -1L;
+
     }
-    public Long getId(){
+
+    public Long getId() {
         return this.id;
     }
 }

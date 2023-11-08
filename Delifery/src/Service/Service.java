@@ -12,10 +12,17 @@ import java.util.Map;
 import java.util.HashMap;
 
 import Vue.FenetreLancement;
+import javafx.application.Platform;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
 import java.time.LocalTime;
 
 import java.util.*;
+
+import static javafx.application.Application.launch;
 
 
 public class Service {
@@ -254,8 +261,16 @@ public class Service {
 
     public void ouvrirDetails(String chemin, Long id){
         Tour t = catalogueTours.getTourById(id);
-        DetailsTour fenetreDeatils = new DetailsTour(chemin, t, 800, 550);
-        fenetreDeatils.ouvrirFenetre();
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        double width = screenBounds.getWidth() * 0.8;
+        double height = 1020.0 / 1080.0 * screenBounds.getHeight();
+        DetailsTour detailsTour = new DetailsTour(chemin,t,(int)(width), (int)(height));
+        Stage stage = new Stage();
+        try {
+            detailsTour.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public DonneesCarte getDonneesCarte() {

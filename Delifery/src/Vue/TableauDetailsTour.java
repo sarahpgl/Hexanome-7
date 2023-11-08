@@ -27,6 +27,7 @@ public class TableauDetailsTour extends StackPane {
         int nbColonnes = 4; // Taille du tableau
 
         ArrayList<Livraison> livraisonsDetails = tour.getLivraisons();
+        System.out.println(livraisonsDetails.size());
         int nbLignes = livraisonsDetails.size() + 1;
 
         GridPane tableau = new GridPane();
