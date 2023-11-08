@@ -53,7 +53,7 @@ public class Service {
 
 
         // Chemin d'accès fixe (à modifier selon vos besoins)
-        String cheminFixe = System.getProperty("user.dir") + "/fichiersXML2022/";
+        String cheminFixe = System.getProperty("user.dir") + "/Delifery/fichiersXML2022/";
 
         String cheminComplet = cheminFixe + nomFichier;
 
