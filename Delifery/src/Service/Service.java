@@ -248,4 +248,16 @@ public class Service {
     public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String chemin, String nomFichier){
         FileSystemXML.EcrireCatalogueXML(Ctour,chemin,nomFichier);
     }
+
+    public List<Intersection> getAllIntersections() {
+        // On crée une liste vide pour stocker les intersections
+        List<Intersection> intersections = new ArrayList<>();
+        // On parcourt l'ensemble des clés de la carte
+        for (Intersection key : donneesCarte.getCarte().keySet()) {
+            // On ajoute chaque clé à la liste
+            intersections.add(key);
+        }
+        // On renvoie la liste
+        return intersections;
+    }
 }
