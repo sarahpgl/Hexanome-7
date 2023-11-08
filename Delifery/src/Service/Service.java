@@ -298,4 +298,10 @@ public class Service {
         }
         return livreurs;
     }
+
+    public ArrayList<Tour> getTours(){
+        return catalogueTours.getCatalogue();
+    }
+
+
 }
