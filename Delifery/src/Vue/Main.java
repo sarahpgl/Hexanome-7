@@ -22,7 +22,7 @@ public class Main {
         //TesterDijkstra();
         //TestCreerCarte();
         //TestLireXML();
-        //testerDetailTour();
+        testerDetailTour();
         launch(FenetreLancement.class, args);
         //TesterTrie();
         //testerHeureLivraison();
@@ -240,7 +240,7 @@ public class Main {
         CatalogueTours c = new CatalogueTours("mediumMap.xml");
         ArrayList<Tour> toursTest = c.getCatalogue();
         c.ajouterTour(tour);
-        //service.setCatalogueTours(c);
+        service.setCatalogueTours(c);
 
     }
 }
