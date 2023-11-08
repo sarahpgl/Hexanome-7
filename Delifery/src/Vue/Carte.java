@@ -56,9 +56,6 @@ public class Carte extends Pane {
             id++;
         }
 
-
-
-
         this.getChildren().add(createNode(listeInterPourLivrer.get(0),util,0,"3"));
         this.getChildren().add(createNode(listeInterPourLivrer.get(1),util,0,"4"));
         this.getChildren().add(createNode(listeInterPourLivrer.get(2),util,0,"5"));
@@ -77,8 +74,6 @@ public class Carte extends Pane {
         Tour tour1=service.creerTour(1L,livraisons1 ,cheminTotal);
         tour1 = tourAColorier(tour1, dc, entrepot);
 
-
-
         ArrayList<Intersection> cheminTotal2 = new ArrayList<>();
 
         Tour tour2=service.creerTour(1L,livraisons2 ,cheminTotal2);
@@ -88,12 +83,8 @@ public class Carte extends Pane {
         Circle entrepotLocation = createNode(entrepot, util, 3,"Entrepot");
         this.getChildren().add(entrepotLocation);
 
-        dessinerTour(tour1, 1);
-        dessinerTour(tour2, 2);
-
-
-
-
+        //dessinerTour(tour1, 1);
+        //dessinerTour(tour2, 2);
 
         //section2Tour1.remove(0);
         //section1Tour1.remove(0);
@@ -105,8 +96,7 @@ public class Carte extends Pane {
         enleverLigne("2");
         remettreLigne("1");
         remettreLigne("2");*/
-
-
+        
     }
 
     private DonneesCarte createSampleGraph() {
