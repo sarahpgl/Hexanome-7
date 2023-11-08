@@ -1,4 +1,5 @@
 package Vue;
+import Service.Service;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Rectangle2D;
@@ -13,19 +14,25 @@ import javafx.scene.control.Label;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import Donnees.Livreur;
 
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class VueLivraison extends Application {
-    Button boutonAnnuler;
-    Button boutonValider;
     public Integer windowWidth=800;
     public Integer windowHeight=600;
     public VueLivraison() {
     }
     @Override
     public void start(Stage primaryStage) {
+
+        Service s = Service.getInstance();
 
         GridPane gridPane = new GridPane();
 
@@ -50,6 +57,9 @@ public class VueLivraison extends Application {
         TextField textField1 = new TextField();
         Label label2 = new Label("Livreur :");
         label2.setFont(Font.font("Arial", 14));
+        /*List<String> nomsLivreurs = Service.getInstance().getListLivreur();
+        ComboBox<String> livreurComboBox = new ComboBox<>(FXCollections.observableArrayList(nomsLivreurs));
+        livreurComboBox.setPromptText("Sélectionnez un livreur");*/
         TextField textField2 = new TextField();
 
         // Ajoutez les titres et les zones de texte à la grille (une en dessous de l'autre)
@@ -57,6 +67,7 @@ public class VueLivraison extends Application {
         gridPane.add(textField1, 1, 1);
         gridPane.add(label2, 0, 2);
         gridPane.add(textField2, 1, 2);
+        //gridPane.add(livreurComboBox, 1, 2);
 
         // Set column constraints for the labels and text fields
         ColumnConstraints labelColumnConstraints = new ColumnConstraints();
@@ -90,15 +101,31 @@ public class VueLivraison extends Application {
         gridPane.setVgap(20);
 
         // Row 4: Buttons with increased size (aligned in a row)
-        boutonAnnuler = new Button("Annuler");
-        boutonValider = new Button("Valider");
-        boutonAnnuler.setPrefSize(100, 40); // Ajuster la taille du bouton Annuler
-        boutonValider.setPrefSize(100, 40); // Ajuster la taille du bouton Valider
+        Button boutonAnnuler = new Button("Annuler");
+        //boutonAnnuler.setPrefSize(100, 40);
+        boutonAnnuler.setOnAction(event -> {
+            // Fermer la fenêtre actuelle
+            Stage stage = (Stage) boutonAnnuler.getScene().getWindow();
+            stage.close();
+        });
+        Button boutonValider = new Button("Valider");
         HBox buttonsRow4 = new HBox(10); // Espace de 10 pixels entre les boutons
         buttonsRow4.getChildren().addAll(boutonAnnuler, boutonValider);
 
-        boutonAnnuler.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
-        boutonValider.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+        List<Button> boutons = Arrays.asList(boutonAnnuler, boutonValider);
+
+        for (Button bouton : boutons) {
+            bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #7D9DA5; -fx-background-radius: 20;");
+            bouton.setOnMouseEntered(event -> {
+                bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #5C7A8B; -fx-background-radius: 20;");
+            });
+            bouton.setOnMouseExited(event -> {
+                bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #7D9DA5; -fx-background-radius: 20;");
+            });
+            bouton.setOnMousePressed(event -> {
+                bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #86a6b8; -fx-background-radius: 20;");
+            });
+        }
 
         // Ajoutez les boutons à la grille (alignés dans la même ligne)
         gridPane.add(buttonsRow4, 0, 4, 2, 1);

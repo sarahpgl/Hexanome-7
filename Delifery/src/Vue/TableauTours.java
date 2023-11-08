@@ -6,6 +6,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -154,6 +155,11 @@ public class TableauTours extends StackPane  {
         Button boutonAjouter=new Button("Ajouter une livraison");
         boutonAjouter.setPrefWidth(230);
         boutonAjouter.setPrefHeight(40);
+        boutonAjouter.setOnAction(event -> {
+            VueLivraison vueLivraison = new VueLivraison();
+            Stage stage = new Stage();
+            vueLivraison.start(stage);
+        });
 
         VBox vbox3boutons=new VBox(hbox2boutons,boutonAjouter);
         vbox3boutons.setSpacing(20);
