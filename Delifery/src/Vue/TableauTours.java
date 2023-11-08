@@ -41,6 +41,7 @@ public class TableauTours extends StackPane  {
         int nbColonnes = 3; // Taille du tableau
         ArrayList<Tour> tours = catalogueTours.getCatalogue();
 
+
         if (tours.size()<1) {
             //si la catalogue courat est vide
             Label titreVIDE = new Label("Vous n'avez actuellement pas de tour. Chargez un fichier de tour ou créez une livraison.");
@@ -81,7 +82,7 @@ public class TableauTours extends StackPane  {
 
                         Long finalJ = (long) j;
                         rectangle.setOnMouseClicked(event -> {
-                            Service.getInstance().ouvrirDetails(this.cheminFchier, finalJ);
+                            Service.getInstance().ouvrirDetails(this.cheminFchier, 3L);
                             rectangle.setFill(Color.rgb(new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256)));
                         });
 

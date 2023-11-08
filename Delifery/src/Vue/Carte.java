@@ -29,7 +29,7 @@ public class Carte extends Pane {
     float[] util;
     private Map<Intersection, Map<Intersection, Float>> graph;
     private String cheminFichier;
-    Service service = new Service();
+    Service service = Service.getInstance();
 
     public Carte(String cheminFich, Integer panelWidth, Integer panelHeight) {
         super();
@@ -71,25 +71,29 @@ public class Carte extends Pane {
         livraisons2.remove(3);
         livraisons2.remove(2);
 
+        //livreur
+        Livreur livreur1 = service.initialisationLivreur("Sophie");
+        Livreur livreur2 = service.initialisationLivreur("Maria");
         ArrayList<Intersection> cheminTotal = new ArrayList<>();
 
 
-        Tour tour1=service.creerTour(1L,livraisons1 ,cheminTotal);
+
+        Tour tour1=service.creerTour(livraisons1 ,cheminTotal,livreur1);
         tour1 = tourAColorier(tour1, dc, entrepot);
 
 
 
         ArrayList<Intersection> cheminTotal2 = new ArrayList<>();
 
-        Tour tour2=service.creerTour(1L,livraisons2 ,cheminTotal2);
+        Tour tour2=service.creerTour(livraisons2 ,cheminTotal2, livreur2);
         tour2 =tourAColorier(tour2,dc, entrepot);
         System.out.println(tour2.toString());
 
         Circle entrepotLocation = createNode(entrepot, util, 3,"Entrepot");
         this.getChildren().add(entrepotLocation);
 
-        dessinerTour(tour1, 1);
-        dessinerTour(tour2, 2);
+        //dessinerTour(tour1, 1);
+        //dessinerTour(tour2, 2);
 
 
 

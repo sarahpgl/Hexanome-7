@@ -102,9 +102,9 @@ public class Service {
         return carteCourante;
     }
 
-    public Tour creerTour(Long id,ArrayList<Livraison> livraisons, ArrayList<Intersection> intersections){
+    public Tour creerTour(ArrayList<Livraison> livraisons, ArrayList<Intersection> intersections, Livreur livreur){
 
-        Tour tour = new Tour(id, livraisons, intersections);
+        Tour tour = new Tour( livraisons, intersections, livreur);
 
         return tour;
     }
@@ -114,10 +114,10 @@ public class Service {
         CatalogueTours catalogueTours = this.catalogueTours;
         Tour tour = catalogueTours.getTourByLivreur(livreur);
         if (tour == null){
-            ArrayList<Intersection> intersections = new ArrayList<Intersection>();
+
             ArrayList<Livraison> livraisons = new ArrayList<Livraison>();
             livraisons.add(l);
-             tour = new Tour(livreur.getId(), livraisons, intersections);
+             tour = new Tour(livraisons, livreur);
              catalogueTours.ajouterTour(tour);
         }else {
             tour.addLivraisonsTour((l));
@@ -287,6 +287,11 @@ public class Service {
 
     public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String chemin, String nomFichier){
         FileSystemXML.EcrireCatalogueXML(Ctour,chemin,nomFichier);
+
+    }
+    public Livreur initialisationLivreur(String name){
+        Livreur l = new Livreur(name);
+        return l;
     }
 
     public ArrayList<Intersection> getAllIntersections() {
@@ -308,4 +313,10 @@ public class Service {
         }
         return livreurs;
     }
+
+    public ArrayList<Tour> getTours(){
+        return catalogueTours.getCatalogue();
+    }
+
+
 }

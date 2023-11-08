@@ -22,8 +22,12 @@ public class Main {
         //TesterDijkstra();
         //TestCreerCarte();
         //TestLireXML();
+
         testerDetailTour();
         launch(FenetreLancement.class, args);
+
+        //testerDetailTour();
+
         //TesterTrie();
         //testerHeureLivraison();
         //testerCalculTour();
@@ -166,7 +170,7 @@ public class Main {
         System.out.println("Heure de départ :"+livraison1.getHeureDepart());
     }
 
-    public static void testerCalculTour(){
+    /*public static void testerCalculTour(){
         Service service = new Service();
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
@@ -186,7 +190,7 @@ public class Main {
         Tour tour = new Tour((long) 1, livraisons);
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         System.out.println(tour.toString());
-    }
+    }*/
 
     public static void getInterById(){
         Service service = new Service();
@@ -194,7 +198,7 @@ public class Main {
         System.out.println(carte.findIntersectionById("975886496").toString());
     }
 
-    /*public static void TesterCreationXMLCatalogueTour(){
+    public static void TesterCreationXMLCatalogueTour(){
         Service service = new Service();
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
@@ -211,12 +215,12 @@ public class Main {
         livraisons.add(livraison2);
         livraisons.add(livraison1);
         livraisons.add(livraison3);
-        Tour tour = new Tour((long) 1, livraisons);
+        Tour tour = new Tour( livraisons, new Livreur("Maria"));
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
-        CatalogueTours c = new CatalogueTours(carte.getCheminFichier());
+        CatalogueTours c = new CatalogueTours();
         c.ajouterTour(tour);
         FileSystemXML.EcrireCatalogueXML(c,"Delifery/output","Test");
-    }*/
+    }
 
     public static void testerDetailTour(){
         Service service = Service.getInstance();
@@ -235,12 +239,13 @@ public class Main {
         livraisons.add(livraison2);
         livraisons.add(livraison1);
         livraisons.add(livraison3);
-        Tour tour = new Tour((long) 1, livraisons);
+        Tour tour = new Tour( livraisons, new Livreur("Sophie"));
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         CatalogueTours c = new CatalogueTours("mediumMap.xml");
         ArrayList<Tour> toursTest = c.getCatalogue();
         c.ajouterTour(tour);
         service.setCatalogueTours(c);
+        System.out.println("iciiii"+tour.toString());
 
     }
 }

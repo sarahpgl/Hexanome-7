@@ -52,9 +52,15 @@ public class DetailsTour extends Application {
         gridPane.add(c, 1, 1);
 
         // Row 2: Section 1 (left side)
-        TableauDetailsTour tabDetailTour = new TableauDetailsTour(tour);
-        gridPane.add(tabDetailTour, 0, 1);
-        gridPane.requestLayout();
+        if(tour!=null){
+            TableauDetailsTour tabDetailTour = new TableauDetailsTour(tour);
+            gridPane.add(tabDetailTour, 0, 1);
+            gridPane.requestLayout();
+            // Make Section 1 and Section 2 equally growable
+            HBox.setHgrow(tabDetailTour, Priority.ALWAYS);
+            HBox.setHgrow(c, Priority.ALWAYS);
+        }
+
 
         // Set column constraints to divide the width equally
         ColumnConstraints column1 = new ColumnConstraints();
@@ -70,9 +76,7 @@ public class DetailsTour extends Application {
         row2.setPercentHeight(80);
         gridPane.getRowConstraints().addAll(row1, row2);
 
-        // Make Section 1 and Section 2 equally growable
-        HBox.setHgrow(tabDetailTour, Priority.ALWAYS);
-        HBox.setHgrow(c, Priority.ALWAYS);
+
 
         Scene scene = new Scene(gridPane, windowWidth, windowHeight);
         primaryStage.setTitle("Details tour");

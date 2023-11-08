@@ -45,6 +45,19 @@ public class CatalogueTours {
         return null;
     }
 
+    public Livreur getLivreur(int index){
+
+       for (Tour t: catalogue){
+           if (t.getId() == index){
+               return t.getLivreur();
+           }
+
+
+       }
+       return null;
+
+    }
+
     public ArrayList<Tour> getCatalogue() {
         return catalogue;
     }
