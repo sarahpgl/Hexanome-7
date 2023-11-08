@@ -1,6 +1,7 @@
 package Vue;
 
 import Donnees.CatalogueTours;
+import Donnees.Creneau;
 import Donnees.Tour;
 
 import Service.Service;
@@ -18,8 +19,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -30,12 +33,15 @@ public class TableauTours extends StackPane  {
     private CatalogueTours catalogueTours;
     private String cheminFchier;
 
+    Service service=new Service();
+
     public TableauTours(CatalogueTours catalogueTours, String cheminFichier) {
         this.catalogueTours = catalogueTours;
         this.cheminFchier = cheminFichier;
 
         int nbColonnes = 3; // Taille du tableau
         ArrayList<Tour> tours = catalogueTours.getCatalogue();
+
 
         if (tours.size()<1) {
             //si la catalogue courat est vide
@@ -57,7 +63,7 @@ public class TableauTours extends StackPane  {
             tableau.setAlignment(Pos.CENTER);
             tableau.setHgap(-1); // Supprime l'espace horizontal entre les cellules
             tableau.setVgap(-1); // Supprime l'espace vertical entre les cellules
-            tableau.setTranslateY(-50); // Définit une hauteur minimale pour le GridPane
+            tableau.setTranslateY(0); // Définit une hauteur minimale pour le GridPane
             //System.out.println(getHeight());
 
             for (int i = 0; i < nbColonnes; i++) {
@@ -77,7 +83,7 @@ public class TableauTours extends StackPane  {
 
                         Long finalJ = (long) j;
                         rectangle.setOnMouseClicked(event -> {
-                            Service.getInstance().ouvrirDetails(this.cheminFchier, finalJ);
+                            Service.getInstance().ouvrirDetails(this.cheminFchier, 3L);
                             rectangle.setFill(Color.rgb(new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256)));
                         });
 
@@ -131,17 +137,84 @@ public class TableauTours extends StackPane  {
                 }
             }
             Label titre = new Label("Cliquez sur un numéro pour obtenir les détails du tour");
-            titre.setAlignment(Pos.CENTER);
             titre.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
-            titre.setTranslateY(-60);
-            titre.setTranslateX(-40);
 
-            // Crée un VBox et ajoute le titre et le GridPane
-            VBox vbox = new VBox(titre, tableau);
-            vbox.setAlignment(Pos.CENTER);
+            TextArea textArea = new TextArea();
+            textArea.setPrefSize(10,10);
+            textArea.setStyle("-fx-font-size:20px;-fx-text-alignment: center;-fx-alignment: center");
 
-            getChildren().add(vbox);
-            setAlignment(Pos.CENTER); // Centre le VBox dans le StackPane
+            Button boutonLivreur = new Button("Enregistrer");
+            boutonLivreur.setPrefWidth(100);
+
+            Label titreLivreur=new Label("Nombre de livreurs : ");
+            titreLivreur.setStyle("-fx-font-style: italic; -fx-font-size: 18px; -fx-text-fill: black;");
+
+            tableau.setAlignment(Pos.CENTER);
+            VBox vboxTableau = new VBox(titre, tableau);
+            vboxTableau.setAlignment(Pos.TOP_CENTER);
+            vboxTableau.setTranslateY(20);
+
+
+            HBox hboxlivreur = new HBox(textArea, boutonLivreur);
+            hboxlivreur.setSpacing(14);
+            hboxlivreur.setAlignment(Pos.BOTTOM_CENTER);
+
+
+            HBox hboxlivreurwithtitle = new HBox(titreLivreur,hboxlivreur);
+            hboxlivreurwithtitle.setSpacing(12);
+            hboxlivreurwithtitle.setAlignment(Pos.BOTTOM_CENTER);
+            hboxlivreurwithtitle.setTranslateX(-20);
+
+
+            Button boutonCharger=new Button("Charger un tour");
+            Button boutonSauvegarder=new Button("Sauvegarder le tour");
+            boutonCharger.setPrefWidth(230);
+            boutonCharger.setPrefHeight(40);
+            boutonSauvegarder.setPrefWidth(230);
+            boutonSauvegarder.setPrefHeight(40);
+
+            HBox hbox2boutons=new HBox(boutonCharger,boutonSauvegarder);
+            hbox2boutons.setSpacing(10);
+            hbox2boutons.setAlignment(Pos.BOTTOM_CENTER);
+            Button boutonAjouter=new Button("Ajouter une livraison");
+            boutonAjouter.setPrefWidth(230);
+            boutonAjouter.setPrefHeight(40);
+            boutonAjouter.setOnAction(event -> {
+                VueLivraison vueLivraison = new VueLivraison();
+                Stage stage = new Stage();
+                vueLivraison.start(stage);
+            });
+
+            VBox vbox3boutons=new VBox(hbox2boutons,boutonAjouter);
+            vbox3boutons.setSpacing(20);
+            vbox3boutons.setAlignment(Pos.BOTTOM_CENTER);
+
+
+            List<Button> boutons = Arrays.asList(boutonCharger, boutonSauvegarder, boutonAjouter,boutonLivreur);
+
+            for (Button bouton : boutons) {
+                bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #7D9DA5; -fx-background-radius: 20;");
+                bouton.setOnMouseEntered(event -> {
+                    bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #5C7A8B; -fx-background-radius: 20;");
+                });
+                bouton.setOnMouseExited(event -> {
+                    bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #7D9DA5; -fx-background-radius: 20;");
+                });
+                bouton.setOnMousePressed(event -> {
+                    if (bouton==boutonLivreur)System.out.println(textArea.getText());
+                    bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #86a6b8; -fx-background-radius: 20;");
+                });
+            }
+
+            VBox vboxPartieBasse=new VBox(hboxlivreurwithtitle,vbox3boutons);
+            vboxPartieBasse.setSpacing(20);
+            vboxPartieBasse.setAlignment(Pos.BOTTOM_CENTER);
+            vboxPartieBasse.setTranslateY(-5);
+
+            VBox vboxtotal= new VBox(vboxTableau,vboxPartieBasse);
+            VBox.setVgrow(vboxTableau, Priority.ALWAYS);
+            VBox.setVgrow(vboxPartieBasse, Priority.ALWAYS);
+            getChildren().add(vboxtotal);
 
 
         }

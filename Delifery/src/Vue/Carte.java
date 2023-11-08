@@ -159,7 +159,7 @@ public class Carte extends Pane {
 
     void dessinerTour(Tour tour, int id) {
         ArrayList<Intersection> cheminTour = tour.getTrajet();
-        Intersection destination =  cheminTour.getFirst();
+        Intersection destination =  cheminTour.get(0);
         // Ajout des points de destination
         for (Intersection inter : cheminTour) {
             if (inter != null) {
@@ -358,7 +358,7 @@ public class Carte extends Pane {
         }
     }
 
-    void remettreLigne(String numTour) {
+    /*void remettreLigne(String numTour) {
         int index = Integer.parseInt(numTour) - 1;
         if (index >= 0 && index < listeCouleurs.size()) {
             Color color = switch (index) {
@@ -377,7 +377,7 @@ public class Carte extends Pane {
             listeCouleurs.get(index).getDot().setVisible(true);
             listeCouleurs.get(index).setEtat(true);
         }
-    }
+    }*/
 
     List<ElementListe> createElementListe(int nbTours){
         List<ElementListe> listeElement = new ArrayList<>();

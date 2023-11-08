@@ -22,7 +22,11 @@ public class Main {
         //TesterDijkstra();
         //TestCreerCarte();
         //TestLireXML();
+
+        testerDetailTour();
         launch(FenetreLancement.class, args);
+
+
         //testerDetailTour();
 
         //TesterTrie();
@@ -241,7 +245,8 @@ public class Main {
         CatalogueTours c = new CatalogueTours("mediumMap.xml");
         ArrayList<Tour> toursTest = c.getCatalogue();
         c.ajouterTour(tour);
-        //service.setCatalogueTours(c);
+        service.setCatalogueTours(c);
+        System.out.println("iciiii"+tour.toString());
 
     }
 }
