@@ -131,7 +131,7 @@ public class FileSystemXML {
                     }
                     Section section = new Section(Float.parseFloat(longueur), nom, intersectionOrigine,intersectionDestination);
                     sections[i] = section;
-                    System.out.println(section.toString());
+                    //System.out.println(section.toString());
                     //System.out.println(section.toString());
                 }
 
@@ -152,8 +152,8 @@ public class FileSystemXML {
             }
         } catch (Exception e) {
             // Afficher le message d'erreur en cas d'exception
-            System.out.println(e.getMessage());
-            System.out.println("Erreur");
+            //System.out.println(e.getMessage());
+            //System.out.println("Erreur");
         }
 
         // Retourner un tableau d'objets contenant l'objet Warehouse, le tableau d'objets Intersection et le tableau d'objets Segment
@@ -240,20 +240,20 @@ public class FileSystemXML {
                     transformer.transform(source, result);
 
                     // Afficher un message de succès
-                    System.out.println("Le fichier XML a été créé avec succès.");
+                    //System.out.println("Le fichier XML a été créé avec succès.");
                 } catch (TransformerException e) {
                     // Afficher un message d'erreur
-                    System.out.println("Une erreur est survenue lors de la transformation du document XML.");
+                    //System.out.println("Une erreur est survenue lors de la transformation du document XML.");
                     e.printStackTrace();
                 }
             } catch (TransformerException e) {
                 // Afficher un message d'erreur
-                System.out.println("Une erreur est survenue lors de la création du transformateur XML.");
+                //System.out.println("Une erreur est survenue lors de la création du transformateur XML.");
                 e.printStackTrace();
             }
         } catch (ParserConfigurationException e) {
             // Afficher un message d'erreur
-            System.out.println("Une erreur est survenue lors de la configuration du parseur XML.");
+            //System.out.println("Une erreur est survenue lors de la configuration du parseur XML.");
             e.printStackTrace();
         }
     }
