@@ -26,6 +26,7 @@ public class Main {
         testerDetailTour();
         launch(FenetreLancement.class, args);
 
+
         //testerDetailTour();
 
         //TesterTrie();
