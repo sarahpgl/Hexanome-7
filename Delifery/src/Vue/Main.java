@@ -191,18 +191,4 @@ public class Main {
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         System.out.println(carte.findIntersectionById("975886496").toString());
     }
-
-    public static void testerDetailsTour(){
-        Service service = new Service();
-        //System.out.println("Nom du fichier xml : " +System.getProperty("user.dir")+"/Delifery/fichiersXML2022/smallMap.xml");
-        DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
-        Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
-        Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
-        Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
-        Intersection destination3 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
-        Intersection destination4 = new Intersection(new BigInteger("975886496"),new Coordonnees(45.756874,4.8574047));
-        List<Intersection> chemin = Calculs.dijkstra(Entrepot,destination1,carte.getCarte());
-
-
-    }
 }
