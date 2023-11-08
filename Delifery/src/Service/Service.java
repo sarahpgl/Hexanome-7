@@ -249,9 +249,9 @@ public class Service {
         FileSystemXML.EcrireCatalogueXML(Ctour,chemin,nomFichier);
     }
 
-    public List<Intersection> getAllIntersections() {
+    public ArrayList<Intersection> getAllIntersections() {
         // On crée une liste vide pour stocker les intersections
-        List<Intersection> intersections = new ArrayList<>();
+        ArrayList<Intersection> intersections = new ArrayList<>();
         // On parcourt l'ensemble des clés de la carte
         for (Intersection key : donneesCarte.getCarte().keySet()) {
             // On ajoute chaque clé à la liste
@@ -259,5 +259,13 @@ public class Service {
         }
         // On renvoie la liste
         return intersections;
+    }
+
+    public ArrayList<Livreur> getListLivreur(){
+        ArrayList<Livreur> livreurs = new ArrayList<>();
+        for (Tour t: catalogueTours.catalogue) {
+            livreurs.add(t.getLivreur());
+        }
+        return livreurs;
     }
 }
