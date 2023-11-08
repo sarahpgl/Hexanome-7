@@ -22,12 +22,12 @@ public class Main {
         //TesterDijkstra();
         //TestCreerCarte();
         //TestLireXML();
-        //launch(FenetreLancement.class, args);
+        launch(FenetreLancement.class, args);
         //TesterTrie();
         //testerHeureLivraison();
         //testerCalculTour();
         //getInterById();
-        TesterCreationXMLCatalogueTour();
+        //TesterCreationXMLCatalogueTour();
     }
 
     public static void TestLireXML(){
@@ -193,7 +193,7 @@ public class Main {
         System.out.println(carte.findIntersectionById("975886496").toString());
     }
 
-    public static void TesterCreationXMLCatalogueTour(){
+    /*public static void TesterCreationXMLCatalogueTour(){
         Service service = new Service();
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
@@ -213,7 +213,7 @@ public class Main {
         Tour tour = new Tour((long) 1, livraisons);
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         CatalogueTours c = new CatalogueTours();
-        c.ajouterTour(tour);
+        //c.ajouterTour(tour);
         FileSystemXML.EcrireCatalogueXML(c,"Delifery/output","Test");
-    }
+    }*/
 }

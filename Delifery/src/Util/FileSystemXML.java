@@ -161,7 +161,7 @@ public class FileSystemXML {
     }
 
     // Une méthode pour écrire un catalogue de tours dans un fichier XML
-    public static void EcrireCatalogueXML(CatalogueTours c, String chemin, String nom) {
+    /*public static void EcrireCatalogueXML(CatalogueTours c, String chemin, String nom) {
         try {
             // Créer un fichier XML avec le chemin et le nom spécifiés
             File file = new File(chemin + "/" + nom +".xml");
@@ -256,5 +256,5 @@ public class FileSystemXML {
             System.out.println("Une erreur est survenue lors de la configuration du parseur XML.");
             e.printStackTrace();
         }
-    }
+    }*/
 }
