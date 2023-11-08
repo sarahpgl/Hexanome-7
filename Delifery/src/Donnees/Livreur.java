@@ -22,7 +22,7 @@ public class Livreur {
     private static double VITESSE = 15;
 
     public Livreur(Integer tourNumber) {
-        this.nom = names[tourNumber + 1];
+        this.nom = names[tourNumber - 1];
     }
 
     public String getNom(){
