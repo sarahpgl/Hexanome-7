@@ -38,4 +38,13 @@ public class CatalogueTours {
         }
         return mes;
     }
+
+    public Tour getTourByLivreur (Livreur l){
+        for (Tour t: catalogue) {
+            if (t.getLivreur().getId()==l.getId()){
+                return t;
+            }
+        }
+        return null;
+    }
 }
