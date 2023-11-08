@@ -22,7 +22,7 @@ public class Main {
         //TesterDijkstra();
         //TestCreerCarte();
         //TestLireXML();
-        testerDetailTour();
+        //testerDetailTour();
         launch(FenetreLancement.class, args);
         //TesterTrie();
         //testerHeureLivraison();
@@ -238,9 +238,9 @@ public class Main {
         Tour tour = new Tour((long) 1, livraisons);
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         CatalogueTours c = new CatalogueTours("mediumMap.xml");
-        //ArrayList<Tour> toursTest = c.getCatalogue();
+        ArrayList<Tour> toursTest = c.getCatalogue();
         c.ajouterTour(tour);
-        service.setCatalogueTours(c);
+        //service.setCatalogueTours(c);
 
     }
 }

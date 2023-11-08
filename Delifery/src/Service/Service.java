@@ -266,6 +266,10 @@ public class Service {
         return catalogueTours;
     }
 
+    public void setCatalogueTours(CatalogueTours catalogueTours) {
+        this.catalogueTours = catalogueTours;
+    }
+
     public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String chemin, String nomFichier){
         FileSystemXML.EcrireCatalogueXML(Ctour,chemin,nomFichier);
     }
