@@ -112,6 +112,9 @@ public class Tour {
         trajet.clear();
     }
 
+    public Livreur getLivreur() {
+        return livreur;
+    }
 }
 
 
