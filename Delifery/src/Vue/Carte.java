@@ -92,8 +92,8 @@ public class Carte extends Pane {
         Circle entrepotLocation = createNode(entrepot, util, 3,"Entrepot");
         this.getChildren().add(entrepotLocation);
 
-        dessinerTour(tour1, 1);
-        dessinerTour(tour2, 2);
+        //dessinerTour(tour1, 1);
+        //dessinerTour(tour2, 2);
 
 
 
