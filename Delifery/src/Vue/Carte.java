@@ -43,9 +43,7 @@ public class Carte extends Pane {
         float originY = dc.getOrigine()[1];
         util = new float[]{originX, originY, echelleX, echelleY};
 
-
         listeCouleurs=createElementListe(nbTours);
-
 
         dessinerCarte();
 
@@ -150,7 +148,6 @@ public class Carte extends Pane {
                         listeCouleurs.get(index).setDot(arrivee);
                         this.getChildren().add(listeCouleurs.get(index).getDot());
                     }
-
                 }
             }
         }
@@ -337,7 +334,14 @@ public class Carte extends Pane {
     void remettreLigne(String numTour) {
         int index = Integer.parseInt(numTour) - 1;
         if (index >= 0 && index < listeCouleurs.size()) {
-            Color color = (index == 0) ? Color.RED : Color.BLUE;
+            Color color = switch (index) {
+                case 0 -> Color.RED;
+                case 1 -> Color.BLUE;
+                case 2 -> Color.GREEN;
+                case 3 -> Color.YELLOW;
+                case 4 -> Color.ORANGE;
+                default -> throw new IndexOutOfBoundsException("Invalid index: " + index);
+            };
             for (Line l : listeCouleurs.get(index).getLines()) {
                 l.setStroke(color);
             }
