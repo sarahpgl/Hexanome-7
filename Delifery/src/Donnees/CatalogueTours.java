@@ -33,4 +33,6 @@ public class CatalogueTours {
         }
         return mes;
     }
+
+    public Tour getTourById()
 }
