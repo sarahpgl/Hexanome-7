@@ -177,9 +177,11 @@ public class TableauTours extends StackPane  {
         VBox vboxPartieBasse=new VBox(hboxlivreurwithtitle,vbox3boutons);
         vboxPartieBasse.setSpacing(20);
         vboxPartieBasse.setAlignment(Pos.BOTTOM_CENTER);
-        vboxPartieBasse.setTranslateY(30);
+        vboxPartieBasse.setTranslateY(-5);
 
         VBox vboxtotal= new VBox(vboxTableau,vboxPartieBasse);
+        VBox.setVgrow(vboxTableau, Priority.ALWAYS);
+        VBox.setVgrow(vboxPartieBasse, Priority.ALWAYS);
         getChildren().add(vboxtotal);
 
 
