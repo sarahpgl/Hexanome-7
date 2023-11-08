@@ -26,10 +26,6 @@ public class Livreur {
         this.id = getIdByName(name);
     }
 
-    public Livreur(String name){
-        this.nom = name;
-        this.id = getIdByName(name);
-    }
     public Livreur(Integer tourNumber) {
         this.nom = names[tourNumber - 1];
     }
