@@ -17,6 +17,7 @@ public class Livreur {
             "Branda"
     };
 
+    private Long id;
     private String nom;
     private static double VITESSE = 15;
 
@@ -30,5 +31,16 @@ public class Livreur {
 
     public double getVitesse() {
         return VITESSE;
+    }
+
+    public Long getId(){
+            // Parcourir le tableau à la recherche de la valeur
+        for (int i = 0; i < names.length; i++) {
+            // Comparer la valeur avec l’élément du tableau à l’indice i
+            if (names[i].equals(this.nom)) {
+                return (long)i;
+            }
+        }
+        return (long)-1;
     }
 }

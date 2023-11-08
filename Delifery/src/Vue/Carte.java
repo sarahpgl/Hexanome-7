@@ -38,7 +38,9 @@ public class Carte extends Pane {
         DonneesCarte dc = createSampleGraph();
         entrepot = dc.getEntrepot();
         // Extraction des échelles et des origines pour plus de lisibilité
+
         float [] util =calculerUtil(dc, panelWidth, panelHeight);
+
 
         listeCouleurs=createElementListe(nbTours);
 
@@ -53,6 +55,8 @@ public class Carte extends Pane {
             livraisons.add(service.creerLivraison(id, l, Creneau.valueOf("HUIT_NEUF"),LocalTime.MIDNIGHT,LocalTime.MIDNIGHT));
             id++;
         }
+
+
 
 
         this.getChildren().add(createNode(listeInterPourLivrer.get(0),util,0,"3"));
@@ -86,6 +90,7 @@ public class Carte extends Pane {
 
         dessinerTour(tour1, 1);
         dessinerTour(tour2, 2);
+
 
 
 
@@ -353,7 +358,14 @@ public class Carte extends Pane {
     void remettreLigne(String numTour) {
         int index = Integer.parseInt(numTour) - 1;
         if (index >= 0 && index < listeCouleurs.size()) {
-            Color color = (index == 0) ? Color.RED : Color.BLUE;
+            Color color = switch (index) {
+                case 0 -> Color.RED;
+                case 1 -> Color.BLUE;
+                case 2 -> Color.GREEN;
+                case 3 -> Color.YELLOW;
+                case 4 -> Color.ORANGE;
+                default -> throw new IndexOutOfBoundsException("Invalid index: " + index);
+            };
             for (Line l : listeCouleurs.get(index).getLines()) {
                 l.setStroke(color);
             }
@@ -377,9 +389,10 @@ public class Carte extends Pane {
     }
 
 
-    void ouvrirDetails(int id){
-        DetailsTour fenetreDetails=new DetailsTour(null);
-        fenetreDetails.show();
+    void ouvrirDetails(Long id){
+        Tour tour = Service.getInstance().getCatalogueTours().getTourById(id);
+        DetailsTour fenetreDetails = new DetailsTour(this.cheminFichier, tour, 800, 550);
+        fenetreDetails.ouvrirFenetre();
     }
 
     int getNbTours(){
