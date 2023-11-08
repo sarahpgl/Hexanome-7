@@ -60,4 +60,18 @@ public class DonneesCarte {
     public void setOrigine(float[] origine) {
         this.origine = origine;
     }
+
+    public Intersection findIntersectionById(String id) {
+        BigInteger bigId = new BigInteger(id);
+        // On parcourt la première clé de la map
+        for (Intersection inter : carte.keySet()) {
+            // On vérifie si l'id de l'intersection correspond au paramètre
+            if (inter.getId().equals(bigId)) {
+                // On renvoie l'intersection trouvée
+                return inter;
+            }
+        }
+        // Si aucune intersection n'a été trouvée, on renvoie null
+        return null;
+    }
 }

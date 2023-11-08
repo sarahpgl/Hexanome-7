@@ -19,7 +19,10 @@ public class Entete extends HBox {
         this.setStyle("-fx-background-color: #ced4d3; -fx-padding: 10px;");
 
         boutonAccueil = new Button("Accueil");
-        boutonAccueil.setStyle("-fx-background-color: #ffffff; -fx-text-fill: black;");
+        // On ajoute un effet de survol sur le bouton
+        boutonAccueil.setStyle("-fx-background-color: #ffffff; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);");
+        boutonAccueil.setOnMouseEntered(e -> boutonAccueil.setStyle("-fx-background-color: #ced4d3; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);"));
+        boutonAccueil.setOnMouseExited(e -> boutonAccueil.setStyle("-fx-background-color: #ffffff; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);"));
         boutonAccueil.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -37,7 +40,10 @@ public class Entete extends HBox {
         imageView.setPreserveRatio(true); // Garde le ratio de l'image lors du redimensionnement
 
         boutonQuitter = new Button("Quitter l'application");
-        boutonQuitter.setStyle("-fx-background-color: #ffffff; -fx-text-fill: black;");
+        // On ajoute un effet de survol sur le bouton
+        boutonQuitter.setStyle("-fx-background-color: #ffffff; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);");
+        boutonQuitter.setOnMouseEntered(e -> boutonQuitter.setStyle("-fx-background-color: #ced4d3; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);"));
+        boutonQuitter.setOnMouseExited(e -> boutonQuitter.setStyle("-fx-background-color: #ffffff; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);"));
         boutonQuitter.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
