@@ -50,7 +50,7 @@ public class TableauTours extends StackPane  {
 
                     Long finalJ = (long) j;
                     rectangle.setOnMouseClicked(event ->{
-                        carteTab.ouvrirDetails(finalJ);
+                        //carteTab.ouvrirDetails(finalJ);
 
                         rectangle.setFill(Color.rgb(new Random().nextInt(256),new Random().nextInt(256),new Random().nextInt(256)));
                     });

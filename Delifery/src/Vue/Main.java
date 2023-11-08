@@ -22,12 +22,12 @@ public class Main {
         //TesterDijkstra();
         //TestCreerCarte();
         //TestLireXML();
-        //launch(FenetreLancement.class, args);
+        launch(FenetreLancement.class, args);
         //TesterTrie();
         //testerHeureLivraison();
         //testerCalculTour();
         //getInterById();
-        TesterCreationXMLCatalogueTour();
+        //TesterCreationXMLCatalogueTour();
     }
 
     public static void TestLireXML(){

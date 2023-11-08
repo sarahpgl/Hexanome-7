@@ -3,7 +3,6 @@ package Vue;
 import Donnees.*;
 import Service.Service;
 import Util.Calculs;
-import Util.Coordonnees;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
@@ -14,9 +13,10 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import java.math.BigInteger;
 import java.time.LocalTime;
 import java.util.*;
+
+import static javafx.application.Application.launch;
 
 public class Carte extends Pane {
 
@@ -163,10 +163,10 @@ public class Carte extends Pane {
                     // Ajout du point
                     Circle arrivee = createNode(inter, util, id,destination.toString());
                     int index = id - 1;
-                    if (index >= 0 && index < listeCouleurs.size()) {
+                    /*if (index >= 0 && index < listeCouleurs.size()) {
                         listeCouleurs.get(index).setDot(arrivee);
                         this.getChildren().add(listeCouleurs.get(index).getDot());
-                    }
+                    }*/
                 }
             }
         }
@@ -174,19 +174,18 @@ public class Carte extends Pane {
         // Ajout des Livraisons entre les points arrivée et départ
         for (Map.Entry<Intersection, Map<Intersection, Float>> entry : graph.entrySet()) {
             Intersection sourceNode = entry.getKey();
-            //test car sinon beug
+
             if (sourceNode != null) {
                 Map<Intersection, Float> edges = entry.getValue();
                 for (Map.Entry<Intersection, Float> edge : edges.entrySet()) {
                     Intersection targetNode = edge.getKey();
-                    float length = edge.getValue();
                     if (cheminTour.contains(targetNode) && cheminTour.contains(sourceNode)) {
 
                         Circle depart = createNode(sourceNode, util, id,"");
                         Circle arrivee = createNode(targetNode, util, id,"");
 
 
-                        Line edgeToAdd = createEdge(depart, arrivee, length, id);
+                        Line edgeToAdd = createEdge(depart, arrivee, id);
                         edgeToAdd.setStrokeWidth(2);
                         int index = id - 1;
                         System.out.println("hello index = "+ index);
@@ -260,7 +259,7 @@ public class Carte extends Pane {
                     Circle arrivee = createNode(targetNode, util, null,"");
 
                     // Creation de l'arrête reliant les deux
-                    Line edgeToAdd = createEdge(depart, arrivee, length, 0);
+                    Line edgeToAdd = createEdge(depart, arrivee, 0);
                     edgeToAdd.setStrokeWidth(1);
                     this.getChildren().add(edgeToAdd);
 
@@ -324,7 +323,7 @@ public class Carte extends Pane {
         return node;
     }
 
-    private Line createEdge(Circle source, Circle target, float length, Integer color) {
+    private Line createEdge(Circle source, Circle target, Integer color) {
         Line edge = new Line();
 
         edge.startXProperty().bind(source.centerXProperty());
@@ -332,13 +331,17 @@ public class Carte extends Pane {
 
         edge.endXProperty().bind(target.centerXProperty());
         edge.endYProperty().bind(target.centerYProperty());
-        if (color == 1) {
-            edge.setStyle("-fx-stroke: red; ");
-        } else if (color == 2) {
-            edge.setStyle("-fx-stroke: blue; ");
-        } else if (color == 0) {
-            edge.setStyle("-fx-stroke: black;");
-        }
+        Color c = switch (color) {
+            case 1 -> Color.RED;
+            case 2 -> Color.BLUE;
+            case 3 -> Color.GREEN;
+            case 4 -> Color.YELLOW;
+            case 5 -> Color.ORANGE;
+            case 0 -> Color.BLACK;
+            default -> throw new IllegalArgumentException("Invalid color: " + color);
+        };
+        edge.setStyle("-fx-stroke: " + c.toString().toLowerCase() + ";");
+
         return edge;
     }
 
@@ -348,6 +351,7 @@ public class Carte extends Pane {
             for (Line l : listeCouleurs.get(index).getLines()) {
                 l.setStroke(Color.BLACK);
                 l.setStrokeWidth(1);
+                l.toBack();
             }
             listeCouleurs.get(index).getDot().setVisible(false);
             listeCouleurs.get(index).setEtat(false);
@@ -367,6 +371,7 @@ public class Carte extends Pane {
             };
             for (Line l : listeCouleurs.get(index).getLines()) {
                 l.setStroke(color);
+                l.toFront();
             }
             listeCouleurs.get(index).getDot().setFill(color);
             listeCouleurs.get(index).getDot().setStroke(color);
@@ -381,18 +386,18 @@ public class Carte extends Pane {
             List<Line> lines = new ArrayList<>();
             Circle dot =new Circle();
             boolean state =true;
-            ElementListe elementListe=new ElementListe(lines,dot ,state);
+            ElementListe elementListe=new ElementListe(lines ,state);
             listeElement.add(elementListe);
         }
         return listeElement;
     }
 
 
-    void ouvrirDetails(Long id){
+    /*void ouvrirDetails(Long id){
         Tour tour = Service.getInstance().getCatalogueTours().getTourById(id);
         DetailsTour fenetreDetails = new DetailsTour(this.cheminFichier, tour, 800, 550);
-        fenetreDetails.ouvrirFenetre();
-    }
+
+    }*/
 
     int getNbTours(){
         return nbTours;
@@ -402,12 +407,12 @@ public class Carte extends Pane {
 
 class ElementListe {
     List<Line> lines;
-    Circle dot;
+    //Circle dot;
     boolean etat;
 
-    public ElementListe(List<Line> lines, Circle circle, boolean number) {
+    public ElementListe(List<Line> lines, boolean number) {
         this.lines = lines;
-        this.dot = circle;
+        //this.dot = circle;
         this.etat = number;
     }
 
@@ -420,11 +425,12 @@ class ElementListe {
     }
 
     public Circle getDot() {
-        return dot;
+        Circle ci =new Circle();
+        return ci;
     }
 
     public void setDot(Circle dot) {
-        this.dot = dot;
+        //this.dot = dot;
     }
 
     public boolean getEtat() {
