@@ -305,7 +305,6 @@ public class Service {
         // On renvoie la liste
         return intersections;
     }
-
     public ArrayList<Livreur> getListLivreur(){
         ArrayList<Livreur> livreurs = new ArrayList<>();
         for (Tour t: catalogueTours.catalogue) {
@@ -328,4 +327,13 @@ public class Service {
         }
         return true;
     }
+    public ArrayList<String> getListeLivreurs(){
+        ArrayList<String > listeNom = new ArrayList<String>();
+        for(Livreur l : catalogueTours.getListeLivreurs()){
+            listeNom.add(l.getNom());
+        }
+        return listeNom;
+    }
+
+
 }

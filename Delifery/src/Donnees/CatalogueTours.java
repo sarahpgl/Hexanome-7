@@ -69,4 +69,11 @@ public class CatalogueTours {
     public Integer getNbTour(){
         return catalogue.size();
     }
+    public ArrayList<Livreur> getListeLivreurs(){
+        ArrayList<Livreur> liste = new ArrayList<Livreur>();
+        for(Tour t : catalogue){
+            liste.add(t.getLivreur());
+        }
+        return liste;
+    }
 }
