@@ -46,13 +46,13 @@ public class DetailsTour extends Application {
         Entete entete=new Entete();
         gridPane.add(entete, 0, 0, 2, 1); // Span 2 columns
 
-
         // Row 3: Section 2 (right side)
         Carte c = new Carte(cheminFichier, windowWidth/2, windowHeight*8/10);
         gridPane.add(c, 1, 1);
 
         // Row 2: Section 1 (left side)
         if(tour!=null){
+            System.out.println("c laaa"+tour.toString());
             TableauDetailsTour tabDetailTour = new TableauDetailsTour(tour);
             gridPane.add(tabDetailTour, 0, 1);
             gridPane.requestLayout();
