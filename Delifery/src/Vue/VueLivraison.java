@@ -74,7 +74,7 @@ public class VueLivraison extends Application {
         ColumnConstraints labelColumnConstraints = new ColumnConstraints();
         labelColumnConstraints.setHalignment(HPos.RIGHT); // Alignez les labels à droite
         labelColumnConstraints.setHgrow(Priority.NEVER);
-        labelColumnConstraints.setMinWidth(100); // Définissez une largeur minimale pour les titres
+        labelColumnConstraints.setMinWidth(125); // Définissez une largeur minimale pour les titres
         ColumnConstraints textFieldColumnConstraints = new ColumnConstraints();
         textFieldColumnConstraints.setHalignment(HPos.LEFT); // Alignez les zones de texte à gauche
         textFieldColumnConstraints.setHgrow(Priority.ALWAYS);
@@ -83,14 +83,14 @@ public class VueLivraison extends Application {
 
         // Row 3: Buttons with title (aligned in a row)
         Label label3 = new Label("Plage horaire :");
-        label3.setFont(Font.font("Arial", 14)); // Définir la police et la taille du titre
+        label3.setFont(Font.font("Arial", 14));
         Button button1 = new Button("8h-9h");
         Button button2 = new Button("9h-10h");
         Button button3 = new Button("10h-11h");
         Button button4 = new Button("11h-12h");
         HBox buttonsRow3 = new HBox(10); // Espace de 10 pixels entre les boutons
         buttonsRow3.getChildren().addAll(label3, button1, button2, button3, button4);
-        AtomicInteger horaire = new AtomicInteger(8);
+        AtomicInteger horaire = new AtomicInteger(0);
 
         // Ajouter le style aux boutons de la ligne 3
         button1.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
@@ -141,7 +141,6 @@ public class VueLivraison extends Application {
 
         // Row 4: Boutons Valider et Annuler
         Button boutonAnnuler = new Button("Annuler");
-        //boutonAnnuler.setPrefSize(100, 40);
         boutonAnnuler.setOnAction(event -> {
             // Fermer la fenêtre actuelle
             Stage stage = (Stage) boutonAnnuler.getScene().getWindow();
@@ -150,19 +149,26 @@ public class VueLivraison extends Application {
         Button boutonValider = new Button("Valider");
 
         boutonValider.setOnAction(event -> {
-            Livreur livreur = new Livreur(livreurComboBox.getValue());
-            Intersection intersection = intersectionComboBox.getValue();
-            Creneau creneau = Creneau.HUIT_NEUF;
-            switch (horaire.get()) {
-                case 8: creneau= Creneau.HUIT_NEUF; break;
-                case 9: creneau= Creneau.NEUF_DIX; break;
-                case 3: creneau= Creneau.DIX_ONZE; break;
-                case 4: creneau= Creneau.ONZE_DOUZE; break;
-                default: System.out.println("Pas de créneau sélectionné");
+            try {
+                Livreur livreur = new Livreur(livreurComboBox.getValue());
+                Intersection intersection = intersectionComboBox.getValue();
+                Creneau creneau = Creneau.HUIT_NEUF;
+                switch (horaire.get()) {
+                    case 8: creneau= Creneau.HUIT_NEUF; break;
+                    case 9: creneau= Creneau.NEUF_DIX; break;
+                    case 10: creneau= Creneau.DIX_ONZE; break;
+                    case 11: creneau= Creneau.ONZE_DOUZE; break;
+                    default: System.out.println("Pas de créneau sélectionné");
+                }
+                boolean reussi = Service.getInstance().essaieAjoutLivraisonAuTour(intersection, creneau, livreur);
+                erreurLabel.setText(reussi ? "" : "Le livreur ne peut pas assurer cette livraison");
+                erreurLabel.setText(!reussi ? "" : "Interstection : "+ intersection+", Livreur : " + livreur +", Creneau : "+ creneau);
+            } catch (Exception e) {
+                // En cas d'erreur, mettez à jour le texte de l'erreurLabel
+                erreurLabel.setText("Une erreur est survenue : " + e.getMessage());
+                // Vous pouvez également imprimer la trace de la pile pour plus d'informations sur l'erreur.
+                e.printStackTrace();
             }
-            boolean reussi = Service.getInstance().essaieAjoutLivraisonAuTour(intersection, creneau, livreur);
-            erreurLabel.setText(reussi ? "" : "Le livreur ne peut pas assurer cette livraison");
-            erreurLabel.setText(!reussi ? "" : "Interstection : "+ intersection+", Livreur : " + livreur +", Creneau : "+ creneau);
         });
 
         HBox buttonsRow4 = new HBox(10); // Espace de 10 pixels entre les boutons
