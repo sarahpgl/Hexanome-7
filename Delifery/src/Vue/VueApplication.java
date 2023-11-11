@@ -53,7 +53,7 @@ public class VueApplication extends Application {
 
         // Row 2: Section 1 (left side)
 
-        TableauTours tabTours = new TableauTours(ct, this.cheminFichier);
+        TableauTours tabTours = new TableauTours(c,this.cheminFichier);
         gridPane.add(tabTours, 0, 1);
         gridPane.requestLayout();
         HBox.setHgrow(tabTours, Priority.ALWAYS);

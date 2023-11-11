@@ -1,51 +1,43 @@
 package Vue;
 
 import Donnees.CatalogueTours;
-import Donnees.Creneau;
 import Donnees.Tour;
-
 import Service.Service;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
-
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Random;
 
 
-public class TableauTours extends StackPane  {
+public class TableauTours extends StackPane {
+    Service service = Service.getInstance();
     private CatalogueTours catalogueTours;
     private String cheminFchier;
 
-    Service service=new Service();
-
-    public TableauTours(CatalogueTours catalogueTours, String cheminFichier) {
-        this.catalogueTours = catalogueTours;
+    Carte carteTab=null;
+    public TableauTours(Carte c,String cheminFichier) {
+        this.carteTab=c;
+        this.catalogueTours = service.getCatalogueTours();
         this.cheminFchier = cheminFichier;
 
-        int nbColonnes = 3; // Taille du tableau
+        int nbColonnes = 3; // Largeur du tableau
         ArrayList<Tour> tours = catalogueTours.getCatalogue();
 
 
-        if (tours.size()<1) {
+        if (tours.size() < 1) {
             //si la catalogue courat est vide
-            Label titreVIDE = new Label("Vous n'avez actuellement pas de tour. Chargez un fichier de tour ou créez une livraison.");
+            Label titreVIDE = new Label("Vous n'avez actuellement pas de tour. Chargez un fichier de tour ou ajoutez une livraison.");
             titreVIDE.setAlignment(Pos.CENTER);
             titreVIDE.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
             titreVIDE.setTranslateY(-60);
@@ -56,7 +48,8 @@ public class TableauTours extends StackPane  {
 
             getChildren().add(vbox);
             setAlignment(Pos.CENTER); // Centre le VBox dans le StackPane
-        } else {
+        } else { //catalagueTours non vide
+
             int nbLignes = tours.size() + 1;
 
             GridPane tableau = new GridPane();
@@ -76,20 +69,25 @@ public class TableauTours extends StackPane  {
                     cellule.getChildren().add(rectangle);
 
                     if (i == 0 && j > 0) {
-                        rectangle.setFill(Color.rgb(new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256)));
-                        Text text = new Text(String.valueOf(j));
+                        rectangle.setFill(Color.rgb(new Random().nextInt(30,255), new Random().nextInt(30,256), new Random().nextInt(30,256)));
+                        Text text = new Text(String.valueOf(tours.get(j-1).getId()));
                         tableau.add(cellule, i, j);
                         cellule.getChildren().add(text);
 
-                        Long finalJ = (long) j;
+                        int finalJ = j;
                         rectangle.setOnMouseClicked(event -> {
-                            Service.getInstance().ouvrirDetails(this.cheminFchier, 3L);
+                            //System.out.println(catalogueTours.toString());
+                            //System.out.println(catalogueTours.getTourById(tours.get(finalJ-1).getId()));
+                            //System.out.println("id tour"+tours.get(finalJ-1).getId());
+
+                            Service.getInstance().ouvrirDetails(this.cheminFchier,tours.get(finalJ-1).getId());
                             rectangle.setFill(Color.rgb(new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256)));
                         });
 
                     } else if (i == 2 && j > 0) {
                         CheckBox caseCocher = new CheckBox();
                         caseCocher.setText(String.valueOf(j));
+                        caseCocher.setStyle("-fx-text-fill: transparent;");
                         caseCocher.setSelected(true);
                         tableau.add(cellule, i, j);
                         cellule.getChildren().add(caseCocher);
@@ -98,23 +96,20 @@ public class TableauTours extends StackPane  {
                         caseCocher.setOnAction(event -> {
                             if (caseCocher.isSelected()) {
                                 System.out.println(caseCocher.getText());
-                                //carteTab.remettreLigne(caseCocher.getText());
+                                carteTab.remettreLigne(caseCocher.getText());
                             } else {
-                                //carteTab.enleverLigne(caseCocher.getText());
+                                carteTab.enleverLigne(caseCocher.getText());
                             }
                         });
 
-                    } else if (i == 1 && j == 1) {
-                        Text text = new Text("Tour Rouge");
+                    }
+                    else if (i == 1 && j>0) {
+                        //Text text = new Text("cc");
+                        Text text = new Text(catalogueTours.getCatalogue().get(j-1).getNomLivreur());
                         tableau.add(cellule, i, j);
                         cellule.getChildren().add(text);
-
-                    } else if (i == 1 && j == 2) {
-                        Text text = new Text("Tour Bleu");
-                        tableau.add(cellule, i, j);
-                        cellule.getChildren().add(text);
-
-                    } else if (i == 0 && j == 0) {
+                    }
+                    else if (i == 0 && j == 0) {
                         Text text = new Text("Tour N°");
                         rectangle.setFill(Color.WHITE);
                         tableau.add(cellule, i, j);
@@ -132,7 +127,7 @@ public class TableauTours extends StackPane  {
                     } else {
                         tableau.add(cellule, i, j);
 
-                }
+                    }
 
                 }
             }
@@ -140,13 +135,13 @@ public class TableauTours extends StackPane  {
             titre.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
 
             TextArea textArea = new TextArea();
-            textArea.setPrefSize(10,10);
+            textArea.setPrefSize(10, 10);
             textArea.setStyle("-fx-font-size:20px;-fx-text-alignment: center;-fx-alignment: center");
 
             Button boutonLivreur = new Button("Enregistrer");
             boutonLivreur.setPrefWidth(100);
 
-            Label titreLivreur=new Label("Nombre de livreurs : ");
+            Label titreLivreur = new Label("Nombre de livreurs : ");
             titreLivreur.setStyle("-fx-font-style: italic; -fx-font-size: 18px; -fx-text-fill: black;");
 
             tableau.setAlignment(Pos.CENTER);
@@ -160,23 +155,23 @@ public class TableauTours extends StackPane  {
             hboxlivreur.setAlignment(Pos.BOTTOM_CENTER);
 
 
-            HBox hboxlivreurwithtitle = new HBox(titreLivreur,hboxlivreur);
+            HBox hboxlivreurwithtitle = new HBox(titreLivreur, hboxlivreur);
             hboxlivreurwithtitle.setSpacing(12);
             hboxlivreurwithtitle.setAlignment(Pos.BOTTOM_CENTER);
             hboxlivreurwithtitle.setTranslateX(-20);
 
 
-            Button boutonCharger=new Button("Charger un tour");
-            Button boutonSauvegarder=new Button("Sauvegarder le tour");
+            Button boutonCharger = new Button("Charger un tour");
+            Button boutonSauvegarder = new Button("Sauvegarder le tour");
             boutonCharger.setPrefWidth(230);
             boutonCharger.setPrefHeight(40);
             boutonSauvegarder.setPrefWidth(230);
             boutonSauvegarder.setPrefHeight(40);
 
-            HBox hbox2boutons=new HBox(boutonCharger,boutonSauvegarder);
+            HBox hbox2boutons = new HBox(boutonCharger, boutonSauvegarder);
             hbox2boutons.setSpacing(10);
             hbox2boutons.setAlignment(Pos.BOTTOM_CENTER);
-            Button boutonAjouter=new Button("Ajouter une livraison");
+            Button boutonAjouter = new Button("Ajouter une livraison");
             boutonAjouter.setPrefWidth(230);
             boutonAjouter.setPrefHeight(40);
             boutonAjouter.setOnAction(event -> {
@@ -185,12 +180,12 @@ public class TableauTours extends StackPane  {
                 vueLivraison.start(stage);
             });
 
-            VBox vbox3boutons=new VBox(hbox2boutons,boutonAjouter);
+            VBox vbox3boutons = new VBox(hbox2boutons, boutonAjouter);
             vbox3boutons.setSpacing(20);
             vbox3boutons.setAlignment(Pos.BOTTOM_CENTER);
 
 
-            List<Button> boutons = Arrays.asList(boutonCharger, boutonSauvegarder, boutonAjouter,boutonLivreur);
+            List<Button> boutons = Arrays.asList(boutonCharger, boutonSauvegarder, boutonAjouter, boutonLivreur);
 
             for (Button bouton : boutons) {
                 bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #7D9DA5; -fx-background-radius: 20;");
@@ -201,17 +196,17 @@ public class TableauTours extends StackPane  {
                     bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #7D9DA5; -fx-background-radius: 20;");
                 });
                 bouton.setOnMousePressed(event -> {
-                    if (bouton==boutonLivreur)System.out.println(textArea.getText());
+                    if (bouton == boutonLivreur) System.out.println(textArea.getText());
                     bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #86a6b8; -fx-background-radius: 20;");
                 });
             }
 
-            VBox vboxPartieBasse=new VBox(hboxlivreurwithtitle,vbox3boutons);
+            VBox vboxPartieBasse = new VBox(hboxlivreurwithtitle, vbox3boutons);
             vboxPartieBasse.setSpacing(20);
             vboxPartieBasse.setAlignment(Pos.BOTTOM_CENTER);
             vboxPartieBasse.setTranslateY(-5);
 
-            VBox vboxtotal= new VBox(vboxTableau,vboxPartieBasse);
+            VBox vboxtotal = new VBox(vboxTableau, vboxPartieBasse);
             VBox.setVgrow(vboxTableau, Priority.ALWAYS);
             VBox.setVgrow(vboxPartieBasse, Priority.ALWAYS);
             getChildren().add(vboxtotal);
