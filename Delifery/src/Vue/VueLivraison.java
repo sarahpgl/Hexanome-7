@@ -1,33 +1,33 @@
 package Vue;
 
+import Donnees.Creneau;
+import Donnees.Intersection;
 import Service.Service;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Rectangle2D;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
-import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import Donnees.Livreur;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class VueLivraison extends Application {
     public Integer windowWidth=800;
     public Integer windowHeight=600;
+
     public VueLivraison() {
     }
     @Override
@@ -55,20 +55,20 @@ public class VueLivraison extends Application {
         // Row 2 et 3: TextFields and Labels (below the header)
         Label label1 = new Label("Adresse :");
         label1.setFont(Font.font("Arial", 14));
-        TextField textField1 = new TextField();
+        ArrayList<Intersection> listeIntersections = Service.getInstance().getAllIntersections();
+        ComboBox<Intersection> intersectionComboBox = new ComboBox<>(FXCollections.observableArrayList(listeIntersections));
+        intersectionComboBox.setPromptText("Sélectionnez une intersection");
         Label label2 = new Label("Livreur :");
         label2.setFont(Font.font("Arial", 14));
-        /*List<String> nomsLivreurs = Service.getInstance().getListLivreur();
-        ComboBox<String> livreurComboBox = new ComboBox<>(FXCollections.observableArrayList(nomsLivreurs));
-        livreurComboBox.setPromptText("Sélectionnez un livreur");*/
-        TextField textField2 = new TextField();
+        ArrayList<String> listeLivreurs = Service.getInstance().getListLivreur();
+        ComboBox<String> livreurComboBox = new ComboBox<>(FXCollections.observableArrayList(listeLivreurs));
+        livreurComboBox.setPromptText("Sélectionnez un livreur");
 
         // Ajoutez les titres et les zones de texte à la grille (une en dessous de l'autre)
         gridPane.add(label1, 0, 1);
-        gridPane.add(textField1, 1, 1);
+        gridPane.add(intersectionComboBox, 1, 1);
         gridPane.add(label2, 0, 2);
-        gridPane.add(textField2, 1, 2);
-        //gridPane.add(livreurComboBox, 1, 2);
+        gridPane.add(livreurComboBox, 1, 2);
 
         // Set column constraints for the labels and text fields
         ColumnConstraints labelColumnConstraints = new ColumnConstraints();
@@ -90,6 +90,7 @@ public class VueLivraison extends Application {
         Button button4 = new Button("11h-12h");
         HBox buttonsRow3 = new HBox(10); // Espace de 10 pixels entre les boutons
         buttonsRow3.getChildren().addAll(label3, button1, button2, button3, button4);
+        AtomicInteger horaire = new AtomicInteger(8);
 
         // Ajouter le style aux boutons de la ligne 3
         button1.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
@@ -97,11 +98,48 @@ public class VueLivraison extends Application {
         button3.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
         button4.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
 
+        button1.setOnAction(event -> {
+            button1.setStyle("-fx-background-color: #5C7A8B; -fx-text-fill: black;");
+            button2.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            button3.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            button4.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            horaire.set(8);
+        });
+
+        button2.setOnAction(event -> {
+            button1.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            button2.setStyle("-fx-background-color: #5C7A8B; -fx-text-fill: black;");
+            button3.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            button4.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            horaire.set(9);
+        });
+
+        button3.setOnAction(event -> {
+            button1.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            button2.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            button3.setStyle("-fx-background-color: #5C7A8B; -fx-text-fill: black;");
+            button4.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            horaire.set(10);
+        });
+
+        button4.setOnAction(event -> {
+            button1.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            button2.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            button3.setStyle("-fx-background-color: #7d9da5; -fx-text-fill: black;");
+            button4.setStyle("-fx-background-color: #5C7A8B; -fx-text-fill: black;");
+            horaire.set(11);
+        });
+
         // Ajoutez les boutons à la grille (alignés dans la même ligne)
         gridPane.add(buttonsRow3, 0, 3, 2, 1);
         gridPane.setVgap(20);
 
-        // Row 4: Buttons with increased size (aligned in a row)
+        // Créez un label pour afficher le message d'erreur
+        Label erreurLabel = new Label();
+        erreurLabel.setStyle("-fx-text-fill: red; -fx-font-size: 9px;");
+        gridPane.add(erreurLabel, 0, 5, 2, 1);
+
+        // Row 4: Boutons Valider et Annuler
         Button boutonAnnuler = new Button("Annuler");
         //boutonAnnuler.setPrefSize(100, 40);
         boutonAnnuler.setOnAction(event -> {
@@ -110,6 +148,23 @@ public class VueLivraison extends Application {
             stage.close();
         });
         Button boutonValider = new Button("Valider");
+
+        boutonValider.setOnAction(event -> {
+            Livreur livreur = new Livreur(livreurComboBox.getValue());
+            Intersection intersection = intersectionComboBox.getValue();
+            Creneau creneau = Creneau.HUIT_NEUF;
+            switch (horaire.get()) {
+                case 8: creneau= Creneau.HUIT_NEUF; break;
+                case 9: creneau= Creneau.NEUF_DIX; break;
+                case 3: creneau= Creneau.DIX_ONZE; break;
+                case 4: creneau= Creneau.ONZE_DOUZE; break;
+                default: System.out.println("Pas de créneau sélectionné");
+            }
+            boolean reussi = Service.getInstance().essaieAjoutLivraisonAuTour(intersection, creneau, livreur);
+            erreurLabel.setText(reussi ? "" : "Le livreur ne peut pas assurer cette livraison");
+            erreurLabel.setText(!reussi ? "" : "Interstection : "+ intersection+", Livreur : " + livreur +", Creneau : "+ creneau);
+        });
+
         HBox buttonsRow4 = new HBox(10); // Espace de 10 pixels entre les boutons
         buttonsRow4.getChildren().addAll(boutonAnnuler, boutonValider);
 
