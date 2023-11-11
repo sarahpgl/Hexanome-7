@@ -249,4 +249,11 @@ public class Main {
         System.out.println("iciiii"+tour.toString());
 
     }
+
+    public static void testImportTours() {
+        String filePath = System.getProperty("user.dir") + "/Delifery/fichiersXML2022/Test.xml";
+        System.out.println("File Path to import tours : " + filePath);
+        Object[] test = FileSystemXML.lireXML(filePath);
+        System.out.println(test[0]);
+    }
 }
