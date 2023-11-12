@@ -23,7 +23,7 @@ public class Main {
         //TestCreerCarte();
         //TestLireXML();
 
-        //testerDetailTour();
+        testerDetailTour();
         launch(FenetreLancement.class, args);
 
 

@@ -144,9 +144,9 @@ public class TableauTours extends StackPane {
                         caseCocher.setOnAction(event -> {
                             if (caseCocher.isSelected()) {
                                 System.out.println(caseCocher.getText());
-                                carteTab.remettreLigne(caseCocher.getText());
+                                service.getCarte().remettreLigne(caseCocher.getText());
                             } else {
-                                carteTab.enleverLigne(caseCocher.getText());
+                                service.getCarte().enleverLigne(caseCocher.getText());
                             }
                         });
 

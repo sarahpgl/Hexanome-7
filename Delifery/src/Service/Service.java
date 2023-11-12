@@ -32,6 +32,8 @@ public class Service {
 
     private VueApplication vueApplication;
 
+    private Carte carte;
+
 
     public Service() {
         this.catalogueTours = new CatalogueTours();
@@ -137,6 +139,7 @@ public class Service {
         }
         // essayer de calculer le tour (modifier dans la fonction qui calcule le tour pour renvoyer l'état de l'opération)
         // si ok
+        updateCarte();
         return true;
     }
     public Livraison creerLivraison(Long id, Intersection adresse, Creneau creneau, LocalTime heureDebut, LocalTime heureFin){
@@ -336,9 +339,12 @@ public class Service {
         this.vueApplication = vueApplication;
     }
 
+    public void setCarte(Carte carte){this.carte=carte;}
+    public Carte getCarte(){return this.carte;}
     public void updateCarte(){
         vueApplication.updateCarte();
     }
+
 
 
 }

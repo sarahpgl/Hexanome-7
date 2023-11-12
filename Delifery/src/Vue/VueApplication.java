@@ -20,6 +20,8 @@ public class VueApplication extends Application {
     public Integer windowHeight;
     GridPane gridPane = new GridPane();
 
+    public Carte carte;
+
     Service service = Service.getInstance();
 
 
@@ -51,6 +53,7 @@ public class VueApplication extends Application {
 
         // Row 3: Section 2 (right side)
         Carte c = new Carte(cheminFichier, windowWidth/2, windowHeight*8/10);
+        this.carte=c;
         gridPane.add(c, 1, 1);
 
         CatalogueTours ct = Service.getInstance().getCatalogueTours();
@@ -91,7 +94,9 @@ public class VueApplication extends Application {
     }
 
     public void updateCarte(){
+        gridPane.getChildren().remove(this.carte);
         Carte c = new Carte(cheminFichier, windowWidth/2, windowHeight*8/10);
+        this.carte=c;
         gridPane.add(c, 1, 1);
     }
 

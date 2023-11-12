@@ -43,6 +43,8 @@ public class Carte extends Pane {
 
         //System.out.println((service.getCatalogueTours().toString()));
 
+        service.setCarte(this);
+
         dessinerCarte();
 
         ArrayList<Intersection> listeInterPourLivrer= service.creerIntersectionsPourLivrer();
@@ -68,6 +70,7 @@ public class Carte extends Pane {
 
                 tourCol=tourAColorier(tourFor,dc,entrepot);
                 dessinerTour(tourCol,i+1,tourFor.getLivreur());
+                listeCouleurs.get(i).getDots().clear();
                 for(Livraison liv : livraisonsFor){
                     Circle dot = createNode(liv.getAdresse(),util,0,String.valueOf(liv.getId()));
                     listeCouleurs.get(i).getDots().add(dot);
