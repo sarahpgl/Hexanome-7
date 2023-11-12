@@ -371,6 +371,7 @@ public class Service {
             setCatalogueTours((CatalogueTours) objects[0]);
             b=true;
             updateCarte();
+            updatePanel();
         }
         return b;
     }
