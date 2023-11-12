@@ -17,7 +17,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 import java.time.LocalTime;
 
 import java.util.*;
@@ -53,7 +52,7 @@ public class Service {
         FileSystemXML fsxml;
         fsxml = new FileSystemXML();
 
-
+        String nomFichierCarte;
         // Chemin d'accès fixe (à modifier selon vos besoins)
         String cheminFixe = System.getProperty("user.dir") + "/Delifery/fichiersXML2022/";
 
@@ -63,12 +62,19 @@ public class Service {
 
         Object[] objects = fsxml.lireXML(nomFichier);
 
-        Intersection[] entrepot = (Intersection[]) objects[0];
-
-        if(entrepot==null){
-            objects = fsxml.lireXML(cheminComplet);
-            entrepot = (Intersection[]) objects[0];
+        if (objects!=null && objects[0] instanceof CatalogueTours) {
+            this.catalogueTours = (CatalogueTours)objects[0];
+            System.out.println("Print de la méthode creerDonnerCartes de la class Service qui print le catalgue Tour dans le cas où le fichier xml correspond à la restitution d'un catalogueTout : \n" + this.getCatalogueTours().toString());
+            nomFichierCarte = this.catalogueTours.getMapName();
+            cheminComplet = cheminFixe + nomFichierCarte;
+            objects = fsxml.lireXML(nomFichierCarte);
         }
+
+        if(objects==null) {
+            objects = fsxml.lireXML(cheminComplet);
+        }
+
+        Intersection[] entrepot = (Intersection[]) objects[0];
 
 
         Intersection[] intersections = (Intersection[]) objects[1];
@@ -116,7 +122,6 @@ public class Service {
         CatalogueTours catalogueTours = this.catalogueTours;
         Tour tour = catalogueTours.getTourByLivreur(livreur);
         if (tour == null){
-
             ArrayList<Livraison> livraisons = new ArrayList<Livraison>();
             livraisons.add(l);
              tour = new Tour(livraisons, livreur);
@@ -258,6 +263,13 @@ public class Service {
             }
         }
 
+        if(interCourante!=entrepot){
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,entrepot,carte.getCarte());
+            tour.ajouterListeAuTrajet(chemin);
+            interCourante=entrepot;
+        }
+
+
         return tour;
     }
 
@@ -308,10 +320,10 @@ public class Service {
         return intersections;
     }
 
-    public ArrayList<Livreur> getListLivreur(){
-        ArrayList<Livreur> livreurs = new ArrayList<>();
+    public ArrayList<String> getListLivreur(){
+        ArrayList<String> livreurs = new ArrayList<>();
         for (Tour t: catalogueTours.catalogue) {
-            livreurs.add(t.getLivreur());
+            livreurs.add(t.getLivreur().getNom());
         }
         return livreurs;
     }

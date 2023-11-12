@@ -7,9 +7,11 @@ public class CatalogueTours {
 
     public ArrayList<Tour> catalogue;
     public String mapName;
+    public Integer nbLivreurs;
 
     public CatalogueTours(){
         catalogue= new ArrayList<Tour>();
+        nbLivreurs = 0;
     }
 
     public CatalogueTours(String mapName) {
@@ -26,14 +28,6 @@ public class CatalogueTours {
 
     public void ajouterTour(Tour tour){
         catalogue.add(tour);
-    }
-
-    public String toString(){
-        String mes = "Catalogue Tour : \n";
-        for (Tour t: catalogue) {
-            mes = mes + t.toString() +"\n";
-        }
-        return mes;
     }
 
     public Tour getTourByLivreur (Livreur l){
@@ -60,5 +54,33 @@ public class CatalogueTours {
 
     public ArrayList<Tour> getCatalogue() {
         return catalogue;
+    }
+    public void setNbLivreurs(Integer nb){
+        this.nbLivreurs = nb ;
+    }
+    public Integer getNbTour(){
+        return catalogue.size();
+    }
+    public ArrayList<Livreur> getListeLivreurs(){
+        ArrayList<Livreur> liste = new ArrayList<Livreur>();
+        for(Tour t : catalogue){
+            liste.add(t.getLivreur());
+        }
+        return liste;
+    }
+
+    public String getMapName() {
+        return mapName;
+    }
+
+    public String toString(){
+        String mes ="************* Catalogue Tout *************\n";
+        if (this.mapName != null){
+            mes = mes + "Map :" + this.getMapName() +"\n";
+        }
+        for (Tour t: this.catalogue) {
+            mes = mes + t.toString();
+        }
+        return  mes;
     }
 }

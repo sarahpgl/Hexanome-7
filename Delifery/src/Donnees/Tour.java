@@ -36,6 +36,15 @@ public class Tour {
         trajet=new ArrayList<Intersection>();
     }
 
+
+    public Tour(Long id) {
+
+        this.id = id;
+        this.livreur = new Livreur(id.intValue());
+        this.livraisons = new ArrayList<Livraison>();
+        trajet=new ArrayList<Intersection>();
+    }
+
     public Long getId() {
         return id;
     }
@@ -82,7 +91,7 @@ public class Tour {
     }
 
     public String toString(){
-        String mes= "Tour numéro "+this.id+"\n";
+        String mes= "Tour numéro "+this.id+" effectué par le livreur : " + this.livreur.getId() +"\n";
         mes= mes +"Livraisons effectuées :\n";
         Calculs.trierLivraisons(livraisons);
         for (Livraison l: livraisons) {
