@@ -113,7 +113,6 @@ public class Service {
         CatalogueTours catalogueTours = this.catalogueTours;
         Tour tour = catalogueTours.getTourByLivreur(livreur);
         if (tour == null){
-
             ArrayList<Livraison> livraisons = new ArrayList<Livraison>();
             livraisons.add(l);
              tour = new Tour(livraisons, livreur);
@@ -254,6 +253,13 @@ public class Service {
                 l.livraisonNonLivree();
             }
         }
+
+        if(interCourante!=entrepot){
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,entrepot,carte.getCarte());
+            tour.ajouterListeAuTrajet(chemin);
+            interCourante=entrepot;
+        }
+
 
         return tour;
     }
