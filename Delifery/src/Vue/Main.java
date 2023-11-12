@@ -58,13 +58,13 @@ public class Main {
         System.out.println("Veuillez entrer le nom du ficher XML : ");
         String nomFichier = scanner.nextLine();
 
-        Service service = new Service();
+        Service service = Service.getInstance();
         DonneesCarte carte = service.creerDonneesCarte(nomFichier);
     }
 
     public static void TesterDijkstra(){
 
-        Service service = new Service();
+        Service service = Service.getInstance();
         System.out.println("Nom du fichier xml : " +System.getProperty("user.dir")+"/Delifery/fichiersXML2022/smallMap.xml");
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
@@ -83,7 +83,7 @@ public class Main {
     }
 
     public static void TestCreerCarte(){
-        Service service = new Service();
+        Service service = Service.getInstance();
         DonneesCarte carte = service.creerDonneesCarte("smallMap.xml");
         afficherGraphe(carte.getCarte());
     }
@@ -122,7 +122,7 @@ public class Main {
     }
 
     public static void TesterTrie(){
-        Service service = new Service();
+        Service service = Service.getInstance();
         System.out.println("Nom du fichier xml : " +System.getProperty("user.dir")+"/Delifery/fichiersXML2022/smallMap.xml");
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
@@ -156,7 +156,7 @@ public class Main {
     }
 
     public static void testerHeureLivraison(){
-        Service service = new Service();
+        Service service = Service.getInstance();
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
         Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
@@ -172,7 +172,7 @@ public class Main {
     }
 
     /*public static void testerCalculTour(){
-        Service service = new Service();
+        Service service = Service.getInstance();
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
         Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
@@ -194,13 +194,13 @@ public class Main {
     }*/
 
     public static void getInterById(){
-        Service service = new Service();
+        Service service = Service.getInstance();
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         System.out.println(carte.findIntersectionById("975886496").toString());
     }
 
     public static void TesterCreationXMLCatalogueTour(){
-        Service service = new Service();
+        Service service = Service.getInstance();
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
         Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
@@ -227,26 +227,54 @@ public class Main {
         Service service = Service.getInstance();
         DonneesCarte carte = service.creerDonneesCarte("mediumMap.xml");
         Intersection Entrepot = new Intersection(new BigInteger("25303831"),new Coordonnees(45.74979,4.87572));
-        Intersection destination1 = new Intersection(new BigInteger("25321456"), new Coordonnees(45.749214,4.875591));
-        Intersection destination2 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
-        Intersection destination3 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
-        Intersection destination4 = new Intersection(new BigInteger("975886496"),new Coordonnees(45.756874,4.8574047));
+        //premier tour
+        Intersection destination1 = new Intersection(new BigInteger("25321433"), new Coordonnees(45.74969,4.873468));
+        Intersection destination2 = new Intersection(new BigInteger("1957527553"), new Coordonnees(45.736317,4.8697796));
+        //Intersection destination3 = new Intersection(new BigInteger("25321422"), new Coordonnees(45.749027,4.873145));
+        Intersection destination4 = new Intersection(new BigInteger("21703594"),new Coordonnees(45.73886,4.876077));
         Livraison livraison1 = new Livraison((long) 1,destination1, Creneau.valueOf("HUIT_NEUF"));
         Livraison livraison2 = new Livraison((long) 2,destination2, Creneau.valueOf("HUIT_NEUF"));
-        Livraison livraison3 = new Livraison((long) 3,destination3, Creneau.valueOf("HUIT_NEUF"));
+        //Livraison livraison3 = new Livraison((long) 3,destination3, Creneau.valueOf("HUIT_NEUF"));
         Livraison livraison4 = new Livraison((long) 4,destination4, Creneau.valueOf("HUIT_NEUF"));
         ArrayList<Livraison> livraisons = new ArrayList<>();
         livraisons.add(livraison4);
         livraisons.add(livraison2);
         livraisons.add(livraison1);
-        livraisons.add(livraison3);
+        //livraisons.add(livraison3);
+
         Tour tour = new Tour( livraisons, new Livreur("Sophie"));
+
+        //deuxieme tour
+        Intersection destination5 = new Intersection(new BigInteger("1682387628"), new Coordonnees(45.754463,4.882047));
+        Intersection destination6 = new Intersection(new BigInteger("60901950"), new Coordonnees(45.7369,4.89531));
+        Intersection destination7 = new Intersection(new BigInteger("459797854"), new Coordonnees(45.76118,4.898195));
+        Livraison livraison5 = new Livraison((long) 5,destination5, Creneau.valueOf("HUIT_NEUF"));
+        Livraison livraison6 = new Livraison((long) 6,destination6, Creneau.valueOf("HUIT_NEUF"));
+        Livraison livraison7 = new Livraison((long) 7,destination7, Creneau.valueOf("HUIT_NEUF"));
+        ArrayList<Livraison> livraisons2 = new ArrayList<>();
+        livraisons2.add(livraison5);
+        livraisons2.add(livraison6);
+        livraisons2.add(livraison7);
+        Tour tour2 = new Tour( livraisons2, new Livreur("Moïse"));
+
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
+        tour2 = service.calculerTour(tour2,(double)15,carte,Entrepot);
+
         CatalogueTours c = new CatalogueTours("mediumMap.xml");
+        c.setNbLivreurs(2);
         ArrayList<Tour> toursTest = c.getCatalogue();
         c.ajouterTour(tour);
-        service.setCatalogueTours(c);
-        System.out.println("iciiii"+tour.toString());
+        c.ajouterTour(tour2);
 
+        service.setCatalogueTours(c);
+        System.out.println("iciiii"+tour2.toString());
+
+    }
+
+    public static void testImportTours() {
+        String filePath = System.getProperty("user.dir") + "/Delifery/fichiersXML2022/Test.xml";
+        System.out.println("File Path to import tours : " + filePath);
+        Object[] test = FileSystemXML.lireXML(filePath);
+        System.out.println(test[0]);
     }
 }

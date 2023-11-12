@@ -30,6 +30,10 @@ public class Service {
     private DonneesCarte donneesCarte;
     private CatalogueTours catalogueTours;
 
+    private VueApplication vueApplication;
+
+    private Carte carte;
+
 
     public Service() {
         this.catalogueTours = new CatalogueTours();
@@ -50,7 +54,7 @@ public class Service {
         FileSystemXML fsxml;
         fsxml = new FileSystemXML();
 
-
+        String nomFichierCarte;
         // Chemin d'accès fixe (à modifier selon vos besoins)
         String cheminFixe = System.getProperty("user.dir") + "/Delifery/fichiersXML2022/";
 
@@ -60,12 +64,19 @@ public class Service {
 
         Object[] objects = fsxml.lireXML(nomFichier);
 
-        Intersection[] entrepot = (Intersection[]) objects[0];
-
-        if(entrepot==null){
-            objects = fsxml.lireXML(cheminComplet);
-            entrepot = (Intersection[]) objects[0];
+        if (objects!=null && objects[0] instanceof CatalogueTours) {
+            this.catalogueTours = (CatalogueTours)objects[0];
+            System.out.println("Print de la méthode creerDonnerCartes de la class Service qui print le catalgue Tour dans le cas où le fichier xml correspond à la restitution d'un catalogueTout : \n" + this.getCatalogueTours().toString());
+            nomFichierCarte = this.catalogueTours.getMapName();
+            cheminComplet = cheminFixe + nomFichierCarte;
+            objects = fsxml.lireXML(nomFichierCarte);
         }
+
+        if(objects==null) {
+            objects = fsxml.lireXML(cheminComplet);
+        }
+
+        Intersection[] entrepot = (Intersection[]) objects[0];
 
 
         Intersection[] intersections = (Intersection[]) objects[1];
@@ -113,7 +124,6 @@ public class Service {
         CatalogueTours catalogueTours = this.catalogueTours;
         Tour tour = catalogueTours.getTourByLivreur(livreur);
         if (tour == null){
-
             ArrayList<Livraison> livraisons = new ArrayList<Livraison>();
             livraisons.add(l);
              tour = new Tour(livraisons, livreur);
@@ -129,6 +139,7 @@ public class Service {
         }
         // essayer de calculer le tour (modifier dans la fonction qui calcule le tour pour renvoyer l'état de l'opération)
         // si ok
+        updateCarte();
         return true;
     }
     public Livraison creerLivraison(Long id, Intersection adresse, Creneau creneau, LocalTime heureDebut, LocalTime heureFin){
@@ -255,6 +266,13 @@ public class Service {
             }
         }
 
+        if(interCourante!=entrepot){
+            List<Intersection> chemin = Calculs.dijkstra(interCourante,entrepot,carte.getCarte());
+            tour.ajouterListeAuTrajet(chemin);
+            interCourante=entrepot;
+        }
+
+
         return tour;
     }
 
@@ -316,6 +334,31 @@ public class Service {
     public ArrayList<Tour> getTours(){
         return catalogueTours.getCatalogue();
     }
+
+    public void setVueApplication(VueApplication vueApplication) {
+        this.vueApplication = vueApplication;
+    }
+
+    public void setCarte(Carte carte){this.carte=carte;}
+    public Carte getCarte(){return this.carte;}
+    public void updateCarte(){
+        vueApplication.updateCarte();
+    }
+
+    public void setNbLivreurs(int nombre){
+        if(nombre>= catalogueTours.getListeLivreurs().size()) {
+            for (int i = catalogueTours.nbLivreurs; i < nombre; i++) {
+                catalogueTours.ajouterTour(new Tour(new Livreur(i)));
+            }
+        }else{
+            for(int i =catalogueTours.getListeLivreurs().size(); i>nombre; i-- ){
+                catalogueTours.supprimerTour();
+            }
+        }
+        catalogueTours.setNbLivreurs(nombre);
+
+    }
+
 
 
 }
