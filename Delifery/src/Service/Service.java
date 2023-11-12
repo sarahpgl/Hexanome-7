@@ -34,6 +34,8 @@ public class Service {
 
     private Carte carte;
 
+    private String nomFichierCarte;
+
 
     public Service() {
         this.catalogueTours = new CatalogueTours();
@@ -60,7 +62,7 @@ public class Service {
 
         String cheminComplet = cheminFixe + nomFichier;
 
-        System.out.println("Chemin Fixe (Methode creerDonneesCarte dans Service) : "+cheminComplet);
+        //System.out.println("Chemin Fixe (Methode creerDonneesCarte dans Service) : "+cheminComplet);
 
         Object[] objects = fsxml.lireXML(nomFichier);
 
@@ -69,7 +71,10 @@ public class Service {
             System.out.println("Print de la méthode creerDonnerCartes de la class Service qui print le catalgue Tour dans le cas où le fichier xml correspond à la restitution d'un catalogueTout : \n" + this.getCatalogueTours().toString());
             nomFichierCarte = this.catalogueTours.getMapName();
             cheminComplet = cheminFixe + nomFichierCarte;
+            this.nomFichierCarte=nomFichierCarte;
             objects = fsxml.lireXML(nomFichierCarte);
+        } else {
+                this.nomFichierCarte = nomFichier;
         }
 
         if(objects==null) {
@@ -368,10 +373,15 @@ public class Service {
         fsxml = new FileSystemXML();
         Object[] objects = fsxml.lireXML(cheminfihcierCatalogueTour);
         if (objects[0]!=null && objects[0] instanceof CatalogueTours){
-            setCatalogueTours((CatalogueTours) objects[0]);
-            b=true;
-            updateCarte();
-            updatePanel();
+            CatalogueTours Ctour = (CatalogueTours) objects[0];
+            if (this.nomFichierCarte.contains(Ctour.getMapName())){
+                setCatalogueTours((CatalogueTours) objects[0]);
+                b=true;
+                updateCarte();
+                updatePanel();
+            } else {
+                System.out.println("Impossible d'importer le Catalogue car le CatalogueTour ne correspond pas avec la carte affcihée");
+            }
         }
         return b;
     }
