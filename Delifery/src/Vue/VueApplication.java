@@ -21,6 +21,7 @@ public class VueApplication extends Application {
     GridPane gridPane = new GridPane();
 
     public Carte carte;
+    public TableauTours tableauTours;
 
     Service service = Service.getInstance();
 
@@ -31,6 +32,7 @@ public class VueApplication extends Application {
         this.windowHeight = height;
         this.cheminFichier = cheminFichier;
     }
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -47,20 +49,21 @@ public class VueApplication extends Application {
         primaryStage.setY(0);
 
         // Row 1: Header (takes full width)
-        Entete entete=new Entete();
+        Entete entete = new Entete();
         gridPane.add(entete, 0, 0, 2, 1); // Span 2 columns
 
 
         // Row 3: Section 2 (right side)
-        Carte c = new Carte(cheminFichier, windowWidth/2, windowHeight*8/10);
-        this.carte=c;
+        Carte c = new Carte(cheminFichier, windowWidth / 2, windowHeight * 8 / 10);
+        this.carte = c;
         gridPane.add(c, 1, 1);
 
         CatalogueTours ct = Service.getInstance().getCatalogueTours();
 
         // Row 2: Section 1 (left side)
 
-        TableauTours tabTours = new TableauTours(c,this.cheminFichier);
+        TableauTours tabTours = new TableauTours(c, this.cheminFichier);
+        this.tableauTours = tabTours;
         gridPane.add(tabTours, 0, 1);
         gridPane.requestLayout();
         HBox.setHgrow(tabTours, Priority.ALWAYS);
@@ -93,12 +96,24 @@ public class VueApplication extends Application {
 
     }
 
-    public void updateCarte(){
+    public void updateCarte() {
         gridPane.getChildren().remove(this.carte);
-        Carte c = new Carte(cheminFichier, windowWidth/2, windowHeight*8/10);
-        this.carte=c;
+        Carte c = new Carte(cheminFichier, windowWidth / 2, windowHeight * 8 / 10);
+        this.carte = c;
         gridPane.add(c, 1, 1);
     }
+
+    public void updatePanel() {
+        gridPane.getChildren().remove(this.tableauTours);
+        TableauTours tb = new TableauTours(this.carte,this.cheminFichier);
+
+        this.tableauTours = tb;
+        gridPane.add(tb, 0, 1);
+        gridPane.requestLayout();
+        HBox.setHgrow(tb, Priority.ALWAYS);
+
+    }
+
 
     // Méthode pour ouvrir la fenêtre
     /*public void ouvrirFenetre() {

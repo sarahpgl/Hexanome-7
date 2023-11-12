@@ -82,7 +82,7 @@ public class TableauTours extends StackPane {
                 });
             }
 
-            titreVIDE.setTranslateY(30);
+            titreVIDE.setTranslateY(10);
             titreVIDE.setTranslateX(30);
 
             vbox3boutons.setTranslateY(-20);
@@ -92,7 +92,32 @@ public class TableauTours extends StackPane {
 
             titreVIDE.setAlignment(Pos.TOP_CENTER);
 
-            VBox vboxTotal=new VBox(titreVIDE,vbox3boutons);
+            TextArea textArea = new TextArea();
+            textArea.setPrefSize(10, 10);
+            textArea.setStyle("-fx-font-size:20px;-fx-text-alignment: center;-fx-alignment: center");
+            Label titreLivreur = new Label("Nombre de livreurs : ");
+            titreLivreur.setStyle("-fx-font-style: italic; -fx-font-size: 18px; -fx-text-fill: black;");
+            Button boutonLivreur = new Button("Enregistrer");
+            boutonLivreur.setPrefWidth(100);
+            boutonLivreur.setOnAction(event -> {
+                service.setNbLivreur(Integer.parseInt(textArea.getText()));
+                service.updateCarte();
+                service.updatePanel();
+            });
+
+            HBox hboxlivreur = new HBox(textArea, boutonLivreur);
+            hboxlivreur.setSpacing(14);
+            hboxlivreur.setAlignment(Pos.BOTTOM_CENTER);
+            HBox hboxlivreurwithtitle = new HBox(titreLivreur, hboxlivreur);
+            hboxlivreurwithtitle.setSpacing(12);
+            hboxlivreurwithtitle.setAlignment(Pos.BOTTOM_CENTER);
+            hboxlivreurwithtitle.setTranslateX(-20);
+            VBox vboxPartieBasse = new VBox(hboxlivreurwithtitle, vbox3boutons);
+            vboxPartieBasse.setSpacing(40);
+            vboxPartieBasse.setAlignment(Pos.BOTTOM_CENTER);
+            vboxPartieBasse.setTranslateY(60);
+
+            VBox vboxTotal=new VBox(titreVIDE, vboxPartieBasse);
             getChildren().add(vboxTotal);
 
 
@@ -189,6 +214,7 @@ public class TableauTours extends StackPane {
             boutonLivreur.setOnAction(event -> {
                 service.setNbLivreur(Integer.parseInt(textArea.getText()));
                 service.updateCarte();
+                service.updatePanel();
             });
 
             Label titreLivreur = new Label("Nombre de livreurs : ");
@@ -280,4 +306,5 @@ public class TableauTours extends StackPane {
     public void setCheminFchier(String cheminFchier) {
         this.cheminFchier = cheminFchier;
     }
+
 }

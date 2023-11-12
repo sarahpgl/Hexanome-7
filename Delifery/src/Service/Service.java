@@ -344,6 +344,9 @@ public class Service {
     public void updateCarte(){
         vueApplication.updateCarte();
     }
+    public void updatePanel(){
+        vueApplication.updatePanel();
+    }
 
     public void setNbLivreur(int nombre){
 
