@@ -362,6 +362,19 @@ public class Service {
         }
     }
 
+    public boolean restituerTour(String cheminfihcierCatalogueTour){
+        boolean b = false;
+        FileSystemXML fsxml;
+        fsxml = new FileSystemXML();
+        Object[] objects = fsxml.lireXML(cheminfihcierCatalogueTour);
+        if (objects[0]!=null && objects[0] instanceof CatalogueTours){
+            setCatalogueTours((CatalogueTours) objects[0]);
+            b=true;
+            updateCarte();
+        }
+        return b;
+    }
+
 
 
 }
