@@ -147,7 +147,7 @@ public class FileSystemXML {
             }
             Section section = new Section(Float.parseFloat(longueur), nom, intersectionOrigine,intersectionDestination);
             sections[i] = section;
-            System.out.println(section.toString());
+            //System.out.println(section.toString());
             //System.out.println(section.toString());
         }
 

@@ -50,7 +50,7 @@ public class Service {
         FileSystemXML fsxml;
         fsxml = new FileSystemXML();
 
-
+        String nomFichierCarte;
         // Chemin d'accès fixe (à modifier selon vos besoins)
         String cheminFixe = System.getProperty("user.dir") + "/Delifery/fichiersXML2022/";
 
@@ -60,9 +60,18 @@ public class Service {
 
         Object[] objects = fsxml.lireXML(nomFichier);
 
-        if(objects==null){
+        if (objects!=null && objects[0] instanceof CatalogueTours) {
+            this.catalogueTours = (CatalogueTours)objects[0];
+            System.out.println("Print de la méthode creerDonnerCartes de la class Service qui print le catalgue Tour dans le cas où le fichier xml correspond à la restitution d'un catalogueTout : \n" + this.getCatalogueTours().toString());
+            nomFichierCarte = this.catalogueTours.getMapName();
+            cheminComplet = cheminFixe + nomFichierCarte;
+            objects = fsxml.lireXML(nomFichierCarte);
+        }
+
+        if(objects==null) {
             objects = fsxml.lireXML(cheminComplet);
         }
+
         Intersection[] entrepot = (Intersection[]) objects[0];
 
 

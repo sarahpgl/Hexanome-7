@@ -30,14 +30,6 @@ public class CatalogueTours {
         catalogue.add(tour);
     }
 
-    public String toString(){
-        String mes = "Catalogue Tour : \n";
-        for (Tour t: catalogue) {
-            mes = mes + t.toString() +"\n";
-        }
-        return mes;
-    }
-
     public Tour getTourByLivreur (Livreur l){
         for (Tour t: catalogue) {
             if (t.getLivreur().getId()==l.getId()){
@@ -75,5 +67,20 @@ public class CatalogueTours {
             liste.add(t.getLivreur());
         }
         return liste;
+    }
+
+    public String getMapName() {
+        return mapName;
+    }
+
+    public String toString(){
+        String mes ="************* Catalogue Tout *************\n";
+        if (this.mapName != null){
+            mes = mes + "Map :" + this.getMapName() +"\n";
+        }
+        for (Tour t: this.catalogue) {
+            mes = mes + t.toString();
+        }
+        return  mes;
     }
 }

@@ -41,7 +41,7 @@ public class Carte extends Pane {
 
         float [] util =calculerUtil(dc, panelWidth, panelHeight);
 
-
+        //System.out.println((service.getCatalogueTours().toString()));
 
         dessinerCarte();
 
@@ -127,6 +127,7 @@ public class Carte extends Pane {
     private DonneesCarte createSampleGraph() {
         Service s = new Service();
         DonneesCarte dc = s.creerDonneesCarte(cheminFichier);
+        //System.out.println(Service.getInstance().getCatalogueTours().toString());
         graph = dc.getCarte();
 
 
