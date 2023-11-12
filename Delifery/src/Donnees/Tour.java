@@ -91,7 +91,7 @@ public class Tour {
     }
 
     public String toString(){
-        String mes= "Tour numéro "+this.id+"\n";
+        String mes= "Tour numéro "+this.id+" effectué par le livreur : " + this.livreur.getId() +"\n";
         mes= mes +"Livraisons effectuées :\n";
         Calculs.trierLivraisons(livraisons);
         for (Livraison l: livraisons) {

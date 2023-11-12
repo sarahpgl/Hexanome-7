@@ -184,6 +184,7 @@ public class FileSystemXML {
 
                 NodeList livraisonList = ((Element)(livraisons)).getElementsByTagName("livraison");
                 NodeList intersectionList = ((Element)(trajet)).getElementsByTagName("intersection");
+
                 for(int j = 0; j < intersectionList.getLength(); j++) {
                     Element intersectionElement = (Element) intersectionList.item(j);
 

@@ -3,7 +3,6 @@ package Donnees;
 public class Livreur {
 
     static String names[] = {
-            "",
             "Moïse",
             "Adam Labrosse",
             "Fatih",
@@ -28,7 +27,11 @@ public class Livreur {
     }
 
     public Livreur(Integer tourNumber) {
+
+        this.id = (long)tourNumber;
         this.nom = names[tourNumber];
+
+
     }
 
     public String getNom() {
