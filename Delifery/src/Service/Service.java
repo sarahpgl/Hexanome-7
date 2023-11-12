@@ -60,12 +60,10 @@ public class Service {
 
         Object[] objects = fsxml.lireXML(nomFichier);
 
-        Intersection[] entrepot = (Intersection[]) objects[0];
-
-        if(entrepot==null){
+        if(objects==null){
             objects = fsxml.lireXML(cheminComplet);
-            entrepot = (Intersection[]) objects[0];
         }
+        Intersection[] entrepot = (Intersection[]) objects[0];
 
 
         Intersection[] intersections = (Intersection[]) objects[1];
