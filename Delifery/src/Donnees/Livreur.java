@@ -27,7 +27,12 @@ public class Livreur {
     }
 
     public Livreur(Integer tourNumber) {
-        this.nom = names[tourNumber - 1];
+
+
+        this.id = (long)tourNumber;
+        this.nom = names[tourNumber];
+
+
     }
 
     public String getNom() {

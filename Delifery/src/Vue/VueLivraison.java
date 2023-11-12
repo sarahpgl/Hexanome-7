@@ -206,7 +206,7 @@ public class VueLivraison extends Application {
         gridPane.getRowConstraints().addAll(row1, row2, row3);
 
         Scene scene = new Scene(gridPane, windowWidth, windowHeight);
-        primaryStage.setTitle("Fenetre Application");
+        primaryStage.setTitle("Fenetre Livraison");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

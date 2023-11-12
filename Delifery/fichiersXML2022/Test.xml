@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalogue idMap="mediumMap.xml">
+    <tour id="9">
+        <livreur nom="Maria" vitesse="15.0"/>
+        <livraisons>
+            <livraison creneau="HUIT_NEUF" heureArrivee="08:24:02" heureDepart="08:29:02" id="4" idIntersection="975886496"/>
+            <livraison creneau="HUIT_NEUF" heureArrivee="08:05:56" heureDepart="08:10:56" id="2" idIntersection="25321433"/>
+            <livraison creneau="HUIT_NEUF" heureArrivee="08:00:15" heureDepart="08:05:15" id="1" idIntersection="25321456"/>
+            <livraison creneau="HUIT_NEUF" heureArrivee="08:11:14" heureDepart="08:16:14" id="3" idIntersection="25321422"/>
+        </livraisons>
+        <trajet>
+            <intersection id="25303831" latitude="45.74979" longitude="4.87572"/>
+            <intersection id="25321456" latitude="45.749214" longitude="4.875591"/>
+            <intersection id="25321433" latitude="45.74969" longitude="4.873468"/>
+            <intersection id="25321422" latitude="45.749027" longitude="4.873145"/>
+            <intersection id="1288817934" latitude="45.749992" longitude="4.8702283"/>
+            <intersection id="25335981" latitude="45.750526" longitude="4.8685336"/>
+            <intersection id="195272" latitude="45.749878" longitude="4.868472"/>
+            <intersection id="25451370" latitude="45.750343" longitude="4.866599"/>
+            <intersection id="195268" latitude="45.75073" longitude="4.8650455"/>
+            <intersection id="195270" latitude="45.751556" longitude="4.865392"/>
+            <intersection id="25336178" latitude="45.752552" longitude="4.8658633"/>
+            <intersection id="25336175" latitude="45.75301" longitude="4.863642"/>
+            <intersection id="25336179" latitude="45.754128" longitude="4.863194"/>
+            <intersection id="195261" latitude="45.753925" longitude="4.8615813"/>
+            <intersection id="2117622721" latitude="45.753757" longitude="4.8601513"/>
+            <intersection id="2587463836" latitude="45.753925" longitude="4.859339"/>
+            <intersection id="25175819" latitude="45.754997" longitude="4.859137"/>
+            <intersection id="26576963" latitude="45.755165" longitude="4.8591056"/>
+            <intersection id="2117622739" latitude="45.755558" longitude="4.858861"/>
+            <intersection id="26033326" latitude="45.756176" longitude="4.8582525"/>
+            <intersection id="92375974" latitude="45.756714" longitude="4.857779"/>
+            <intersection id="92375972" latitude="45.75687" longitude="4.8576"/>
+            <intersection id="975886496" latitude="45.756874" longitude="4.8574047"/>
+        </trajet>
+    </tour>
+</catalogue>

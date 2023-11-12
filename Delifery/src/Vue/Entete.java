@@ -27,7 +27,12 @@ public class Entete extends HBox {
             @Override
             public void handle(ActionEvent event) {
                 // Mettez ici le code à exécuter lorsque le bouton "Accueil" est cliqué
-                System.out.println("Bouton Accueil cliqué !");
+                Stage stage = (Stage) getScene().getWindow();
+                if(stage.getTitle()!= "Fenetre Application"){
+                    stage.close(); // Ferme la fenêtre
+                }
+
+
             }
         });
 

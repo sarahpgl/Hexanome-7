@@ -241,7 +241,6 @@ public class Main {
         livraisons.add(livraison2);
         livraisons.add(livraison1);
         //livraisons.add(livraison3);
-
         Tour tour = new Tour( livraisons, new Livreur("Sophie"));
 
         //deuxieme tour
@@ -261,7 +260,6 @@ public class Main {
         tour2 = service.calculerTour(tour2,(double)15,carte,Entrepot);
 
         CatalogueTours c = new CatalogueTours("mediumMap.xml");
-        c.setNbLivreurs(2);
         ArrayList<Tour> toursTest = c.getCatalogue();
         c.ajouterTour(tour);
         c.ajouterTour(tour2);
