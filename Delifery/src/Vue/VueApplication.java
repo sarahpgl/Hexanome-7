@@ -18,6 +18,11 @@ public class VueApplication extends Application {
     public String cheminFichier;
     public Integer windowWidth;
     public Integer windowHeight;
+    GridPane gridPane = new GridPane();
+
+    Service service = Service.getInstance();
+
+
     public VueApplication(String cheminFichier, Integer width, Integer height) {
         super();
         this.windowWidth = width;
@@ -27,7 +32,6 @@ public class VueApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        GridPane gridPane = new GridPane();
 
         // Get screen dimensions
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -77,10 +81,18 @@ public class VueApplication extends Application {
 
         HBox.setHgrow(c, Priority.ALWAYS);
 
+        service.setVueApplication(this);
+
         Scene scene = new Scene(gridPane, windowWidth, windowHeight);
         primaryStage.setTitle("Fenetre Application");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+    }
+
+    public void updateCarte(){
+        Carte c = new Carte(cheminFichier, windowWidth/2, windowHeight*8/10);
+        gridPane.add(c, 1, 1);
     }
 
     // Méthode pour ouvrir la fenêtre

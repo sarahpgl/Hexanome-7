@@ -7,7 +7,6 @@ import Util.Coordonnees;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -34,12 +33,9 @@ public class TableauDetailsTour extends StackPane {
         tableau.setVgap(1); // Ajustez l'espacement vertical entre les cellules
 
 
-
-        Livraison livCourante=null;
-        for (int i = 0; i < nbLignes; i++) {
-            if(i<=livraisonsDetails.size()-1){
-                 livCourante = livraisonsDetails.get(i);
-            }
+        Livraison livCourante = null;
+        for (int i = 1; i < nbLignes; i++) {
+            livCourante = livraisonsDetails.get(i - 1);
             for (int j = 0; j < nbColonnes; j++) {
 
                 Rectangle rectangle = new Rectangle(140, 70);
@@ -94,13 +90,29 @@ public class TableauDetailsTour extends StackPane {
             }
         }
 
+        String[] texts = {"Colis N°", "Coordonnées", "Heure arrivée", "Heure départ"};
+        for (int i = 0; i < 4; i++) {
+            Rectangle rectangle = new Rectangle(140, 70);
+            rectangle.setStroke(Color.BLACK);
+            rectangle.setFill(Color.LIGHTGREY);
 
-        Label livreurLabel = new Label("Livreur :"+tour.getLivreur().getNom());
-        Label identifiantTourLabel = new Label("Identifiant du tour :"+tour.getId());
+            StackPane cellule = new StackPane();
+            cellule.getChildren().add(rectangle);
+
+            Text text = new Text(texts[i]);
+            rectangle.setFill(Color.WHITE);
+            cellule.getChildren().add(text);
+
+            tableau.add(cellule, i, 0);
+        }
+
+
+        Label livreurLabel = new Label("Livreur :" + tour.getLivreur().getNom());
+        Label identifiantTourLabel = new Label("Identifiant du tour :" + tour.getId());
         livreurLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
         identifiantTourLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
         VBox labelsVBox = new VBox(livreurLabel, identifiantTourLabel);
-
+        labelsVBox.setTranslateX(20);
 
         //livreurLabel.setTranslateY(-10); // Ajustez la position verticale
         //identifiantTourLabel.setTranslateY(-10); // Ajustez la position verticale
