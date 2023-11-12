@@ -24,6 +24,7 @@ public class Main {
         //TestLireXML();
 
         //testerDetailTour();
+
         launch(FenetreLancement.class, args);
 
 
@@ -274,5 +275,10 @@ public class Main {
         System.out.println("File Path to import tours : " + filePath);
         Object[] test = FileSystemXML.lireXML(filePath);
         System.out.println(test[0]);
+    }
+
+    public static void initialiserLivreurs(){
+        Service service = Service.getInstance();
+        service.initialisationLivreur();
     }
 }

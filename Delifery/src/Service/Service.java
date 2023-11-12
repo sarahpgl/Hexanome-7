@@ -56,7 +56,7 @@ public class Service {
 
         String nomFichierCarte;
         // Chemin d'accès fixe (à modifier selon vos besoins)
-        String cheminFixe = System.getProperty("user.dir") + "/Delifery/fichiersXML2022/";
+        String cheminFixe = System.getProperty("user.dir") + "/fichiersXML2022/";
 
         String cheminComplet = cheminFixe + nomFichier;
 
@@ -306,8 +306,8 @@ public class Service {
         FileSystemXML.EcrireCatalogueXML(Ctour,chemin,nomFichier);
 
     }
-    public Livreur initialisationLivreur(String name){
-        Livreur l = new Livreur(name);
+    public Livreur initialisationLivreur(){
+        Livreur l = new Livreur("Moïse");
         return l;
     }
 

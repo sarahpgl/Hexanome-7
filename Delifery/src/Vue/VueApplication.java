@@ -34,7 +34,6 @@ public class VueApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-
         // Get screen dimensions
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         // Set window size accordingly
@@ -85,6 +84,7 @@ public class VueApplication extends Application {
         HBox.setHgrow(c, Priority.ALWAYS);
 
         service.setVueApplication(this);
+
 
         Scene scene = new Scene(gridPane, windowWidth, windowHeight);
         primaryStage.setTitle("Fenetre Application");
