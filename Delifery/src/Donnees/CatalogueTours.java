@@ -29,6 +29,9 @@ public class CatalogueTours {
     public void ajouterTour(Tour tour){
         catalogue.add(tour);
     }
+    public void supprimerTour(){
+        catalogue.remove(catalogue.getLast());
+    }
 
     public Tour getTourByLivreur (Livreur l){
         for (Tour t: catalogue) {

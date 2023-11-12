@@ -345,6 +345,20 @@ public class Service {
         vueApplication.updateCarte();
     }
 
+    public void setNbLivreur(int nombre){
+
+        if(nombre > catalogueTours.getListeLivreurs().size()){
+            for(int i =catalogueTours.getListeLivreurs().size(); i<nombre;i++){
+                catalogueTours.ajouterTour(new Tour(new Livreur(i)));
+            }
+        }else{
+            for(int i = catalogueTours.getListeLivreurs().size(); i>nombre; i--){
+                catalogueTours.supprimerTour();
+            }
+
+        }
+    }
+
 
 
 }

@@ -187,9 +187,7 @@ public class TableauTours extends StackPane {
             Button boutonLivreur = new Button("Enregistrer");
             boutonLivreur.setPrefWidth(100);
             boutonLivreur.setOnAction(event -> {
-                Intersection destination4 = new Intersection(new BigInteger("21703594"),new Coordonnees(45.73886,4.876077));
-                Livraison livraison4 = new Livraison((long) 1,destination4, Creneau.valueOf("HUIT_NEUF"));
-                service.essaieAjoutLivraisonAuTour(destination4,Creneau.valueOf("HUIT_NEUF"),new Livreur("Moïse"));
+                service.setNbLivreur(Integer.parseInt(textArea.getText()));
                 service.updateCarte();
             });
 
