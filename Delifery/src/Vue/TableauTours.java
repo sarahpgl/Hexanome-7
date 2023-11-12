@@ -1,8 +1,8 @@
 package Vue;
 
-import Donnees.CatalogueTours;
-import Donnees.Tour;
+import Donnees.*;
 import Service.Service;
+import Util.Coordonnees;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -14,6 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,14 +41,61 @@ public class TableauTours extends StackPane {
             Label titreVIDE = new Label("Vous n'avez actuellement pas de tour. Chargez un fichier de tour ou ajoutez une livraison.");
             titreVIDE.setAlignment(Pos.CENTER);
             titreVIDE.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
-            titreVIDE.setTranslateY(-60);
-            titreVIDE.setTranslateX(-40);
             // Crée un VBox et ajoute le titre et le GridPane
-            VBox vbox = new VBox(titreVIDE);
-            vbox.setAlignment(Pos.CENTER);
 
-            getChildren().add(vbox);
-            setAlignment(Pos.CENTER); // Centre le VBox dans le StackPane
+            Button boutonCharger = new Button("Charger un tour");
+            Button boutonSauvegarder = new Button("Sauvegarder le tour");
+            boutonCharger.setPrefWidth(230);
+            boutonCharger.setPrefHeight(40);
+            boutonSauvegarder.setPrefWidth(230);
+            boutonSauvegarder.setPrefHeight(40);
+
+            HBox hbox2boutons = new HBox(boutonCharger, boutonSauvegarder);
+            hbox2boutons.setSpacing(10);
+            hbox2boutons.setAlignment(Pos.BOTTOM_CENTER);
+            Button boutonAjouter = new Button("Ajouter une livraison");
+            boutonAjouter.setPrefWidth(230);
+            boutonAjouter.setPrefHeight(40);
+            boutonAjouter.setOnAction(event -> {
+                VueLivraison vueLivraison = new VueLivraison();
+                Stage stage = new Stage();
+                vueLivraison.start(stage);
+            });
+
+            VBox vbox3boutons = new VBox(hbox2boutons, boutonAjouter);
+            vbox3boutons.setSpacing(20);
+            vbox3boutons.setAlignment(Pos.BOTTOM_CENTER);
+
+
+            List<Button> boutons = Arrays.asList(boutonCharger, boutonSauvegarder, boutonAjouter);
+
+            for (Button bouton : boutons) {
+                bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #7D9DA5; -fx-background-radius: 20;");
+                bouton.setOnMouseEntered(event -> {
+                    bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #5C7A8B; -fx-background-radius: 20;");
+                });
+                bouton.setOnMouseExited(event -> {
+                    bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #7D9DA5; -fx-background-radius: 20;");
+                });
+                bouton.setOnMousePressed(event -> {
+                    bouton.setStyle("-fx-font-size: 14px; -fx-text-fill: black;-fx-background-color: #86a6b8; -fx-background-radius: 20;");
+                });
+            }
+
+            titreVIDE.setTranslateY(30);
+            titreVIDE.setTranslateX(30);
+
+            vbox3boutons.setTranslateY(-20);
+
+            VBox.setVgrow(titreVIDE, Priority.ALWAYS);
+            VBox.setVgrow(vbox3boutons, Priority.ALWAYS);
+
+            titreVIDE.setAlignment(Pos.TOP_CENTER);
+
+            VBox vboxTotal=new VBox(titreVIDE,vbox3boutons);
+            getChildren().add(vboxTotal);
+
+
         } else { //catalagueTours non vide
 
             int nbLignes = tours.size() + 1;
@@ -69,8 +117,8 @@ public class TableauTours extends StackPane {
                     cellule.getChildren().add(rectangle);
 
                     if (i == 0 && j > 0) {
-                        rectangle.setFill(Color.rgb(new Random().nextInt(30,255), new Random().nextInt(30,256), new Random().nextInt(30,256)));
-                        Text text = new Text(String.valueOf(tours.get(j-1).getId()));
+                        rectangle.setFill(Color.rgb(new Random().nextInt(30, 255), new Random().nextInt(30, 256), new Random().nextInt(30, 256)));
+                        Text text = new Text(String.valueOf(tours.get(j - 1).getId()));
                         tableau.add(cellule, i, j);
                         cellule.getChildren().add(text);
 
@@ -80,7 +128,7 @@ public class TableauTours extends StackPane {
                             //System.out.println(catalogueTours.getTourById(tours.get(finalJ-1).getId()));
                             //System.out.println("id tour"+tours.get(finalJ-1).getId());
 
-                            Service.getInstance().ouvrirDetails(this.cheminFchier,tours.get(finalJ-1).getId());
+                            Service.getInstance().ouvrirDetails(this.cheminFchier, tours.get(finalJ - 1).getId());
                             rectangle.setFill(Color.rgb(new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256)));
                         });
 
@@ -102,14 +150,12 @@ public class TableauTours extends StackPane {
                             }
                         });
 
-                    }
-                    else if (i == 1 && j>0) {
+                    } else if (i == 1 && j > 0) {
                         //Text text = new Text("cc");
-                        Text text = new Text(catalogueTours.getCatalogue().get(j-1).getNomLivreur());
+                        Text text = new Text(catalogueTours.getCatalogue().get(j - 1).getNomLivreur());
                         tableau.add(cellule, i, j);
                         cellule.getChildren().add(text);
-                    }
-                    else if (i == 0 && j == 0) {
+                    } else if (i == 0 && j == 0) {
                         Text text = new Text("Tour N°");
                         rectangle.setFill(Color.WHITE);
                         tableau.add(cellule, i, j);
@@ -140,6 +186,12 @@ public class TableauTours extends StackPane {
 
             Button boutonLivreur = new Button("Enregistrer");
             boutonLivreur.setPrefWidth(100);
+            boutonLivreur.setOnAction(event -> {
+                Intersection destination4 = new Intersection(new BigInteger("21703594"),new Coordonnees(45.73886,4.876077));
+                Livraison livraison4 = new Livraison((long) 1,destination4, Creneau.valueOf("HUIT_NEUF"));
+                service.essaieAjoutLivraisonAuTour(destination4,Creneau.valueOf("HUIT_NEUF"),new Livreur("Moïse"));
+                service.updateCarte();
+            });
 
             Label titreLivreur = new Label("Nombre de livreurs : ");
             titreLivreur.setStyle("-fx-font-style: italic; -fx-font-size: 18px; -fx-text-fill: black;");

@@ -31,6 +31,8 @@ public class Service {
     private DonneesCarte donneesCarte;
     private CatalogueTours catalogueTours;
 
+    private VueApplication vueApplication;
+
 
     public Service() {
         this.catalogueTours = new CatalogueTours();
@@ -316,6 +318,14 @@ public class Service {
 
     public ArrayList<Tour> getTours(){
         return catalogueTours.getCatalogue();
+    }
+
+    public void setVueApplication(VueApplication vueApplication) {
+        this.vueApplication = vueApplication;
+    }
+
+    public void updateCarte(){
+        vueApplication.updateCarte();
     }
 
 
