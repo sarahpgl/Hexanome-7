@@ -17,7 +17,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 import java.time.LocalTime;
 
 import java.util.*;
@@ -306,10 +305,10 @@ public class Service {
         return intersections;
     }
 
-    public ArrayList<Livreur> getListLivreur(){
-        ArrayList<Livreur> livreurs = new ArrayList<>();
+    public ArrayList<String> getListLivreur(){
+        ArrayList<String> livreurs = new ArrayList<>();
         for (Tour t: catalogueTours.catalogue) {
-            livreurs.add(t.getLivreur());
+            livreurs.add(t.getLivreur().getNom());
         }
         return livreurs;
     }
