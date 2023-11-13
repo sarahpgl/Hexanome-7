@@ -256,6 +256,7 @@ public class TableauTours extends StackPane {
             boutonCharger.setOnAction(event -> {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers XML", "*.xml"));
+                fileChooser.setInitialDirectory(new File("Delifery/catalogueSauvegarde"));
                 File selectedFile = fileChooser.showOpenDialog(getScene().getWindow());
                 if (selectedFile != null) {
                     String cheminFichierCatalogueXML = selectedFile.getAbsolutePath();
@@ -306,7 +307,7 @@ public class TableauTours extends StackPane {
                 fileChooser.setTitle("Enregistrer le fichier XML");
 
                 // Spécifier le répertoire initial par défaut
-                fileChooser.setInitialDirectory(new File("Delifery/catalogueSauvegardeXML"));
+                fileChooser.setInitialDirectory(new File("Delifery/catalogueSauvegarde"));
 
                 // Présaisir un nom de fichier par défaut
                 LocalDateTime now = LocalDateTime.now();
