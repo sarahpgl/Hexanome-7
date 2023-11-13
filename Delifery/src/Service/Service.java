@@ -374,7 +374,7 @@ public class Service {
         Object[] objects = fsxml.lireXML(cheminfihcierCatalogueTour);
         if (objects[0]!=null && objects[0] instanceof CatalogueTours){
             CatalogueTours Ctour = (CatalogueTours) objects[0];
-            if (this.nomFichierCarte.contains(Ctour.getMapName())){
+            if (this.nomFichierCarte.contains(Ctour.getMapName())){ //On vérifie la cohérence des cartes
                 setCatalogueTours((CatalogueTours) objects[0]);
                 b=true;
                 updateCarte();

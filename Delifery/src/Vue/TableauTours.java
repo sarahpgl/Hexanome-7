@@ -258,6 +258,20 @@ public class TableauTours extends StackPane {
             Button boutonSauvegarder = new Button("Sauvegarder le tour");
             boutonCharger.setPrefWidth(230);
             boutonCharger.setPrefHeight(40);
+            boutonCharger.setOnAction(event -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers XML", "*.xml"));
+                File selectedFile = fileChooser.showOpenDialog(getScene().getWindow());
+
+                if (selectedFile != null) {
+                    // Vous pouvez appeler la méthode lireXML(selectedFile.getAbsolutePath()) ici
+                    String cheminFichierCatalogueXML = selectedFile.getAbsolutePath();
+                    System.out.println("Chemin du fichier sélectionné (Print dans TableauTours) : " + cheminFichierCatalogueXML);
+                    service.restituerTour(cheminFichierCatalogueXML);
+
+                    System.out.println("Catalogue restauré (Print dans TableauTours) : " + service.getCatalogueTours().toString());
+                }
+            });
             boutonSauvegarder.setPrefWidth(230);
             boutonSauvegarder.setPrefHeight(40);
 
