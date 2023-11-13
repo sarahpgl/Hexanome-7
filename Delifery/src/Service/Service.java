@@ -145,6 +145,7 @@ public class Service {
         // essayer de calculer le tour (modifier dans la fonction qui calcule le tour pour renvoyer l'état de l'opération)
         // si ok
         updateCarte();
+        updatePanel();
         return true;
     }
     public Livraison creerLivraison(Long id, Intersection adresse, Creneau creneau, LocalTime heureDebut, LocalTime heureFin){
