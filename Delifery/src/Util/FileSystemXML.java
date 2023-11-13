@@ -236,10 +236,10 @@ public class FileSystemXML {
     }
 
     // Une méthode pour écrire un catalogue de tours dans un fichier XML
-    public static void EcrireCatalogueXML(CatalogueTours c, String chemin, String nom) {
+    public static void EcrireCatalogueXML(CatalogueTours c, String cheminSauvegarde) {
         try {
             // Créer un fichier XML avec le chemin et le nom spécifiés
-            File file = new File(chemin + "/" + nom +".xml");
+            File file = new File(cheminSauvegarde);
 
             // Créer un résultat de type fichier
             StreamResult result = new StreamResult(file);

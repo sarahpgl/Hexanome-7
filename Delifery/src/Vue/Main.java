@@ -220,7 +220,7 @@ public class Main {
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         CatalogueTours c = new CatalogueTours();
         c.ajouterTour(tour);
-        FileSystemXML.EcrireCatalogueXML(c,"Delifery/output","Test");
+        FileSystemXML.EcrireCatalogueXML(c,"Delifery/catalogueSauvegarde/Test.xml");
     }
 
     public static void testerDetailTour(){

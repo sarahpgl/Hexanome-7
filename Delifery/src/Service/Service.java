@@ -307,8 +307,10 @@ public class Service {
         this.catalogueTours = catalogueTours;
     }
 
-    public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String chemin, String nomFichier){
-        FileSystemXML.EcrireCatalogueXML(Ctour,chemin,nomFichier);
+    public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String cheminSauvegarde){
+        System.out.println("Catalogue a sauvegardé : " +Ctour.toString());
+        System.out.println("Chemin où enregistrer :" + cheminSauvegarde);
+        FileSystemXML.EcrireCatalogueXML(Ctour,cheminSauvegarde);
 
     }
     public Livreur initialisationLivreur(String name){
@@ -385,7 +387,4 @@ public class Service {
         }
         return b;
     }
-
-
-
 }
