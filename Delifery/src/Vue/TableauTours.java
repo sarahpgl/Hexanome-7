@@ -291,45 +291,13 @@ public class TableauTours extends StackPane {
             Button boutonSauvegarder = new Button("Sauvegarder le tour");
             boutonSauvegarder.setPrefWidth(230);
             boutonSauvegarder.setPrefHeight(40);
-            /*boutonSauvegarder.setOnAction(event -> {
-                LocalDateTime now = LocalDateTime.now();
-                String dateHeure = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-                String nomFichier = "SauvegardeCatalogueTour_" + dateHeure + ".xml";
-                // Boîte de dialogue de saisie de texte pour le chemin
-                TextInputDialog cheminDialog = new TextInputDialog("Delifery/sauvegardeCatalogue");
-                cheminDialog.setTitle("Chemin du fichier");
-                cheminDialog.setHeaderText("Entrez le chemin du fichier (modifiable)");
-                cheminDialog.setContentText("Chemin du fichier :");
-
-                // Boîte de dialogue de saisie de texte pour le nom du fichier
-                TextInputDialog nomFichierDialog = new TextInputDialog(nomFichier);
-                nomFichierDialog.setTitle("Nom du fichier");
-                nomFichierDialog.setHeaderText("Entrez le nom du fichier (modifiable)");
-                nomFichierDialog.setContentText("Nom du fichier :");
-
-                Optional<String> cheminResult = cheminDialog.showAndWait();
-                Optional<String> nomFichierResult = nomFichierDialog.showAndWait();
-
-                cheminResult.ifPresent(chemin -> {
-                    nomFichierResult.ifPresent(nomFichierLambda  -> {
-                        // Utilisez 'chemin' et 'nomFichier' pour appeler le service pour écrire le fichier XML
-                        service.sauvegarderCatalogueTourXML(service.getCatalogueTours(), chemin, nomFichierLambda );
-
-                        // Affichez un message pour indiquer le nom du fichier sauvegardé
-                        System.out.println("Fichier sauvegardé au chemin : " + chemin + ", nom du fichier : " + nomFichierLambda);
-                    });
-                });
-            });*/
-
-            boutonSauvegarder.setPrefWidth(230);
-            boutonSauvegarder.setPrefHeight(40);
             boutonSauvegarder.setOnAction(event -> {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers XML", "*.xml"));
                 fileChooser.setTitle("Enregistrer le fichier XML");
 
                 // Spécifier le répertoire initial par défaut
-                fileChooser.setInitialDirectory(new File("Delifery/catalogueSauvegarde"));
+                fileChooser.setInitialDirectory(new File("Delifery/catalogueSauvegardeXML"));
 
                 // Présaisir un nom de fichier par défaut
                 LocalDateTime now = LocalDateTime.now();
