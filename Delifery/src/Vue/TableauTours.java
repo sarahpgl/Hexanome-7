@@ -1,13 +1,10 @@
 package Vue;
 
-import Donnees.*;
+import Donnees.CatalogueTours;
+import Donnees.Tour;
 import Service.Service;
-import Util.Coordonnees;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -16,21 +13,23 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
 
 
 public class TableauTours extends StackPane {
     Service service = Service.getInstance();
+    Carte carteTab = null;
     private CatalogueTours catalogueTours;
     private String cheminFchier;
 
-    Carte carteTab=null;
-    public TableauTours(Carte c,String cheminFichier) {
-        this.carteTab=c;
+    public TableauTours(Carte c, String cheminFichier) {
+        this.setStyle("-fx-background-color: #ffffff; -fx-padding: 10px;");
+        this.carteTab = c;
         this.catalogueTours = service.getCatalogueTours();
         this.cheminFchier = cheminFichier;
 
@@ -134,7 +133,7 @@ public class TableauTours extends StackPane {
             vboxPartieBasse.setAlignment(Pos.BOTTOM_CENTER);
             vboxPartieBasse.setTranslateY(60);
 
-            VBox vboxTotal=new VBox(titreVIDE, vboxPartieBasse);
+            VBox vboxTotal = new VBox(titreVIDE, vboxPartieBasse);
             getChildren().add(vboxTotal);
 
 
@@ -159,38 +158,52 @@ public class TableauTours extends StackPane {
                     cellule.getChildren().add(rectangle);
 
                     if (i == 0 && j > 0) {
-                        rectangle.setFill(Color.rgb(new Random().nextInt(30, 255), new Random().nextInt(30, 256), new Random().nextInt(30, 256)));
+                        int finalJ = j;
+                        Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE};
+
+                        rectangle.setFill(colors[(finalJ-1) % 5]);
+
                         Text text = new Text(String.valueOf(tours.get(j - 1).getId()));
                         tableau.add(cellule, i, j);
                         cellule.getChildren().add(text);
 
-                        int finalJ = j;
-                        rectangle.setOnMouseClicked(event -> {
-                            //System.out.println(catalogueTours.toString());
-                            //System.out.println(catalogueTours.getTourById(tours.get(finalJ-1).getId()));
-                            //System.out.println("id tour"+tours.get(finalJ-1).getId());
-
-                            Service.getInstance().ouvrirDetails(this.cheminFchier, tours.get(finalJ - 1).getId());
-                            rectangle.setFill(Color.rgb(new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256)));
+                        rectangle.setOnMouseEntered(event -> {
+                            Color color = (Color) rectangle.getFill();
+                            rectangle.setFill(color.darker());
                         });
+
+                        rectangle.setOnMouseClicked(event -> {
+                            Service.getInstance().ouvrirDetails(this.cheminFchier, tours.get(finalJ - 1).getId());
+                        });
+
+                        rectangle.setOnMouseExited(event -> {
+                            Color color = (Color) rectangle.getFill();
+                            rectangle.setFill(color.brighter());
+                        });
+
 
                     } else if (i == 2 && j > 0) {
-                        CheckBox caseCocher = new CheckBox();
-                        caseCocher.setText(String.valueOf(j));
-                        caseCocher.setStyle("-fx-text-fill: transparent;");
-                        caseCocher.setSelected(true);
-                        tableau.add(cellule, i, j);
-                        cellule.getChildren().add(caseCocher);
+                        if (catalogueTours.getCatalogue().get(j-1).getLivraisons().size()>=1){
+                            CheckBox caseCocher = new CheckBox();
+                            caseCocher.setText(String.valueOf(j));
+                            caseCocher.setStyle("-fx-text-fill: transparent;");
+                            caseCocher.setSelected(true);
+                            tableau.add(cellule, i, j);
+                            cellule.getChildren().add(caseCocher);
 
-                        int finalJ = j;
-                        caseCocher.setOnAction(event -> {
-                            if (caseCocher.isSelected()) {
-                                System.out.println(caseCocher.getText());
-                                service.getCarte().remettreLigne(caseCocher.getText());
-                            } else {
-                                service.getCarte().enleverLigne(caseCocher.getText());
-                            }
-                        });
+                            int finalJ = j;
+                            caseCocher.setOnAction(event -> {
+                                if (caseCocher.isSelected()) {
+                                    System.out.println(caseCocher.getText());
+                                    service.getCarte().remettreLigne(caseCocher.getText());
+                                } else {
+                                    service.getCarte().enleverLigne(caseCocher.getText());
+                                }
+                            });
+                        }else{
+                            Text text = new Text("Aucun tour prévu");
+                            tableau.add(cellule, i, j);
+                            cellule.getChildren().add(text);                        }
 
                     } else if (i == 1 && j > 0) {
                         //Text text = new Text("cc");
@@ -238,7 +251,12 @@ public class TableauTours extends StackPane {
             titreLivreur.setStyle("-fx-font-style: italic; -fx-font-size: 18px; -fx-text-fill: black;");
 
             tableau.setAlignment(Pos.CENTER);
-            VBox vboxTableau = new VBox(titre, tableau);
+
+            ScrollPane scroll=new ScrollPane(tableau);
+            scroll.setFitToWidth(true);
+            scroll.setPrefWidth(tableau.getWidth());
+            scroll.setStyle("-fx-background-color:white;");
+            VBox vboxTableau = new VBox(titre, scroll);
             vboxTableau.setAlignment(Pos.TOP_CENTER);
             vboxTableau.setTranslateY(20);
 
@@ -255,25 +273,53 @@ public class TableauTours extends StackPane {
 
 
             Button boutonCharger = new Button("Charger un tour");
-            Button boutonSauvegarder = new Button("Sauvegarder le tour");
             boutonCharger.setPrefWidth(230);
             boutonCharger.setPrefHeight(40);
             boutonCharger.setOnAction(event -> {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers XML", "*.xml"));
+                fileChooser.setInitialDirectory(new File("Delifery/catalogueSauvegarde"));
                 File selectedFile = fileChooser.showOpenDialog(getScene().getWindow());
-
                 if (selectedFile != null) {
-                    // Vous pouvez appeler la méthode lireXML(selectedFile.getAbsolutePath()) ici
                     String cheminFichierCatalogueXML = selectedFile.getAbsolutePath();
                     System.out.println("Chemin du fichier sélectionné (Print dans TableauTours) : " + cheminFichierCatalogueXML);
                     service.restituerTour(cheminFichierCatalogueXML);
-
                     System.out.println("Catalogue restauré (Print dans TableauTours) : " + service.getCatalogueTours().toString());
                 }
             });
+
+            Button boutonSauvegarder = new Button("Sauvegarder le tour");
             boutonSauvegarder.setPrefWidth(230);
             boutonSauvegarder.setPrefHeight(40);
+            boutonSauvegarder.setOnAction(event -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers XML", "*.xml"));
+                fileChooser.setTitle("Enregistrer le fichier XML");
+
+                // Spécifier le répertoire initial par défaut
+                fileChooser.setInitialDirectory(new File("Delifery/catalogueSauvegardeXML"));
+
+                // Présaisir un nom de fichier par défaut
+                LocalDateTime now = LocalDateTime.now();
+                String dateHeure = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+                String nomFichierInitial = "SauvegardeCatalogueTour_" + dateHeure + ".xml";
+                fileChooser.setInitialFileName(nomFichierInitial);
+
+                // Afficher la boîte de dialogue de sélection de fichier
+                File selectedFile = fileChooser.showSaveDialog(getScene().getWindow());
+
+                if (selectedFile != null) {
+                    // Récupérer le chemin du fichier et le nom du fichier choisi par l'utilisateur
+                    String cheminFichierSauvegarde = selectedFile.getAbsolutePath();
+                    System.out.println("Chemin du fichier sélectionné : " + cheminFichierSauvegarde);
+
+                    // Vous pouvez également extraire le nom du fichier (y compris l'extension) si nécessaire
+                    String nomFichier = selectedFile.getName();
+                    System.out.println("Nom du fichier : " + nomFichier);
+
+                    service.sauvegarderCatalogueTourXML(service.getCatalogueTours(), cheminFichierSauvegarde);
+                }
+            });
 
             HBox hbox2boutons = new HBox(boutonCharger, boutonSauvegarder);
             hbox2boutons.setSpacing(10);

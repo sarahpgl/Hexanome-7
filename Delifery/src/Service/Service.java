@@ -89,7 +89,7 @@ public class Service {
             this.nomFichierCarte=nomFichierCarte;
             objects = fsxml.lireXML(nomFichierCarte);
         } else {
-                this.nomFichierCarte = nomFichier;
+            this.nomFichierCarte = nomFichier;
         }
 
         if(objects==null) {
@@ -170,6 +170,7 @@ public class Service {
         // essayer de calculer le tour (modifier dans la fonction qui calcule le tour pour renvoyer l'état de l'opération)
         // si ok
         updateCarte();
+        updatePanel();
         return true;
     }
 
@@ -372,14 +373,14 @@ public class Service {
     }
 
     /**
-     * Sauvegarde un catalogue de tours en format XML à l'emplacement spécifié.
      *
-     * @param Ctour Le catalogue de tours à sauvegarder.
-     * @param chemin Le chemin où le fichier XML sera sauvegardé.
-     * @param nomFichier Le nom du fichier XML.
+     * @param Ctour
+     * @param cheminSauvegarde
      */
-    public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String chemin, String nomFichier){
-        FileSystemXML.EcrireCatalogueXML(Ctour,chemin,nomFichier);
+    public void sauvegarderCatalogueTourXML (CatalogueTours Ctour, String cheminSauvegarde){
+        System.out.println("Catalogue a sauvegardé : " +Ctour.toString());
+        System.out.println("Chemin où enregistrer :" + cheminSauvegarde);
+        FileSystemXML.EcrireCatalogueXML(Ctour,cheminSauvegarde);
 
     }
 
@@ -495,6 +496,7 @@ public class Service {
         return b;
     }
 
+
     /**
      * Renvoie les données de la carte.
      *
@@ -544,4 +546,5 @@ public class Service {
      * @return L'objet Carte.
      */
     public Carte getCarte(){return this.carte;}
+
 }

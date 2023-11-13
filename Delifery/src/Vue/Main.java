@@ -220,7 +220,7 @@ public class Main {
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         CatalogueTours c = new CatalogueTours();
         c.ajouterTour(tour);
-        FileSystemXML.EcrireCatalogueXML(c,"Delifery/output","Test");
+        FileSystemXML.EcrireCatalogueXML(c,"Delifery/catalogueSauvegarde/Test.xml");
     }
 
     public static void testerDetailTour(){
@@ -241,7 +241,7 @@ public class Main {
         livraisons.add(livraison2);
         livraisons.add(livraison1);
         //livraisons.add(livraison3);
-        Tour tour = new Tour( livraisons, new Livreur("Sophie"));
+        Tour tour = new Tour( livraisons, new Livreur("Moïse"));
 
         //deuxieme tour
         Intersection destination5 = new Intersection(new BigInteger("1682387628"), new Coordonnees(45.754463,4.882047));
@@ -254,7 +254,7 @@ public class Main {
         livraisons2.add(livraison5);
         livraisons2.add(livraison6);
         livraisons2.add(livraison7);
-        Tour tour2 = new Tour( livraisons2, new Livreur("Moïse"));
+        Tour tour2 = new Tour( livraisons2, new Livreur("Adam Labrosse"));
 
         tour = service.calculerTour(tour,(double)15,carte,Entrepot);
         tour2 = service.calculerTour(tour2,(double)15,carte,Entrepot);
