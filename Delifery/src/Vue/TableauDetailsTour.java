@@ -21,6 +21,8 @@ public class TableauDetailsTour extends StackPane {
 
     public TableauDetailsTour(Tour monTour) {
         this.tour = monTour;
+        this.setStyle("-fx-background-color: #ffffff; -fx-padding: 10px;");
+
         int nbColonnes = 4; // Taille du tableau
 
         ArrayList<Livraison> livraisonsDetails = tour.getLivraisons();

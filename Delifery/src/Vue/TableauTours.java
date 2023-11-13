@@ -1,13 +1,10 @@
 package Vue;
 
-import Donnees.*;
+import Donnees.CatalogueTours;
+import Donnees.Tour;
 import Service.Service;
-import Util.Coordonnees;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -16,7 +13,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,12 +21,13 @@ import java.util.Random;
 
 public class TableauTours extends StackPane {
     Service service = Service.getInstance();
+    Carte carteTab = null;
     private CatalogueTours catalogueTours;
     private String cheminFchier;
 
-    Carte carteTab=null;
-    public TableauTours(Carte c,String cheminFichier) {
-        this.carteTab=c;
+    public TableauTours(Carte c, String cheminFichier) {
+        this.setStyle("-fx-background-color: #ffffff; -fx-padding: 10px;");
+        this.carteTab = c;
         this.catalogueTours = service.getCatalogueTours();
         this.cheminFchier = cheminFichier;
 
@@ -134,7 +131,7 @@ public class TableauTours extends StackPane {
             vboxPartieBasse.setAlignment(Pos.BOTTOM_CENTER);
             vboxPartieBasse.setTranslateY(60);
 
-            VBox vboxTotal=new VBox(titreVIDE, vboxPartieBasse);
+            VBox vboxTotal = new VBox(titreVIDE, vboxPartieBasse);
             getChildren().add(vboxTotal);
 
 
@@ -159,38 +156,52 @@ public class TableauTours extends StackPane {
                     cellule.getChildren().add(rectangle);
 
                     if (i == 0 && j > 0) {
-                        rectangle.setFill(Color.rgb(new Random().nextInt(30, 255), new Random().nextInt(30, 256), new Random().nextInt(30, 256)));
+                        int finalJ = j;
+                        Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE};
+
+                        rectangle.setFill(colors[(finalJ-1) % 5]);
+
                         Text text = new Text(String.valueOf(tours.get(j - 1).getId()));
                         tableau.add(cellule, i, j);
                         cellule.getChildren().add(text);
 
-                        int finalJ = j;
-                        rectangle.setOnMouseClicked(event -> {
-                            //System.out.println(catalogueTours.toString());
-                            //System.out.println(catalogueTours.getTourById(tours.get(finalJ-1).getId()));
-                            //System.out.println("id tour"+tours.get(finalJ-1).getId());
-
-                            Service.getInstance().ouvrirDetails(this.cheminFchier, tours.get(finalJ - 1).getId());
-                            rectangle.setFill(Color.rgb(new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256)));
+                        rectangle.setOnMouseEntered(event -> {
+                            Color color = (Color) rectangle.getFill();
+                            rectangle.setFill(color.darker());
                         });
+
+                        rectangle.setOnMouseClicked(event -> {
+                            Service.getInstance().ouvrirDetails(this.cheminFchier, tours.get(finalJ - 1).getId());
+                        });
+
+                        rectangle.setOnMouseExited(event -> {
+                            Color color = (Color) rectangle.getFill();
+                            rectangle.setFill(color.brighter());
+                        });
+
 
                     } else if (i == 2 && j > 0) {
-                        CheckBox caseCocher = new CheckBox();
-                        caseCocher.setText(String.valueOf(j));
-                        caseCocher.setStyle("-fx-text-fill: transparent;");
-                        caseCocher.setSelected(true);
-                        tableau.add(cellule, i, j);
-                        cellule.getChildren().add(caseCocher);
+                        if (catalogueTours.getCatalogue().get(j-1).getLivraisons().size()>=1){
+                            CheckBox caseCocher = new CheckBox();
+                            caseCocher.setText(String.valueOf(j));
+                            caseCocher.setStyle("-fx-text-fill: transparent;");
+                            caseCocher.setSelected(true);
+                            tableau.add(cellule, i, j);
+                            cellule.getChildren().add(caseCocher);
 
-                        int finalJ = j;
-                        caseCocher.setOnAction(event -> {
-                            if (caseCocher.isSelected()) {
-                                System.out.println(caseCocher.getText());
-                                service.getCarte().remettreLigne(caseCocher.getText());
-                            } else {
-                                service.getCarte().enleverLigne(caseCocher.getText());
-                            }
-                        });
+                            int finalJ = j;
+                            caseCocher.setOnAction(event -> {
+                                if (caseCocher.isSelected()) {
+                                    System.out.println(caseCocher.getText());
+                                    service.getCarte().remettreLigne(caseCocher.getText());
+                                } else {
+                                    service.getCarte().enleverLigne(caseCocher.getText());
+                                }
+                            });
+                        }else{
+                            Text text = new Text("Aucun tour prévu");
+                            tableau.add(cellule, i, j);
+                            cellule.getChildren().add(text);                        }
 
                     } else if (i == 1 && j > 0) {
                         //Text text = new Text("cc");
@@ -238,7 +249,12 @@ public class TableauTours extends StackPane {
             titreLivreur.setStyle("-fx-font-style: italic; -fx-font-size: 18px; -fx-text-fill: black;");
 
             tableau.setAlignment(Pos.CENTER);
-            VBox vboxTableau = new VBox(titre, tableau);
+
+            ScrollPane scroll=new ScrollPane(tableau);
+            scroll.setFitToWidth(true);
+            scroll.setPrefWidth(tableau.getWidth());
+            scroll.setStyle("-fx-background-color:white;");
+            VBox vboxTableau = new VBox(titre, scroll);
             vboxTableau.setAlignment(Pos.TOP_CENTER);
             vboxTableau.setTranslateY(20);
 

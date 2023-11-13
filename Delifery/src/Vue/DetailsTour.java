@@ -42,13 +42,14 @@ public class DetailsTour extends Application {
         primaryStage.setX(0);
         primaryStage.setY(0);
 
+        // Row 3: Section 2 (right side)
+        Carte c = new Carte(cheminFichier, windowWidth/2, windowHeight*8/10,tour);
+        gridPane.add(c, 1, 1);
         // Row 1: Header (takes full width)
         Entete entete=new Entete();
         gridPane.add(entete, 0, 0, 2, 1); // Span 2 columns
 
-        // Row 3: Section 2 (right side)
-        Carte c = new Carte(cheminFichier, windowWidth/2, windowHeight*8/10);
-        gridPane.add(c, 1, 1);
+
 
         // Row 2: Section 1 (left side)
         if(tour!=null){
