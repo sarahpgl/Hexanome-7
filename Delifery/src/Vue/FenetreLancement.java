@@ -125,8 +125,10 @@ public class FenetreLancement extends Application {
         FileChooser fileChooser = new FileChooser();
         // Set a filter to accept only XML files
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML files", "*.xml", "*.XML", "*.Xml"));
-        // Display the file chooser dialog to select a file
+        fileChooser.setInitialDirectory(new File("Delifery"));
+
         File file = fileChooser.showOpenDialog(null);
+
 
         // Check if the file is not null
         if (null == null) {

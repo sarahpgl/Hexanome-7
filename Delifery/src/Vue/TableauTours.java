@@ -4,10 +4,7 @@ import Donnees.*;
 import Service.Service;
 import Util.Coordonnees;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -17,10 +14,9 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 
 public class TableauTours extends StackPane {
@@ -255,25 +251,84 @@ public class TableauTours extends StackPane {
 
 
             Button boutonCharger = new Button("Charger un tour");
-            Button boutonSauvegarder = new Button("Sauvegarder le tour");
             boutonCharger.setPrefWidth(230);
             boutonCharger.setPrefHeight(40);
             boutonCharger.setOnAction(event -> {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers XML", "*.xml"));
                 File selectedFile = fileChooser.showOpenDialog(getScene().getWindow());
-
                 if (selectedFile != null) {
-                    // Vous pouvez appeler la méthode lireXML(selectedFile.getAbsolutePath()) ici
                     String cheminFichierCatalogueXML = selectedFile.getAbsolutePath();
                     System.out.println("Chemin du fichier sélectionné (Print dans TableauTours) : " + cheminFichierCatalogueXML);
                     service.restituerTour(cheminFichierCatalogueXML);
-
                     System.out.println("Catalogue restauré (Print dans TableauTours) : " + service.getCatalogueTours().toString());
                 }
             });
+
+            Button boutonSauvegarder = new Button("Sauvegarder le tour");
             boutonSauvegarder.setPrefWidth(230);
             boutonSauvegarder.setPrefHeight(40);
+            /*boutonSauvegarder.setOnAction(event -> {
+                LocalDateTime now = LocalDateTime.now();
+                String dateHeure = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+                String nomFichier = "SauvegardeCatalogueTour_" + dateHeure + ".xml";
+                // Boîte de dialogue de saisie de texte pour le chemin
+                TextInputDialog cheminDialog = new TextInputDialog("Delifery/sauvegardeCatalogue");
+                cheminDialog.setTitle("Chemin du fichier");
+                cheminDialog.setHeaderText("Entrez le chemin du fichier (modifiable)");
+                cheminDialog.setContentText("Chemin du fichier :");
+
+                // Boîte de dialogue de saisie de texte pour le nom du fichier
+                TextInputDialog nomFichierDialog = new TextInputDialog(nomFichier);
+                nomFichierDialog.setTitle("Nom du fichier");
+                nomFichierDialog.setHeaderText("Entrez le nom du fichier (modifiable)");
+                nomFichierDialog.setContentText("Nom du fichier :");
+
+                Optional<String> cheminResult = cheminDialog.showAndWait();
+                Optional<String> nomFichierResult = nomFichierDialog.showAndWait();
+
+                cheminResult.ifPresent(chemin -> {
+                    nomFichierResult.ifPresent(nomFichierLambda  -> {
+                        // Utilisez 'chemin' et 'nomFichier' pour appeler le service pour écrire le fichier XML
+                        service.sauvegarderCatalogueTourXML(service.getCatalogueTours(), chemin, nomFichierLambda );
+
+                        // Affichez un message pour indiquer le nom du fichier sauvegardé
+                        System.out.println("Fichier sauvegardé au chemin : " + chemin + ", nom du fichier : " + nomFichierLambda);
+                    });
+                });
+            });*/
+
+            boutonSauvegarder.setPrefWidth(230);
+            boutonSauvegarder.setPrefHeight(40);
+            boutonSauvegarder.setOnAction(event -> {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers XML", "*.xml"));
+                fileChooser.setTitle("Enregistrer le fichier XML");
+
+                // Spécifier le répertoire initial par défaut
+                fileChooser.setInitialDirectory(new File("Delifery/catalogueSauvegardeXML"));
+
+                // Présaisir un nom de fichier par défaut
+                LocalDateTime now = LocalDateTime.now();
+                String dateHeure = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+                String nomFichierInitial = "SauvegardeCatalogueTour_" + dateHeure + ".xml";
+                fileChooser.setInitialFileName(nomFichierInitial);
+
+                // Afficher la boîte de dialogue de sélection de fichier
+                File selectedFile = fileChooser.showSaveDialog(getScene().getWindow());
+
+                if (selectedFile != null) {
+                    // Récupérer le chemin du fichier et le nom du fichier choisi par l'utilisateur
+                    String cheminFichierSauvegarde = selectedFile.getAbsolutePath();
+                    System.out.println("Chemin du fichier sélectionné : " + cheminFichierSauvegarde);
+
+                    // Vous pouvez également extraire le nom du fichier (y compris l'extension) si nécessaire
+                    String nomFichier = selectedFile.getName();
+                    System.out.println("Nom du fichier : " + nomFichier);
+
+                    service.sauvegarderCatalogueTourXML(service.getCatalogueTours(), cheminFichierSauvegarde);
+                }
+            });
 
             HBox hbox2boutons = new HBox(boutonCharger, boutonSauvegarder);
             hbox2boutons.setSpacing(10);
