@@ -74,7 +74,7 @@ public class Service {
             this.nomFichierCarte=nomFichierCarte;
             objects = fsxml.lireXML(nomFichierCarte);
         } else {
-                this.nomFichierCarte = nomFichier;
+            this.nomFichierCarte = nomFichier;
         }
 
         if(objects==null) {

@@ -3,7 +3,6 @@ package Vue;
 import Donnees.*;
 import Service.Service;
 import Util.Calculs;
-import Util.Coordonnees;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
@@ -14,70 +13,78 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import java.math.BigInteger;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class Carte extends Pane {
 
     //nb de tours au total à afficher
-    int nbTours=-1;
+    int nbTours = -1;
 
-    List<ElementListe> listeCouleurs=new ArrayList<>();
+    List<ElementListe> listeCouleurs = new ArrayList<>();
 
     Intersection entrepot;
     float[] util;
+    Service service = Service.getInstance();
+    Integer panelWidth;
+    Integer panelHeight;
+    Tour tourAAfficher = null;
     private Map<Intersection, Map<Intersection, Float>> graph;
     private String cheminFichier;
-    Service service = Service.getInstance();
 
-    public Carte(String cheminFich, Integer panelWidth, Integer panelHeight) {
+    public Carte(String cheminFich, Integer panelWidth, Integer panelHeight, Tour tourAAfficher) {
         super();
         this.cheminFichier = cheminFich;
+        this.panelHeight = panelHeight;
+        this.panelWidth = panelWidth;
+        this.tourAAfficher = tourAAfficher;
+
+
         // Create a sample graph
         DonneesCarte dc = createSampleGraph();
         entrepot = dc.getEntrepot();
         // Extraction des échelles et des origines pour plus de lisibilité
-
-        float [] util =calculerUtil(dc, panelWidth, panelHeight);
+        float[] util = calculerUtil(dc, panelWidth, panelHeight);
+        if (tourAAfficher != null) {
+            util = calculerUtilTour(panelWidth, panelHeight, tourAAfficher);
+        }
 
         //System.out.println((service.getCatalogueTours().toString()));
 
-        service.setCarte(this);
+        //service.setCarte(this);
 
         dessinerCarte();
 
-        ArrayList<Intersection> listeInterPourLivrer= service.creerIntersectionsPourLivrer();
+        ArrayList<Intersection> listeInterPourLivrer = service.creerIntersectionsPourLivrer();
 
         ArrayList<Livraison> livraisons = new ArrayList<Livraison>();
-        long id  = 0;
-        for(Intersection l : listeInterPourLivrer){
-            livraisons.add(service.creerLivraison(id, l, Creneau.valueOf("HUIT_NEUF"),LocalTime.MIDNIGHT,LocalTime.MIDNIGHT));
+        long id = 0;
+        for (Intersection l : listeInterPourLivrer) {
+            livraisons.add(service.creerLivraison(id, l, Creneau.valueOf("HUIT_NEUF"), LocalTime.MIDNIGHT, LocalTime.MIDNIGHT));
             id++;
         }
 
-        CatalogueTours cat=service.getCatalogueTours();
-        nbTours=cat.getCatalogue().size();
-        listeCouleurs=createElementListe(nbTours);
+        CatalogueTours cat = service.getCatalogueTours();
+        nbTours = tourAAfficher.getLivreur().getId().intValue() +2;
+        listeCouleurs = createElementListe(nbTours);
 
         ArrayList<Livraison> livraisonsFor = new ArrayList<>();
-        Tour tourFor=null;
         Tour tourCol;
-        if (cat.getCatalogue().size()>0){
-            for (int i=0;i<cat.getCatalogue().size();i++){
-                tourFor=cat.getCatalogue().get(i);
-                livraisonsFor=tourFor.getLivraisons();
-
-                tourCol=tourAColorier(tourFor,dc,entrepot);
-                dessinerTour(tourCol,i+1,tourFor.getLivreur());
-                listeCouleurs.get(i).getDots().clear();
-                for(Livraison liv : livraisonsFor){
-                    Circle dot = createNode(liv.getAdresse(),util,0,String.valueOf(liv.getId()));
-                    listeCouleurs.get(i).getDots().add(dot);
-                    this.getChildren().add(dot);
-                }
-            }
+        int couleur=tourAAfficher.getLivreur().getId().intValue() +1 ;
+        tourCol = tourAColorier(tourAAfficher, dc, entrepot);
+        dessinerTour(tourCol, couleur, tourAAfficher.getLivreur());
+        //System.out.println("couleur"+ couleur+ " tailleliste"+ listeCouleurs.size());
+        listeCouleurs.get(couleur).getDots().clear();
+        livraisonsFor=tourAAfficher.getLivraisons();
+        for (Livraison liv : livraisonsFor) {
+            Circle dot = createNode(liv.getAdresse(), util, 0, String.valueOf(liv.getId()));
+            listeCouleurs.get(couleur-1).getDots().add(dot);
+            this.getChildren().add(dot);
         }
+
+
 
 
         /*
@@ -87,20 +94,132 @@ public class Carte extends Pane {
         */
 
 
-
-
-        Circle entrepotLocation = createNode(entrepot, util, 3,"Entrepot");
+        Circle entrepotLocation = createNode(entrepot, util, 3, "Entrepot");
         this.getChildren().add(entrepotLocation);
 
 
-
-
-        for (int i=1;i<5;i++){
+        for (int i = 1; i < 5; i++) {
             enleverLigne(String.valueOf(i));
             remettreLigne(String.valueOf(i));
         }
-
     }
+
+    public Carte(String cheminFich, Integer panelWidth, Integer panelHeight) {
+        super();
+        this.cheminFichier = cheminFich;
+        this.panelHeight = panelHeight;
+        this.panelWidth = panelWidth;
+
+
+        // Create a sample graph
+        DonneesCarte dc = createSampleGraph();
+        entrepot = dc.getEntrepot();
+        // Extraction des échelles et des origines pour plus de lisibilité
+        float[] util = calculerUtil(dc, panelWidth, panelHeight);
+        if (tourAAfficher != null) {
+            //util=calculerUtilTour(panelWidth,panelHeight,tourAAfficher);
+        }
+
+        //System.out.println((service.getCatalogueTours().toString()));
+
+        service.setCarte(this);
+
+        dessinerCarte();
+
+        ArrayList<Intersection> listeInterPourLivrer = service.creerIntersectionsPourLivrer();
+
+        ArrayList<Livraison> livraisons = new ArrayList<Livraison>();
+        long id = 0;
+        for (Intersection l : listeInterPourLivrer) {
+            livraisons.add(service.creerLivraison(id, l, Creneau.valueOf("HUIT_NEUF"), LocalTime.MIDNIGHT, LocalTime.MIDNIGHT));
+            id++;
+        }
+
+        CatalogueTours cat = service.getCatalogueTours();
+        nbTours = cat.getCatalogue().size();
+        listeCouleurs = createElementListe(nbTours);
+
+        ArrayList<Livraison> livraisonsFor = new ArrayList<>();
+        Tour tourFor = null;
+        Tour tourCol;
+        if (cat.getCatalogue().size() > 0) {
+            for (int i = 0; i < cat.getCatalogue().size(); i++) {
+                tourFor = cat.getCatalogue().get(i);
+                livraisonsFor = tourFor.getLivraisons();
+                tourCol = tourAColorier(tourFor, dc, entrepot);
+                dessinerTour(tourCol, i + 1, tourFor.getLivreur());
+                listeCouleurs.get(i).getDots().clear();
+                for (Livraison liv : livraisonsFor) {
+                    Circle dot = createNode(liv.getAdresse(), util, 0, String.valueOf(liv.getId()));
+                    listeCouleurs.get(i).getDots().add(dot);
+                    this.getChildren().add(dot);
+                }
+            }
+        }
+
+        /*
+        this.getChildren().add(createNode(listeInterPourLivrer.get(0),util,0,"3"));
+        this.getChildren().add(createNode(listeInterPourLivrer.get(1),util,0,"4"));
+        this.getChildren().add(createNode(listeInterPourLivrer.get(2),util,0,"5"));
+        */
+
+        Circle entrepotLocation = createNode(entrepot, util, 3, "Entrepot");
+        this.getChildren().add(entrepotLocation);
+
+        for (int i = 1; i < 5; i++) {
+            enleverLigne(String.valueOf(i));
+            remettreLigne(String.valueOf(i));
+        }
+    }
+
+    private float[] getMinMax(Tour tour) {
+        // Initialiser les valeurs min et max avec les premières intersections du tour
+        double minLat = tour.getTrajet().get(0).getCoordonnees().getLatitude();
+        double maxLat = minLat;
+        double minLong = tour.getTrajet().get(0).getCoordonnees().getLongitude();
+        double maxLong = minLong;
+
+        // Parcourir toutes les intersections du tour
+        for (Intersection intersection : tour.getTrajet()) {
+            double lat = intersection.getCoordonnees().getLatitude();
+            double lon = intersection.getCoordonnees().getLongitude();
+
+            // Mettre à jour les valeurs min et max si nécessaire
+            if (lat < minLat) minLat = lat;
+            if (lat > maxLat) maxLat = lat;
+            if (lon < minLong) minLong = lon;
+            if (lon > maxLong) maxLong = lon;
+        }
+
+        // Calculez les différences de lat et long
+        double latDiff = maxLat - minLat;
+        double longDiff = maxLong - minLong;
+
+        // Prenez la plus grande différence pour la taille du carré
+        double size = Math.max(latDiff, longDiff);
+
+        // Ajustez les limites pour former un carré
+        maxLat = minLat + size;
+        maxLong = minLong + size;
+
+        minLat=minLat-0.002;
+        minLong=minLong-0.002;
+        maxLat=maxLat+0.002;
+        maxLong=maxLong+0.002;
+
+        // Retourner le tableau de résultats
+        return new float[]{(float) minLat, (float) minLong, (float) maxLat, (float) maxLong};
+    }
+
+
+
+    /*public Carte(String cheminFich, Integer panelWidth, Integer panelHeight, Tour tourAAfficher) {
+        super();
+        this.cheminFichier = cheminFich;
+        this.panelHeight = panelHeight;
+        this.panelWidth = panelWidth;
+        this.tourAAfficher = tourAAfficher;
+    }*/
 
     private DonneesCarte createSampleGraph() {
         Service s = Service.getInstance();
@@ -112,20 +231,29 @@ public class Carte extends Pane {
         return dc;
     }
 
-    private float[] calculerUtil(DonneesCarte dc, Integer panelWidth, Integer panelHeight){
+    private float[] calculerUtil(DonneesCarte dc, Integer panelWidth, Integer panelHeight) {
         float echelleX = dc.getEchelleX() * panelWidth;
         float echelleY = dc.getEchelleY() * panelHeight;
         float originX = dc.getOrigine()[0];
         float originY = dc.getOrigine()[1];
         util = new float[]{originX, originY, echelleX, echelleY};
-        return util ;
+        return util;
+    }
+
+    private float[] calculerUtilTour(Integer panelWidth, Integer panelHeight, Tour tour) {
+        float[] floats = getMinMax(tour);
+        float echelleX = 1 / (floats[2] - floats[0]) * panelWidth;
+        float echelleY = 1 / (floats[3] - floats[1]) * panelHeight;
+        float originX = floats[0];
+        float originY = floats[1];
+        util = new float[]{originX, originY, echelleX, echelleY};
+        return util;
     }
 
 
+    private ArrayList<Intersection> testCalculChemin(Intersection dest1, Intersection dest2) {
 
-    private ArrayList<Intersection> testCalculChemin(Intersection dest1,Intersection dest2) {
-
-        List<Intersection> chemin2 = Calculs.dijkstra(dest1,dest2,graph);
+        List<Intersection> chemin2 = Calculs.dijkstra(dest1, dest2, graph);
 
         ArrayList<Intersection> monChemin = new ArrayList<Intersection>(chemin2);
 
@@ -142,14 +270,14 @@ public class Carte extends Pane {
         return sectionAColorier;
     }
 
-    private Tour tourAColorier(Tour tour,  DonneesCarte carte, Intersection entrepot){
+    private Tour tourAColorier(Tour tour, DonneesCarte carte, Intersection entrepot) {
         Tour t = service.calculerTour(tour, 15.0, carte, entrepot);
         return t;
     }
 
-    void dessinerTour(Tour tour, int id,Livreur livr) {
+    void dessinerTour(Tour tour, int id, Livreur livr) {
         ArrayList<Intersection> cheminTour = tour.getTrajet();
-        Intersection destination =  cheminTour.get(0);
+        Intersection destination = cheminTour.get(0);
         // Ajout des points de destination
 
         /*
@@ -178,8 +306,8 @@ public class Carte extends Pane {
                     float length = edge.getValue();
                     if (cheminTour.contains(targetNode) && cheminTour.contains(sourceNode)) {
 
-                        Circle depart = createNode(sourceNode, util, id,"");
-                        Circle arrivee = createNode(targetNode, util, id,"");
+                        Circle depart = createNode(sourceNode, util, id, "");
+                        Circle arrivee = createNode(targetNode, util, id, "");
 
 
                         Line edgeToAdd = createEdge(depart, arrivee, length, id);
@@ -187,7 +315,7 @@ public class Carte extends Pane {
                         int index = id - 1;
                         //System.out.println("hello index = "+ index);
                         if (index >= 0 && index < listeCouleurs.size()) {
-                          //  System.out.println("hello id = "+ id);
+                            //  System.out.println("hello id = "+ id);
                             listeCouleurs.get(index).getLines().add(edgeToAdd);
                         }
 
@@ -206,11 +334,11 @@ public class Carte extends Pane {
                         if (index >= 0 && index < listeCouleurs.size()) {
 
                             rect.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET, event -> {
-                                if (listeCouleurs.get(index).getEtat()){
+                                if (listeCouleurs.get(index).getEtat()) {
                                     for (Line line : listeCouleurs.get(index).getLines()) {
                                         line.setStrokeWidth(5);
                                     }
-                                    tooltip.setText("Livreur " + livr.getId()+" ("+livr.getNom()+")");
+                                    tooltip.setText("Livreur " + livr.getId() + " (" + livr.getNom() + ")");
                                     tooltip.show(rect, event.getScreenX(), event.getScreenY());
                                 }
                             });
@@ -252,9 +380,9 @@ public class Carte extends Pane {
                     float length = edge.getValue();
 
                     // Creation du point de départ
-                    Circle depart = createNode(sourceNode, util, null,"");
+                    Circle depart = createNode(sourceNode, util, null, "");
                     // Creation du point d'arrivée
-                    Circle arrivee = createNode(targetNode, util, null,"");
+                    Circle arrivee = createNode(targetNode, util, null, "");
 
                     // Creation de l'arrête reliant les deux
                     Line edgeToAdd = createEdge(depart, arrivee, length, 0);
@@ -266,7 +394,7 @@ public class Carte extends Pane {
         }
     }
 
-    private Circle createNode(Intersection inter, float[] util, Integer color,String description) {
+    private Circle createNode(Intersection inter, float[] util, Integer color, String description) {
         Circle node = new Circle(); // Circle with radius 10
         //util[0] = originX
         //util[1] = originY
@@ -300,7 +428,7 @@ public class Carte extends Pane {
         node.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET, event -> {
             int index = color - 1;
             if (index >= 0 && index < listeCouleurs.size()) {
-                if(listeCouleurs.get(index).getEtat()){
+                if (listeCouleurs.get(index).getEtat()) {
                     tooltip.setText(description);
                     tooltip.show(node, event.getScreenX(), event.getScreenY());
                     delay.playFromStart();
@@ -377,26 +505,26 @@ public class Carte extends Pane {
         }
     }
 
-    List<ElementListe> createElementListe(int nbTours){
+    List<ElementListe> createElementListe(int nbTours) {
         List<ElementListe> listeElement = new ArrayList<>();
-        for (int i=0;i<nbTours;i++){
+        for (int i = 0; i < nbTours; i++) {
             List<Line> lines = new ArrayList<>();
-            List <Circle> dots =new ArrayList<>();
-            boolean state =true;
-            ElementListe elementListe=new ElementListe(lines,dots ,state);
+            List<Circle> dots = new ArrayList<>();
+            boolean state = true;
+            ElementListe elementListe = new ElementListe(lines, dots, state);
             listeElement.add(elementListe);
         }
         return listeElement;
     }
 
 
-    void ouvrirDetails(Long id){
+    void ouvrirDetails(Long id) {
         Tour tour = Service.getInstance().getCatalogueTours().getTourById(id);
         DetailsTour fenetreDetails = new DetailsTour(this.cheminFichier, tour, 800, 550);
         fenetreDetails.ouvrirFenetre();
     }
 
-    int getNbTours(){
+    int getNbTours() {
         return nbTours;
     }
 
@@ -436,4 +564,5 @@ class ElementListe {
     public void setEtat(boolean etat) {
         this.etat = etat;
     }
+
 }
