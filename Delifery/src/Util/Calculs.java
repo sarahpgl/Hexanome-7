@@ -9,6 +9,15 @@ public class Calculs {
 
 
     // Méthode qui calcule le plus court chemin entre deux intersections, en utilisant l'algorithme de Dijkstra
+    /**
+     * Applique l'algorithme de Dijkstra pour trouver le chemin le plus court entre deux intersections dans un graphe.
+     *
+     * @param depart   L'intersection de départ.
+     * @param arrivee  L'intersection d'arrivée.
+     * @param graphe   Le graphe représenté sous forme de map avec les intersections comme clés et leurs voisins comme valeurs.
+     * @return Une liste d'intersections représentant le chemin le plus court entre le point de départ et d'arrivée.
+     *         Null si l'une des intersections n'appartient pas au graphe ou s'il n'existe pas de chemin.
+     */
     public static List<Intersection> dijkstra(Intersection depart, Intersection arrivee, Map<Intersection, Map<Intersection, Float>> graphe) {
         if (!graphe.containsKey(depart) || !graphe.containsKey(arrivee)) {
             System.out.println("Le départ ou l'arrivée n'est pas dans le graphe");
@@ -76,6 +85,12 @@ public class Calculs {
     }
 
     //Cette méthode renvoie la distance nécessaire pour parcourir la liste d'intersection rentrée en paramètre
+    /**
+     * Calcule la distance totale parcourue le long d'un chemin d'intersections.
+     *
+     * @param chemin La liste des intersections formant le chemin.
+     * @return La distance totale parcourue le long du chemin. 0 si le chemin est nul ou vide.
+     */
     public static double getDistanceChemin(List<Intersection> chemin) {
         double distance = 0;
         if (chemin != null) {
@@ -92,6 +107,13 @@ public class Calculs {
 
     // Définir la méthode trierLivraisons qui prend en paramètre une liste de livraisons et une intersection de départ
     // /!\ Cette méthode vide la liste rentrée en paramètre
+    /**
+     * Trie une liste de livraisons en fonction de leur proximité par rapport à une intersection de départ.
+     *
+     * @param livraisons La liste des livraisons à trier.
+     * @param depart     L'intersection de départ pour évaluer la proximité des livraisons.
+     * @return Une nouvelle liste de livraisons triées par ordre de proximité par rapport à l'intersection de départ.
+     */
     public static ArrayList<Livraison> trierLivraisons(ArrayList<Livraison> livraisons, Intersection depart) {
 
         ArrayList<Livraison> livraisonsTriees = new ArrayList<Livraison>();
@@ -121,6 +143,11 @@ public class Calculs {
     }
 
     // Fonction qui prend en paramètre une liste de livraisons et qui la trie par ordre croissant des heures de départ
+    /**
+     * Trie une liste de livraisons en fonction de leur heure de départ.
+     *
+     * @param livraisons La liste des livraisons à trier.
+     */
     public static void trierLivraisons(ArrayList<Livraison> livraisons) {
         // Création d'un comparateur qui compare deux livraisons selon leur heure de départ
         Comparator<Livraison> comparateur = new Comparator<Livraison>() {

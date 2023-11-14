@@ -15,6 +15,9 @@ public class Entete extends HBox {
     Button boutonAccueil;
     Button boutonQuitter;
 
+    /**
+     * Entête est le bandeau utilisé sur toutes les fenêtre de l'application
+     */
     public Entete() {
         this.setStyle("-fx-background-color: #ced4d3; -fx-padding: 10px;");
 

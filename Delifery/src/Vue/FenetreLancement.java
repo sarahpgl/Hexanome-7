@@ -119,6 +119,10 @@ public class FenetreLancement extends Application {
         boutonLancement.setPrefHeight(primaryStage.getHeight() * 0.08);
     }
 
+    /**
+     * Lier le bouton d'import avec la logique
+     * @param actionEvent
+     */
     private void importButtonAction(javafx.event.ActionEvent actionEvent) {
 
         // Create a FileChooser to open the file explorer
@@ -145,6 +149,10 @@ public class FenetreLancement extends Application {
         }
     }
 
+    /**
+     * Lie le bouton Action lancement avec la logique
+     * @param actionEvent
+     */
     private void lancementButtonAction(javafx.event.ActionEvent actionEvent) {
         if (cheminFichier != null) {
             Node source = (Node)actionEvent.getSource();

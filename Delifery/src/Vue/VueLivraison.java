@@ -2,23 +2,21 @@ package Vue;
 
 import Donnees.Creneau;
 import Donnees.Intersection;
+import Donnees.Livreur;
 import Service.Service;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.collections.FXCollections;
-import javafx.scene.control.ComboBox;
-import Donnees.Livreur;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,11 +24,15 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class VueLivraison extends Application {
-    public Integer windowWidth=400;
-    public Integer windowHeight=400;
+    public Integer windowWidth = 400;
+    public Integer windowHeight = 400;
 
+    /**
+     * Fenêtre permettant d'ajouter une livraison à un tour
+     */
     public VueLivraison() {
     }
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -42,7 +44,7 @@ public class VueLivraison extends Application {
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         // Set window size accordingly
         double width = screenBounds.getWidth() * 0.4;
-        double height = (1080.0 / 1920.0) * width-80;
+        double height = (1080.0 / 1920.0) * width - 80;
         primaryStage.setWidth(width);
         primaryStage.setHeight(height);
         // Place the window at the top-left of the screen
@@ -154,18 +156,27 @@ public class VueLivraison extends Application {
                 Intersection intersection = intersectionComboBox.getValue();
                 Creneau creneau = Creneau.HUIT_NEUF;
                 switch (horaire.get()) {
-                    case 8: creneau= Creneau.HUIT_NEUF; break;
-                    case 9: creneau= Creneau.NEUF_DIX; break;
-                    case 10: creneau= Creneau.DIX_ONZE; break;
-                    case 11: creneau= Creneau.ONZE_DOUZE; break;
-                    default: System.out.println("Pas de créneau sélectionné");
+                    case 8:
+                        creneau = Creneau.HUIT_NEUF;
+                        break;
+                    case 9:
+                        creneau = Creneau.NEUF_DIX;
+                        break;
+                    case 10:
+                        creneau = Creneau.DIX_ONZE;
+                        break;
+                    case 11:
+                        creneau = Creneau.ONZE_DOUZE;
+                        break;
+                    default:
+                        System.out.println("Pas de créneau sélectionné");
                 }
                 boolean reussi = Service.getInstance().essaieAjoutLivraisonAuTour(intersection, creneau, livreur);
-                if(!reussi){
-                    //erreurLabel.setText("Impossible");
+                if (!reussi) {
+                    erreurLabel.setText("Attention :certaines livraisons ne peuvent être réalisées veuillez consulter les détails du tour");
                     //System.out.println("NON");
                 }
-                if(reussi){
+                if (reussi) {
                     erreurLabel.setText("Livraison ajoutée");
                 }
                 Service.getInstance().updateCarte();
@@ -180,7 +191,7 @@ public class VueLivraison extends Application {
 
         HBox buttonsRow4 = new HBox(30); // Espace de 10 pixels entre les boutons
         buttonsRow4.setTranslateX(50);
-        buttonsRow4.getChildren().addAll(boutonValider,boutonAnnuler);
+        buttonsRow4.getChildren().addAll(boutonValider, boutonAnnuler);
 
         List<Button> boutons = Arrays.asList(boutonAnnuler, boutonValider);
 
@@ -197,7 +208,7 @@ public class VueLivraison extends Application {
             });
         }
 
-        VBox vboxBas=new VBox(buttonsRow4,erreurLabel);
+        VBox vboxBas = new VBox(buttonsRow4, erreurLabel);
         // Ajoutez les boutons à la grille (alignés dans la même ligne)
         gridPane.add(vboxBas, 0, 3, 2, 1);
 

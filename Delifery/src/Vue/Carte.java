@@ -35,6 +35,14 @@ public class Carte extends Pane {
     private Map<Intersection, Map<Intersection, Float>> graph;
     private String cheminFichier;
 
+    /**
+     * Constructeur de Carte, Affichage graphique du graph et des Tours
+     * Utilisé notamment pour l'affichage du détail d'un tour
+     * @param cheminFich chemin vers le fichier de la carte
+     * @param panelWidth Largeur du Panneau
+     * @param panelHeight Hauteur du Panneau
+     * @param tourAAfficher le Tour à afficher
+     */
     public Carte(String cheminFich, Integer panelWidth, Integer panelHeight, Tour tourAAfficher) {
         super();
         this.cheminFichier = cheminFich;
@@ -106,6 +114,13 @@ public class Carte extends Pane {
         }
     }
 
+
+    /**
+     * Constructeur de Carte, Affichage du graph et des tours
+     * @param cheminFich chemin vers le fichier de la carte
+     * @param panelWidth Largeur du panneau
+     * @param panelHeight Hauteur du panneau
+     */
     public Carte(String cheminFich, Integer panelWidth, Integer panelHeight) {
         super();
         this.cheminFichier = cheminFich;
@@ -176,6 +191,11 @@ public class Carte extends Pane {
         }
     }
 
+    /**
+     * Calcule les latitudes et longitudes min et max d'un Tour
+     * @param tour Tour dont on souhaite connaitre ces infos
+     * @return Le tableau [minLat, minLong, maxLat, maxLong]
+     */
     private float[] getMinMax(Tour tour) {
         // Initialiser les valeurs min et max avec les premières intersections du tour
         double minLat = tour.getTrajet().get(0).getCoordonnees().getLatitude();
@@ -235,6 +255,13 @@ public class Carte extends Pane {
         return dc;
     }
 
+    /**
+     * Permet de calculer les échelles et origines de la carte pour redimensionner la carte dans le panneau
+     * @param dc Données de la carte
+     * @param panelWidth Largeur du panneau
+     * @param panelHeight Hauteur du panneau
+     * @return Le tableau [originX, originY, echelleX, echelleY]
+     */
     private float[] calculerUtil(DonneesCarte dc, Integer panelWidth, Integer panelHeight) {
         float echelleX = dc.getEchelleX() * panelWidth;
         float echelleY = dc.getEchelleY() * panelHeight;
@@ -244,6 +271,13 @@ public class Carte extends Pane {
         return util;
     }
 
+    /**
+     * Permet de calculer les échelles et origine lors de l'affichage sur le détail d'un tour
+     * @param panelWidth Largeur du panneau
+     * @param panelHeight Hauteur du panneau
+     * @param tour Le tour dont on souhaite connaitre les échelles
+     * @return Le tableau [originX, originY, echelleX, echelleY]
+     */
     private float[] calculerUtilTour(Integer panelWidth, Integer panelHeight, Tour tour) {
         float[] floats = getMinMax(tour);
         float echelleX = 1 / (floats[2] - floats[0]) * panelWidth;
@@ -274,11 +308,24 @@ public class Carte extends Pane {
         return sectionAColorier;
     }
 
+    /**
+     *
+     * @param tour Tour a colorier
+     * @param carte Données de la carte
+     * @param entrepot Intersection de l'entrepor
+     * @return Le tour à colorier
+     */
     private Tour tourAColorier(Tour tour, DonneesCarte carte, Intersection entrepot) {
         Tour t = service.calculerTour(tour, 15.0, carte, entrepot);
         return t;
     }
 
+    /**
+     * Dessine le tour dans le panneau de la carte
+     * @param tour Tour à afficher
+     * @param couleur Couleur de l'affichage
+     * @param livr Livreur associé au tour
+     */
     void dessinerTour(Tour tour, int id, Livreur livr) {
         ArrayList<Intersection> cheminTour = tour.getTrajet();
         Intersection destination = cheminTour.get(0);
@@ -372,6 +419,9 @@ public class Carte extends Pane {
         }
     }
 
+    /**
+     * Dessine la carte dans le panneau
+     */
     void dessinerCarte() {
         for (Map.Entry<Intersection, Map<Intersection, Float>> entry : graph.entrySet()) {
             Intersection sourceNode = entry.getKey();
@@ -397,6 +447,14 @@ public class Carte extends Pane {
         }
     }
 
+    /**
+     * Crée un point sur la carte
+     * @param inter intersection sur laquelle crée le point
+     * @param util Les échelles et origines
+     * @param color Couleur dur point
+     * @param description Description affiché lors d'un hover du point
+     * @return Point créé
+     */
     private Circle createNode(Intersection inter, float[] util, Integer color, String description) {
         Circle node = new Circle(); // Circle with radius 10
         //util[0] = originX
@@ -452,6 +510,13 @@ public class Carte extends Pane {
         return node;
     }
 
+    /**
+     * Crée sur la carte un arc entre deux points
+     * @param source Origine de l'arc
+     * @param target Destination de l'arc
+     * @param color Couleur de l'arc
+     * @return L'arc
+     */
     private Line createEdge(Circle source, Circle target, float length, Integer color) {
         Line edge = new Line();
 
@@ -470,6 +535,10 @@ public class Carte extends Pane {
         return edge;
     }
 
+    /**
+     * Permet de cacher un tour de l'affichage sur la carte
+     * @param numTour Id du tour à cacher
+     */
     void enleverLigne(String numTour) {
         int index = Integer.parseInt(numTour) - 1;
         if (index >= 0 && index < listeCouleurs.size()) {
@@ -486,6 +555,10 @@ public class Carte extends Pane {
         }
     }
 
+    /**
+     * Permet d'afficher un tour caché sur la carte
+     * @param numTour Numéro du tour à ré-afficher
+     */
     void remettreLigne(String numTour) {
         int index = Integer.parseInt(numTour) - 1;
         if (index >= 0 && index < listeCouleurs.size()) {
@@ -508,6 +581,11 @@ public class Carte extends Pane {
         }
     }
 
+    /**
+     * Crée les élément de la liste qui permettent de gérer l'affichage et le cachage des tour
+     * @param nbTours Nb de tours totaux
+     * @return Liste des elements
+     */
     List<ElementListe> createElementListe(int nbTours) {
         List<ElementListe> listeElement = new ArrayList<>();
         for (int i = 0; i < nbTours; i++) {
@@ -553,10 +631,16 @@ class ElementListe {
     List<Circle> dots;
     boolean etat;
 
-    public ElementListe(List<Line> lines, List<Circle> dots, boolean number) {
+    /**
+     * La classe ElementsList contient les éléments pour l'affichage graphique d'un tour sur la carte
+     * @param lines Arcs du tour
+     * @param dots Points du tour
+     * @param etat Tour affiché ou caché
+     */
+    public ElementListe(List<Line> lines, List<Circle> dots, boolean etat) {
         this.lines = lines;
         this.dots = dots;
-        this.etat = number;
+        this.etat = etat;
     }
 
     public List<Line> getLines() {

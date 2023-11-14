@@ -28,7 +28,14 @@ import javax.xml.transform.stream.StreamResult;
 public class FileSystemXML {
 
     public FileSystemXML(){};
+
     // Définir une méthode statique qui prend en paramètre le chemin du fichier XML et qui renvoie un objet Warehouse, un tableau d'objets Intersection et un tableau d'objets Segment
+    /**
+     * Lit un fichier XML à partir du chemin spécifié, extrait les données du document XML et les renvoie sous forme d'objets.
+     *
+     * @param chemin Le chemin du fichier XML à lire.
+     * @return Un tableau d'objets contenant les données extraites du fichier XML, telles qu'un objet Warehouse, un tableau d'objets Intersection et un tableau d'objets Segment, ou null en cas d'erreur.
+     */
     public static Object[] lireXML(String chemin) {
 
         Object[] returnObject = null;
@@ -61,6 +68,12 @@ public class FileSystemXML {
         return returnObject;
     }
 
+    /**
+     * Importe les données du document XML de type "map" pour extraire les informations sur les intersections, les segments et les entrepôts.
+     *
+     * @param racine L'élément racine du document XML "map".
+     * @return Un tableau d'objets contenant les entrepôts, les intersections, les segments, les coordonnées minimales et maximales de latitude et longitude, ou null en cas d'erreur.
+     */
     private static Object[] importMap(Element racine) {
         // Déclarer un objet Warehouse, un tableau d'objets Intersection et un tableau d'objets Segment
         Intersection[] warehouse = null;
@@ -169,6 +182,12 @@ public class FileSystemXML {
         return new Object[] {warehouse, intersections, sections, minLong, maxLong, minLat,maxLat};
     }
 
+    /**
+     * Importe les données du document XML de type "catalogue" pour extraire les informations sur les tournées, leurs intersections, et leurs livraisons.
+     *
+     * @param racine L'élément racine du document XML "catalogue".
+     * @return Un tableau d'objets contenant le catalogue des tournées, ou null en cas d'erreur.
+     */
     public static Object[] importTour (Element racine) {
         CatalogueTours catalogueTours = new CatalogueTours(racine.getAttribute("idMap"));
 
@@ -218,6 +237,13 @@ public class FileSystemXML {
         return new Object[] {catalogueTours};
     }
 
+    /**
+     * Recherche et renvoie une intersection à partir d'une liste d'intersections et d'un identifiant donné.
+     *
+     * @param intersections La liste des intersections parmi lesquelles effectuer la recherche.
+     * @param id L'identifiant de l'intersection à rechercher.
+     * @return L'intersection correspondant à l'identifiant donné, ou null si aucune correspondance n'est trouvée.
+     */
     private static Intersection getIntersectionById(ArrayList<Intersection> intersections, String id) {
         BigInteger bigId = new BigInteger(id);
 
@@ -227,6 +253,12 @@ public class FileSystemXML {
         return null;
     }
 
+    /**
+     * Convertit une chaîne de temps donnée en une instance de LocalTime.
+     *
+     * @param timeString La chaîne de temps au format "HH:mm:ss".
+     * @return Une instance de LocalTime correspondant à la chaîne de temps fournie.
+     */
     private static LocalTime parseTime(String timeString) {
         // Define the formatter for the given time format
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -236,6 +268,12 @@ public class FileSystemXML {
     }
 
     // Une méthode pour écrire un catalogue de tours dans un fichier XML
+    /**
+     * Écrit les données du catalogue des tournées dans un fichier XML à l'emplacement spécifié.
+     *
+     * @param c               Le catalogue des tournées à écrire dans le fichier XML.
+     * @param cheminSauvegarde Le chemin complet où le fichier XML doit être sauvegardé.
+     */
     public static void EcrireCatalogueXML(CatalogueTours c, String cheminSauvegarde) {
         try {
             // Créer un fichier XML avec le chemin et le nom spécifiés

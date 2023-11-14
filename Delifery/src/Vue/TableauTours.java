@@ -27,6 +27,12 @@ public class TableauTours extends StackPane {
     private CatalogueTours catalogueTours;
     private String cheminFchier;
 
+
+    /**
+     * Le tableau affichant la liste des tours, il permet d'acceder au détail de tour par la suite
+     * @param c Carte contenant les tours à afficher
+     * @param cheminFichier Chemin vers le fichier de la carte
+     */
     public TableauTours(Carte c, String cheminFichier) {
         this.setStyle("-fx-background-color: #ffffff; -fx-padding: 10px;");
         this.carteTab = c;

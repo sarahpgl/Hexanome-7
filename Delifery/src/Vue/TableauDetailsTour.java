@@ -20,6 +20,10 @@ public class TableauDetailsTour extends StackPane {
 
     Tour tour;
 
+    /**
+     * Classe du tableau qui affiche le détail des tours
+     * @param monTour Tour a afficher en détail
+     */
     public TableauDetailsTour(Tour monTour) {
         this.tour = monTour;
         this.setStyle("-fx-background-color: #ffffff; -fx-padding: 10px;");
@@ -39,60 +43,71 @@ public class TableauDetailsTour extends StackPane {
         Livraison livCourante = null;
         for (int i = 1; i < nbLignes; i++) {
             livCourante = livraisonsDetails.get(i - 1);
-            if (livCourante.livree()) {
-                for (int j = 0; j < nbColonnes; j++) {
+            for (int j = 0; j < nbColonnes; j++) {
 
-                    Rectangle rectangle = new Rectangle(140, 70);
-                    rectangle.setStroke(Color.BLACK);
-                    rectangle.setFill(Color.LIGHTGREY);
+                Rectangle rectangle = new Rectangle(140, 70);
+                rectangle.setStroke(Color.BLACK);
+                rectangle.setFill(Color.LIGHTGREY);
 
-                    StackPane cellule = new StackPane();
-                    cellule.getChildren().add(rectangle);
+                StackPane cellule = new StackPane();
+                cellule.getChildren().add(rectangle);
 
-                    if (j == 0 && i >= 1) {
-                        // Affiche le numéro de colis dans la première ligne
-                        Label colisNumeroLabel = new Label(String.valueOf(livCourante.getId()));
-                        colisNumeroLabel.setAlignment(Pos.CENTER);
-                        cellule.getChildren().add(colisNumeroLabel);
-                    } else if (j == 1 && i >= 1) {
-                        // Affiche les coordonnees dans la deuxième ligne
-                        Intersection inter = livCourante.getAdresse();
-                        Coordonnees coordonnees = inter.getCoordonnees();
-                        String coordonneesStr = "(" + coordonnees.getLatitude() + ", " + coordonnees.getLongitude() + ")";
-                        Label coordonneesLabel = new Label(coordonneesStr);
-                        coordonneesLabel.setAlignment(Pos.CENTER);
-                        cellule.getChildren().add(coordonneesLabel);
-                    } else if (j == 2 && i >= 1) {
-                        // Affiche l'heure d'arrivée dans la troisième ligne
-                        Label heure1Label = new Label(livCourante.getHeureArrivee().toString());
-                        heure1Label.setAlignment(Pos.CENTER);
-                        cellule.getChildren().add(heure1Label);
-                    } else if (j == 3 && i >= 1) {
-                        // Affiche l'heure de départ dans la quatrième ligne
-                        Label heure2Label = new Label(livCourante.getHeureDepart().toString());
-                        heure2Label.setAlignment(Pos.CENTER);
-                        cellule.getChildren().add(heure2Label);
-                    } else if (i == 0 && j == 0) {
-                        Text text = new Text("Colis N°");
-                        rectangle.setFill(Color.WHITE);
-                        cellule.getChildren().add(text);
-                    } else if (i == 0 && j == 1) {
-                        Text text = new Text("Coordonnées");
-                        rectangle.setFill(Color.WHITE);
-                        cellule.getChildren().add(text);
-                    } else if (i == 0 && j == 2) {
-                        Text text = new Text("Heure arrivée");
-                        rectangle.setFill(Color.WHITE);
-                        cellule.getChildren().add(text);
-                    } else if (i == 0 && j == 3) {
-                        Text text = new Text("Heure départ");
-                        rectangle.setFill(Color.WHITE);
-                        cellule.getChildren().add(text);
+                if (j == 0 && i >= 1) {
+                    // Affiche le numéro de colis dans la première ligne
+                    Label colisNumeroLabel = new Label(String.valueOf(livCourante.getId()));
+                    colisNumeroLabel.setAlignment(Pos.CENTER);
+                    cellule.getChildren().add(colisNumeroLabel);
+                } else if (j == 1 && i >= 1) {
+                    // Affiche les coordonnees dans la deuxième ligne
+                    Intersection inter = livCourante.getAdresse();
+                    Coordonnees coordonnees = inter.getCoordonnees();
+                    String coordonneesStr = "(" + coordonnees.getLatitude() + ", " + coordonnees.getLongitude() + ")";
+                    Label coordonneesLabel = new Label(coordonneesStr);
+                    coordonneesLabel.setAlignment(Pos.CENTER);
+                    cellule.getChildren().add(coordonneesLabel);
+                } else if (j == 2 && i >= 1) {
+                    Label heure1Label=new Label();
+                    if(livCourante.livree()){
+                        heure1Label = new Label(livCourante.getHeureArrivee().toString());
+                    }else{
+                        heure1Label = new Label("Non effectuée");
+                        heure1Label.setStyle("-fx-text-fill: darkred; -fx-font-weight: bold;");
                     }
-                    tableau.add(cellule, j, i); // Ajoutez la cellule au tableau
-
+                    // Affiche l'heure d'arrivée dans la troisième ligne
+                    heure1Label.setAlignment(Pos.CENTER);
+                    cellule.getChildren().add(heure1Label);
+                } else if (j == 3 && i >= 1) {
+                    Label heure2Label=new Label();
+                    if(livCourante.livree()){
+                        heure2Label = new Label(livCourante.getHeureDepart().toString());
+                    }else{
+                        heure2Label = new Label("Non effectuée");
+                        heure2Label.setStyle("-fx-text-fill: darkred; -fx-font-weight: bold;");
+                    }
+                    // Affiche l'heure de départ dans la quatrième ligne
+                    heure2Label.setAlignment(Pos.CENTER);
+                    cellule.getChildren().add(heure2Label);
+                } else if (i == 0 && j == 0) {
+                    Text text = new Text("Colis N°");
+                    rectangle.setFill(Color.WHITE);
+                    cellule.getChildren().add(text);
+                } else if (i == 0 && j == 1) {
+                    Text text = new Text("Coordonnées");
+                    rectangle.setFill(Color.WHITE);
+                    cellule.getChildren().add(text);
+                } else if (i == 0 && j == 2) {
+                    Text text = new Text("Heure arrivée");
+                    rectangle.setFill(Color.WHITE);
+                    cellule.getChildren().add(text);
+                } else if (i == 0 && j == 3) {
+                    Text text = new Text("Heure départ");
+                    rectangle.setFill(Color.WHITE);
+                    cellule.getChildren().add(text);
                 }
+                tableau.add(cellule, j, i); // Ajoutez la cellule au tableau
+
             }
+
 
         }
 

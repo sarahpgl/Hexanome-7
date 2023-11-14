@@ -25,7 +25,12 @@ public class VueApplication extends Application {
 
     Service service = Service.getInstance();
 
-
+    /**
+     * Fenêtre de base de l'application qui accueille les différents panneaux
+     * @param cheminFichier chemin du fichier vers la carte
+     * @param width largeur de la fenêtre
+     * @param height hauteur de la carte
+     */
     public VueApplication(String cheminFichier, Integer width, Integer height) {
         super();
         this.windowWidth = width;
@@ -96,6 +101,9 @@ public class VueApplication extends Application {
 
     }
 
+    /**
+     * Recharge le fichier de la carte à partir de <b>CheminFichier</b>
+     */
     public void updateCarte() {
         gridPane.getChildren().remove(this.carte);
         Carte c = new Carte(cheminFichier, windowWidth / 2, windowHeight * 8 / 10);
@@ -103,6 +111,9 @@ public class VueApplication extends Application {
         gridPane.add(c, 1, 1);
     }
 
+    /**
+     * Mets à jour le tableau tour en fonction de la <b>carte</b> et du <b>cheminFichier</b>
+     */
     public void updatePanel() {
         gridPane.getChildren().remove(this.tableauTours);
         TableauTours tb = new TableauTours(this.carte,this.cheminFichier);
