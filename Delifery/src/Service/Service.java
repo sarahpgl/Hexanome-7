@@ -458,10 +458,22 @@ public class Service {
      * @param nombre Le nombre de livreurs désiré dans le catalogue de tours.
      */
     public void setNbLivreur(int nombre){
-
+        ArrayList<String> listeNoms = new ArrayList<String>();
+        for(Livreur l :catalogueTours.getListeLivreurs()){
+            listeNoms.add(l.getNom());
+        }
         if(nombre > catalogueTours.getListeLivreurs().size()){
-            for(int i =catalogueTours.getListeLivreurs().size(); i<nombre;i++){
-                catalogueTours.ajouterTour(new Tour(new Livreur(i)));
+
+
+            for(int i =0; i<nombre;i++){
+                Livreur li = new Livreur(i);
+                if(!listeNoms.contains(li.getNom())){
+                    System.out.println("here");
+                    catalogueTours.ajouterTour(new Tour(new Livreur(i)));
+                }else{
+                    i--;
+                }
+
             }
         }else{
             for(int i = catalogueTours.getListeLivreurs().size(); i>nombre; i--){
