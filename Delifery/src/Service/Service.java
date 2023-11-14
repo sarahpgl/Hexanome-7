@@ -476,16 +476,18 @@ public class Service {
         FileSystemXML fsxml;
         fsxml = new FileSystemXML();
         Object[] objects = fsxml.lireXML(cheminfihcierCatalogueTour);
-        if (objects[0] != null && objects[0] instanceof CatalogueTours) {
-            CatalogueTours Ctour = (CatalogueTours) objects[0];
-            if (this.nomFichierCarte.contains(Ctour.getMapName())) { //On vérifie la cohérence des cartes
-                setCatalogueTours((CatalogueTours) objects[0]);
-                b = true;
-                updateCarte();
-                updatePanel();
-            } else {
-                System.out.println("Impossible d'importer le Catalogue car le CatalogueTour ne correspond pas avec la carte affichée");
-            }
+        if (objects[0] != null ){
+             if(objects[0] instanceof CatalogueTours) {
+                 CatalogueTours Ctour = (CatalogueTours) objects[0];
+                 if (this.nomFichierCarte.contains(Ctour.getMapName())) { //On vérifie la cohérence des cartes
+                     setCatalogueTours((CatalogueTours) objects[0]);
+                     b = true;
+                     updateCarte();
+                     updatePanel();
+                 } else {
+                     System.out.println("Impossible d'importer le Catalogue car le CatalogueTour ne correspond pas avec la carte affichée");
+                 }
+             }
         }
         return b;
     }

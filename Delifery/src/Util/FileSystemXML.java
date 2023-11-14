@@ -278,8 +278,8 @@ public class FileSystemXML {
                     livraison.setAttribute("id", l.getId().toString());
                     livraison.setAttribute("idIntersection", l.getAdresse().getId().toString());
                     livraison.setAttribute("creneau", l.getCreneau().toString());
-                    livraison.setAttribute("heureArrivee", l.getHeureArrivee().toString());
-                    livraison.setAttribute("heureDepart", l.getHeureDepart().toString());
+                    livraison.setAttribute("heureArrivee", l.getHeureArrivee().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+                    livraison.setAttribute("heureDepart", l.getHeureDepart().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
                     livraisons.appendChild(livraison);
                 }
 

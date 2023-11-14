@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalogue idMap="">
+    <tour id="0">
+        <livreur nom="Moïse" vitesse="15.0"/>
+        <livraisons>
+            <livraison creneau="HUIT_NEUF" heureArrivee="08:04:37" heureDepart="08:09:37" id="269" idIntersection="26155375"/>
+            <livraison creneau="HUIT_NEUF" heureArrivee="08:18:27" heureDepart="08:23:27" id="232" idIntersection="26057069"/>
+            <livraison creneau="HUIT_NEUF" heureArrivee="08:42:26" heureDepart="08:47:26" id="189" idIntersection="2066074373"/>
+        </livraisons>
+        <trajet>
+            <intersection id="25303831" latitude="45.74979" longitude="4.87572"/>
+            <intersection id="25303832" latitude="45.749344" longitude="4.876714"/>
+            <intersection id="25303833" latitude="45.748894" longitude="4.877902"/>
+            <intersection id="2365376415" latitude="45.748672" longitude="4.8785987"/>
+            <intersection id="2365376404" latitude="45.748333" longitude="4.879658"/>
+            <intersection id="2365376413" latitude="45.74813" longitude="4.880285"/>
+            <intersection id="434308458" latitude="45.74796" longitude="4.88083"/>
+            <intersection id="26570169" latitude="45.747814" longitude="4.881324"/>
+            <intersection id="26155402" latitude="45.748585" longitude="4.8837514"/>
+            <intersection id="26155382" latitude="45.74932" longitude="4.886111"/>
+            <intersection id="26155419" latitude="45.7496" longitude="4.886964"/>
+            <intersection id="4034132513" latitude="45.749508" longitude="4.887014"/>
+            <intersection id="868438829" latitude="45.74986" longitude="4.8881073"/>
+            <intersection id="26155375" latitude="45.750538" longitude="4.8876624"/>
+            <intersection id="26155376" latitude="45.75118" longitude="4.887296"/>
+            <intersection id="26155377" latitude="45.751747" longitude="4.8869824"/>
+            <intersection id="26286695" latitude="45.752182" longitude="4.886743"/>
+            <intersection id="26286694" latitude="45.752815" longitude="4.886397"/>
+            <intersection id="26286762" latitude="45.75364" longitude="4.8859205"/>
+            <intersection id="1383027258" latitude="45.753696" longitude="4.8855987"/>
+            <intersection id="26286760" latitude="45.75409" longitude="4.885686"/>
+            <intersection id="25611395" latitude="45.75427" longitude="4.885665"/>
+            <intersection id="249740340" latitude="45.754288" longitude="4.884357"/>
+            <intersection id="25611400" latitude="45.754307" longitude="4.883899"/>
+            <intersection id="25611401" latitude="45.75433" longitude="4.8832564"/>
+            <intersection id="25611404" latitude="45.754368" longitude="4.8827524"/>
+            <intersection id="1682387628" latitude="45.754463" longitude="4.882047"/>
+            <intersection id="26317392" latitude="45.75456" longitude="4.881335"/>
+            <intersection id="25611408" latitude="45.754616" longitude="4.881013"/>
+            <intersection id="25611409" latitude="45.754684" longitude="4.880419"/>
+            <intersection id="55463824" latitude="45.75477" longitude="4.879847"/>
+            <intersection id="25611411" latitude="45.75486" longitude="4.879142"/>
+            <intersection id="25611424" latitude="45.754955" longitude="4.8783345"/>
+            <intersection id="25611425" latitude="45.754944" longitude="4.8772635"/>
+            <intersection id="55463792" latitude="45.75585" longitude="4.876966"/>
+            <intersection id="55463799" latitude="45.755966" longitude="4.876903"/>
+            <intersection id="1368674810" latitude="45.75577" longitude="4.876167"/>
+            <intersection id="1368674811" latitude="45.75587" longitude="4.876154"/>
+            <intersection id="2672660419" latitude="45.756004" longitude="4.8742256"/>
+            <intersection id="26057106" latitude="45.7561" longitude="4.8726816"/>
+            <intersection id="26057098" latitude="45.75631" longitude="4.871078"/>
+            <intersection id="26057085" latitude="45.756638" longitude="4.8683963"/>
+            <intersection id="26057084" latitude="45.756714" longitude="4.8673143"/>
+            <intersection id="26057083" latitude="45.756855" longitude="4.86569"/>
+            <intersection id="26057069" latitude="45.75693" longitude="4.86464"/>
+            <intersection id="26057064" latitude="45.75704" longitude="4.8625107"/>
+            <intersection id="26317236" latitude="45.75603" longitude="4.864057"/>
+            <intersection id="26317235" latitude="45.754982" longitude="4.865772"/>
+            <intersection id="25611760" latitude="45.754536" longitude="4.866525"/>
+            <intersection id="26317214" latitude="45.754124" longitude="4.867271"/>
+            <intersection id="3509898986" latitude="45.753796" longitude="4.867863"/>
+            <intersection id="2026239409" latitude="45.752804" longitude="4.869617"/>
+            <intersection id="1603856892" latitude="45.752464" longitude="4.870312"/>
+            <intersection id="25336254" latitude="45.751957" longitude="4.8713155"/>
+            <intersection id="2129259176" latitude="45.75171" longitude="4.8718166"/>
+            <intersection id="251047560" latitude="45.751255" longitude="4.8727455"/>
+            <intersection id="25321447" latitude="45.750668" longitude="4.8739367"/>
+            <intersection id="2129259178" latitude="45.750404" longitude="4.8744674"/>
+            <intersection id="25303831" latitude="45.74979" longitude="4.87572"/>
+            <intersection id="25303832" latitude="45.749344" longitude="4.876714"/>
+            <intersection id="25303833" latitude="45.748894" longitude="4.877902"/>
+            <intersection id="2365376415" latitude="45.748672" longitude="4.8785987"/>
+            <intersection id="2365376404" latitude="45.748333" longitude="4.879658"/>
+            <intersection id="2365376413" latitude="45.74813" longitude="4.880285"/>
+            <intersection id="434308458" latitude="45.74796" longitude="4.88083"/>
+            <intersection id="26570169" latitude="45.747814" longitude="4.881324"/>
+            <intersection id="25303803" latitude="45.7477" longitude="4.8817077"/>
+            <intersection id="25303804" latitude="45.747467" longitude="4.8824387"/>
+            <intersection id="624172864" latitude="45.747402" longitude="4.882675"/>
+            <intersection id="25303807" latitude="45.747284" longitude="4.8830442"/>
+            <intersection id="325213179" latitude="45.746887" longitude="4.8842854"/>
+            <intersection id="26155540" latitude="45.746685" longitude="4.8849287"/>
+            <intersection id="388568803" latitude="45.746437" longitude="4.885732"/>
+            <intersection id="325213183" latitude="45.746105" longitude="4.886761"/>
+            <intersection id="26155538" latitude="45.74584" longitude="4.8876343"/>
+            <intersection id="26464320" latitude="45.745415" longitude="4.887695"/>
+            <intersection id="26464315" latitude="45.744488" longitude="4.8878455"/>
+            <intersection id="26464316" latitude="45.743805" longitude="4.887943"/>
+            <intersection id="26464270" latitude="45.743114" longitude="4.888061"/>
+            <intersection id="26464271" latitude="45.742455" longitude="4.8881497"/>
+            <intersection id="26464252" latitude="45.741745" longitude="4.888255"/>
+            <intersection id="365117230" latitude="45.74111" longitude="4.888338"/>
+            <intersection id="26464318" latitude="45.740288" longitude="4.888469"/>
+            <intersection id="1373967339" latitude="45.740215" longitude="4.88842"/>
+            <intersection id="836850034" latitude="45.739136" longitude="4.891646"/>
+            <intersection id="21715071" latitude="45.73897" longitude="4.892067"/>
+            <intersection id="21715069" latitude="45.73893" longitude="4.892188"/>
+            <intersection id="21715067" latitude="45.73876" longitude="4.8927574"/>
+            <intersection id="194605193" latitude="45.738644" longitude="4.893329"/>
+            <intersection id="21715078" latitude="45.738525" longitude="4.8937016"/>
+            <intersection id="60901944" latitude="45.738197" longitude="4.8946996"/>
+            <intersection id="60901945" latitude="45.737644" longitude="4.8963575"/>
+            <intersection id="2864851049" latitude="45.737427" longitude="4.89702"/>
+            <intersection id="60901947" latitude="45.7371" longitude="4.8980203"/>
+            <intersection id="194605197" latitude="45.736553" longitude="4.8996997"/>
+            <intersection id="194605312" latitude="45.73622" longitude="4.900421"/>
+            <intersection id="194605316" latitude="45.73597" longitude="4.901063"/>
+            <intersection id="194605319" latitude="45.735813" longitude="4.9015846"/>
+            <intersection id="194605322" latitude="45.735493" longitude="4.9025283"/>
+            <intersection id="194610463" latitude="45.73529" longitude="4.903048"/>
+            <intersection id="194605201" latitude="45.734715" longitude="4.904867"/>
+            <intersection id="194605205" latitude="45.73465" longitude="4.9048934"/>
+            <intersection id="245023213" latitude="45.734554" longitude="4.904345"/>
+            <intersection id="2066074390" latitude="45.734455" longitude="4.9036465"/>
+            <intersection id="2066074373" latitude="45.733994" longitude="4.9025884"/>
+            <intersection id="2066074368" latitude="45.733387" longitude="4.9021153"/>
+            <intersection id="3760110976" latitude="45.733135" longitude="4.901924"/>
+            <intersection id="245023120" latitude="45.732418" longitude="4.901371"/>
+            <intersection id="60901987" latitude="45.73325" longitude="4.8993382"/>
+            <intersection id="60901983" latitude="45.734013" longitude="4.897888"/>
+            <intersection id="60901982" latitude="45.734184" longitude="4.8974867"/>
+            <intersection id="60901948" latitude="45.73438" longitude="4.8970246"/>
+            <intersection id="245054847" latitude="45.73461" longitude="4.896528"/>
+            <intersection id="60901949" latitude="45.73489" longitude="4.8958178"/>
+            <intersection id="60901989" latitude="45.73491" longitude="4.8956866"/>
+            <intersection id="60901942" latitude="45.73513" longitude="4.894723"/>
+            <intersection id="60901940" latitude="45.735107" longitude="4.893508"/>
+            <intersection id="60901937" latitude="45.734886" longitude="4.8920493"/>
+            <intersection id="60901938" latitude="45.73479" longitude="4.8913703"/>
+            <intersection id="1315984607" latitude="45.734962" longitude="4.8905373"/>
+            <intersection id="21715082" latitude="45.73514" longitude="4.8898077"/>
+            <intersection id="21715081" latitude="45.735176" longitude="4.889699"/>
+            <intersection id="21715080" latitude="45.73527" longitude="4.8893137"/>
+            <intersection id="1201354422" latitude="45.736843" longitude="4.886118"/>
+            <intersection id="1201354435" latitude="45.73726" longitude="4.8857665"/>
+            <intersection id="21717930" latitude="45.737392" longitude="4.885561"/>
+            <intersection id="21717929" latitude="45.73765" longitude="4.8851733"/>
+            <intersection id="21717912" latitude="45.73806" longitude="4.8845325"/>
+            <intersection id="21717907" latitude="45.739338" longitude="4.883"/>
+            <intersection id="21717908" latitude="45.739582" longitude="4.8826475"/>
+            <intersection id="21717904" latitude="45.739925" longitude="4.8820524"/>
+            <intersection id="21704345" latitude="45.741234" longitude="4.879596"/>
+            <intersection id="21702424" latitude="45.74226" longitude="4.8775773"/>
+            <intersection id="21702423" latitude="45.74234" longitude="4.8774304"/>
+            <intersection id="21702435" latitude="45.742672" longitude="4.876846"/>
+            <intersection id="21604593" latitude="45.743027" longitude="4.8768773"/>
+            <intersection id="24640391" latitude="45.743576" longitude="4.876974"/>
+            <intersection id="7300874" latitude="45.744404" longitude="4.8745656"/>
+            <intersection id="25321323" latitude="45.745842" longitude="4.87497"/>
+            <intersection id="25321327" latitude="45.74706" longitude="4.8751974"/>
+            <intersection id="251167391" latitude="45.74758" longitude="4.875293"/>
+            <intersection id="25321469" latitude="45.748405" longitude="4.875445"/>
+            <intersection id="25321456" latitude="45.749214" longitude="4.875591"/>
+            <intersection id="25303831" latitude="45.74979" longitude="4.87572"/>
+        </trajet>
+    </tour>
+    <tour id="1">
+        <livreur nom="Adam Labrosse" vitesse="15.0"/>
+        <livraisons>
+            <livraison creneau="HUIT_NEUF" heureArrivee="08:03:52" heureDepart="08:08:52" id="348" idIntersection="26155373"/>
+            <livraison creneau="HUIT_NEUF" heureArrivee="08:15:36" heureDepart="08:20:36" id="974" idIntersection="55474989"/>
+        </livraisons>
+        <trajet>
+            <intersection id="25303831" latitude="45.74979" longitude="4.87572"/>
+            <intersection id="25303832" latitude="45.749344" longitude="4.876714"/>
+            <intersection id="25303833" latitude="45.748894" longitude="4.877902"/>
+            <intersection id="2365376415" latitude="45.748672" longitude="4.8785987"/>
+            <intersection id="2365376404" latitude="45.748333" longitude="4.879658"/>
+            <intersection id="2365376413" latitude="45.74813" longitude="4.880285"/>
+            <intersection id="434308458" latitude="45.74796" longitude="4.88083"/>
+            <intersection id="26570169" latitude="45.747814" longitude="4.881324"/>
+            <intersection id="26155402" latitude="45.748585" longitude="4.8837514"/>
+            <intersection id="26155382" latitude="45.74932" longitude="4.886111"/>
+            <intersection id="26155373" latitude="45.749924" longitude="4.885727"/>
+            <intersection id="26155372" latitude="45.75055" longitude="4.8853126"/>
+            <intersection id="26155378" latitude="45.751114" longitude="4.88497"/>
+            <intersection id="26155379" latitude="45.751038" longitude="4.884626"/>
+            <intersection id="26155380" latitude="45.7513" longitude="4.883234"/>
+            <intersection id="325772567" latitude="45.751896" longitude="4.8833594"/>
+            <intersection id="26317396" latitude="45.75356" longitude="4.883734"/>
+            <intersection id="25611400" latitude="45.754307" longitude="4.883899"/>
+            <intersection id="25611401" latitude="45.75433" longitude="4.8832564"/>
+            <intersection id="25611404" latitude="45.754368" longitude="4.8827524"/>
+            <intersection id="1682387628" latitude="45.754463" longitude="4.882047"/>
+            <intersection id="26317392" latitude="45.75456" longitude="4.881335"/>
+            <intersection id="25611408" latitude="45.754616" longitude="4.881013"/>
+            <intersection id="25611409" latitude="45.754684" longitude="4.880419"/>
+            <intersection id="55463824" latitude="45.75477" longitude="4.879847"/>
+            <intersection id="55463826" latitude="45.75659" longitude="4.8790674"/>
+            <intersection id="4193445730" latitude="45.756573" longitude="4.8789897"/>
+            <intersection id="4193445733" latitude="45.757183" longitude="4.878625"/>
+            <intersection id="2586814489" latitude="45.757202" longitude="4.8783083"/>
+            <intersection id="3236267785" latitude="45.7578" longitude="4.878393"/>
+            <intersection id="2586814494" latitude="45.758804" longitude="4.878655"/>
+            <intersection id="208769303" latitude="45.75924" longitude="4.877136"/>
+            <intersection id="208769312" latitude="45.759335" longitude="4.877039"/>
+            <intersection id="208769295" latitude="45.759293" longitude="4.876936"/>
+            <intersection id="55475004" latitude="45.759575" longitude="4.8759494"/>
+            <intersection id="55474989" latitude="45.75948" longitude="4.87583"/>
+            <intersection id="48830474" latitude="45.75852" longitude="4.8765216"/>
+            <intersection id="48830471" latitude="45.757717" longitude="4.876506"/>
+            <intersection id="48830470" latitude="45.75691" longitude="4.8763556"/>
+            <intersection id="1368674811" latitude="45.75587" longitude="4.876154"/>
+            <intersection id="1368674810" latitude="45.75577" longitude="4.876167"/>
+            <intersection id="1368674809" latitude="45.755665" longitude="4.8761983"/>
+            <intersection id="1368674806" latitude="45.755222" longitude="4.876136"/>
+            <intersection id="1368674800" latitude="45.754917" longitude="4.876105"/>
+            <intersection id="55463812" latitude="45.754936" longitude="4.876986"/>
+            <intersection id="25611425" latitude="45.754944" longitude="4.8772635"/>
+            <intersection id="26317293" latitude="45.752815" longitude="4.8769016"/>
+            <intersection id="25303841" latitude="45.75184" longitude="4.87654"/>
+            <intersection id="25321689" latitude="45.751118" longitude="4.876261"/>
+            <intersection id="25303831" latitude="45.74979" longitude="4.87572"/>
+        </trajet>
+    </tour>
+    <tour id="2">
+        <livreur nom="Fatih" vitesse="15.0"/>
+        <livraisons>
+            <livraison creneau="ONZE_DOUZE" heureArrivee="11:00:00" heureDepart="11:05:00" id="108" idIntersection="25152444"/>
+            <livraison creneau="ONZE_DOUZE" heureArrivee="11:16:42" heureDepart="11:21:42" id="136" idIntersection="21715078"/>
+        </livraisons>
+        <trajet>
+            <intersection id="25303831" latitude="45.74979" longitude="4.87572"/>
+            <intersection id="25321456" latitude="45.749214" longitude="4.875591"/>
+            <intersection id="25321433" latitude="45.74969" longitude="4.873468"/>
+            <intersection id="25321422" latitude="45.749027" longitude="4.873145"/>
+            <intersection id="25321408" latitude="45.748898" longitude="4.873075"/>
+            <intersection id="25321407" latitude="45.748512" longitude="4.8728576"/>
+            <intersection id="25321359" latitude="45.747795" longitude="4.872455"/>
+            <intersection id="25335974" latitude="45.748856" longitude="4.868323"/>
+            <intersection id="195274" latitude="45.7489" longitude="4.8681254"/>
+            <intersection id="1703401805" latitude="45.749405" longitude="4.866139"/>
+            <intersection id="25334442" latitude="45.74966" longitude="4.865105"/>
+            <intersection id="195266" latitude="45.75" longitude="4.8644643"/>
+            <intersection id="25321302" latitude="45.749954" longitude="4.8637676"/>
+            <intersection id="195262" latitude="45.74992" longitude="4.8604593"/>
+            <intersection id="3393859920" latitude="45.749447" longitude="4.8603206"/>
+            <intersection id="25719228" latitude="45.74938" longitude="4.8602924"/>
+            <intersection id="3393859930" latitude="45.74965" longitude="4.859534"/>
+            <intersection id="2841904730" latitude="45.749687" longitude="4.8594136"/>
+            <intersection id="25173820" latitude="45.749996" longitude="4.858258"/>
+            <intersection id="21712143" latitude="45.74872" longitude="4.857905"/>
+            <intersection id="15925440" latitude="45.747505" longitude="4.857594"/>
+            <intersection id="25152444" latitude="45.747326" longitude="4.858333"/>
+            <intersection id="26576955" latitude="45.74725" longitude="4.8587947"/>
+            <intersection id="26576953" latitude="45.747192" longitude="4.859119"/>
+            <intersection id="18697372" latitude="45.747116" longitude="4.859554"/>
+            <intersection id="18697383" latitude="45.74676" longitude="4.8610096"/>
+            <intersection id="21992981" latitude="45.74635" longitude="4.862217"/>
+            <intersection id="21595834" latitude="45.745872" longitude="4.8636017"/>
+            <intersection id="21595835" latitude="45.74569" longitude="4.864196"/>
+            <intersection id="143418" latitude="45.74512" longitude="4.866212"/>
+            <intersection id="25334276" latitude="45.74467" longitude="4.867998"/>
+            <intersection id="143421" latitude="45.744587" longitude="4.8683205"/>
+            <intersection id="195279" latitude="45.744053" longitude="4.870475"/>
+            <intersection id="25451455" latitude="45.743866" longitude="4.871252"/>
+            <intersection id="245957281" latitude="45.74365" longitude="4.8723927"/>
+            <intersection id="7300867" latitude="45.74357" longitude="4.8728495"/>
+            <intersection id="21704353" latitude="45.74349" longitude="4.8732567"/>
+            <intersection id="7300869" latitude="45.743343" longitude="4.874252"/>
+            <intersection id="21604592" latitude="45.74324" longitude="4.8750687"/>
+            <intersection id="21604593" latitude="45.743027" longitude="4.8768773"/>
+            <intersection id="21702438" latitude="45.74283" longitude="4.878133"/>
+            <intersection id="1029591870" latitude="45.74278" longitude="4.8783345"/>
+            <intersection id="21604594" latitude="45.742737" longitude="4.878498"/>
+            <intersection id="21604601" latitude="45.74265" longitude="4.8790674"/>
+            <intersection id="21715353" latitude="45.742462" longitude="4.880019"/>
+            <intersection id="2320613216" latitude="45.742138" longitude="4.8822455"/>
+            <intersection id="21715425" latitude="45.74132" longitude="4.8851886"/>
+            <intersection id="564766082" latitude="45.74116" longitude="4.8855476"/>
+            <intersection id="257682550" latitude="45.740723" longitude="4.886876"/>
+            <intersection id="1373967339" latitude="45.740215" longitude="4.88842"/>
+            <intersection id="836850034" latitude="45.739136" longitude="4.891646"/>
+            <intersection id="21715071" latitude="45.73897" longitude="4.892067"/>
+            <intersection id="21715069" latitude="45.73893" longitude="4.892188"/>
+            <intersection id="21715067" latitude="45.73876" longitude="4.8927574"/>
+            <intersection id="194605193" latitude="45.738644" longitude="4.893329"/>
+            <intersection id="21715078" latitude="45.738525" longitude="4.8937016"/>
+            <intersection id="194605193" latitude="45.738644" longitude="4.893329"/>
+            <intersection id="657813231" latitude="45.73877" longitude="4.8930063"/>
+            <intersection id="21715068" latitude="45.73902" longitude="4.8922586"/>
+            <intersection id="21715072" latitude="45.739063" longitude="4.892132"/>
+            <intersection id="26464318" latitude="45.740288" longitude="4.888469"/>
+            <intersection id="2512682805" latitude="45.740807" longitude="4.88692"/>
+            <intersection id="2512682814" latitude="45.741234" longitude="4.8855844"/>
+            <intersection id="21715425" latitude="45.74132" longitude="4.8851886"/>
+            <intersection id="564740277" latitude="45.74147" longitude="4.884858"/>
+            <intersection id="644880770" latitude="45.742546" longitude="4.880047"/>
+            <intersection id="21604600" latitude="45.742912" longitude="4.8793445"/>
+            <intersection id="2018719148" latitude="45.743176" longitude="4.878484"/>
+            <intersection id="1039285693" latitude="45.743385" longitude="4.877518"/>
+            <intersection id="24640391" latitude="45.743576" longitude="4.876974"/>
+            <intersection id="7300874" latitude="45.744404" longitude="4.8745656"/>
+            <intersection id="25321323" latitude="45.745842" longitude="4.87497"/>
+            <intersection id="25321327" latitude="45.74706" longitude="4.8751974"/>
+            <intersection id="251167391" latitude="45.74758" longitude="4.875293"/>
+            <intersection id="25321469" latitude="45.748405" longitude="4.875445"/>
+            <intersection id="25321456" latitude="45.749214" longitude="4.875591"/>
+            <intersection id="25303831" latitude="45.74979" longitude="4.87572"/>
+        </trajet>
+    </tour>
+</catalogue>
