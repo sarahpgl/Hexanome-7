@@ -3,6 +3,7 @@ package Vue;
 import Donnees.*;
 import Service.Service;
 import Util.Calculs;
+import Util.Coordonnees;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
@@ -67,23 +68,24 @@ public class Carte extends Pane {
         }
 
         CatalogueTours cat = service.getCatalogueTours();
-        nbTours = tourAAfficher.getLivreur().getId().intValue() +2;
+        nbTours = tourAAfficher.getLivreur().getId().intValue() + 2;
         listeCouleurs = createElementListe(nbTours);
 
         ArrayList<Livraison> livraisonsFor = new ArrayList<>();
         Tour tourCol;
-        int couleur=tourAAfficher.getLivreur().getId().intValue() +1 ;
+        int couleur = tourAAfficher.getLivreur().getId().intValue() + 1;
         tourCol = tourAColorier(tourAAfficher, dc, entrepot);
         dessinerTour(tourCol, couleur, tourAAfficher.getLivreur());
         //System.out.println("couleur"+ couleur+ " tailleliste"+ listeCouleurs.size());
-        listeCouleurs.get(couleur).getDots().clear();
-        livraisonsFor=tourAAfficher.getLivraisons();
+        listeCouleurs.get(couleur-1).getDots().clear();
+        livraisonsFor = tourAAfficher.getLivraisons();
         for (Livraison liv : livraisonsFor) {
-            Circle dot = createNode(liv.getAdresse(), util, 0, String.valueOf(liv.getId()));
-            listeCouleurs.get(couleur-1).getDots().add(dot);
-            this.getChildren().add(dot);
+            if (liv.livree()){
+                Circle dot = createNode(liv.getAdresse(), util, 0, String.valueOf(liv.getId()));
+                listeCouleurs.get(couleur - 1).getDots().add(dot);
+                this.getChildren().add(dot);
+            }
         }
-
 
 
 
@@ -150,9 +152,11 @@ public class Carte extends Pane {
                 dessinerTour(tourCol, i + 1, tourFor.getLivreur());
                 listeCouleurs.get(i).getDots().clear();
                 for (Livraison liv : livraisonsFor) {
-                    Circle dot = createNode(liv.getAdresse(), util, 0, String.valueOf(liv.getId()));
-                    listeCouleurs.get(i).getDots().add(dot);
-                    this.getChildren().add(dot);
+                    if(liv.livree()){
+                        Circle dot = createNode(liv.getAdresse(), util, 0, String.valueOf(liv.getId()));
+                        listeCouleurs.get(i).getDots().add(dot);
+                        this.getChildren().add(dot);
+                    }
                 }
             }
         }
@@ -202,10 +206,10 @@ public class Carte extends Pane {
         maxLat = minLat + size;
         maxLong = minLong + size;
 
-        minLat=minLat-0.002;
-        minLong=minLong-0.002;
-        maxLat=maxLat+0.002;
-        maxLong=maxLong+0.002;
+        minLat = minLat - 0.002;
+        minLong = minLong - 0.002;
+        maxLat = maxLat + 0.002;
+        maxLong = maxLong + 0.002;
 
         // Retourner le tableau de résultats
         return new float[]{(float) minLat, (float) minLong, (float) maxLat, (float) maxLong};
@@ -366,7 +370,6 @@ public class Carte extends Pane {
                 }
             }
         }
-
     }
 
     void dessinerCarte() {
@@ -528,6 +531,21 @@ public class Carte extends Pane {
         return nbTours;
     }
 
+    void surlignerLigne(int ligne) {
+        if (listeCouleurs.get(ligne).getEtat()) {
+            for (Line l : listeCouleurs.get(ligne).getLines()) {
+                l.setStrokeWidth(4);
+            }
+        }
+    }
+
+    void amincirLigne(int ligne) {
+        if (listeCouleurs.get(ligne).getEtat()) {
+            for (Line l : listeCouleurs.get(ligne).getLines()) {
+                l.setStrokeWidth(1);
+            }
+        }
+    }
 }
 
 class ElementListe {

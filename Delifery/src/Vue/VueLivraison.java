@@ -5,6 +5,7 @@ import Donnees.Intersection;
 import Service.Service;
 import javafx.application.Application;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,8 +26,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class VueLivraison extends Application {
-    public Integer windowWidth=800;
-    public Integer windowHeight=600;
+    public Integer windowWidth=400;
+    public Integer windowHeight=400;
 
     public VueLivraison() {
     }
@@ -40,17 +41,13 @@ public class VueLivraison extends Application {
         // Get screen dimensions
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         // Set window size accordingly
-        double width = screenBounds.getWidth() * 0.8;
-        double height = 1020.0 / 1080.0 * screenBounds.getHeight();
+        double width = screenBounds.getWidth() * 0.4;
+        double height = (1080.0 / 1920.0) * width-80;
         primaryStage.setWidth(width);
         primaryStage.setHeight(height);
         // Place the window at the top-left of the screen
-        primaryStage.setX(0);
-        primaryStage.setY(0);
-
-        // Row 1: Header (takes full width)
-        Entete entete = new Entete(); // Créez une instance de votre entête personnalisée
-        gridPane.add(entete, 0, 0, 2, 1); // Span 2 columns
+        primaryStage.setX(10);
+        primaryStage.setY(200);
 
         // Row 2 et 3: TextFields and Labels (below the header)
         Label label1 = new Label("Adresse :");
@@ -59,16 +56,17 @@ public class VueLivraison extends Application {
         ComboBox<Intersection> intersectionComboBox = new ComboBox<>(FXCollections.observableArrayList(listeIntersections));
         intersectionComboBox.setPromptText("Sélectionnez une intersection");
         Label label2 = new Label("Livreur :");
+        label2.setAlignment(Pos.CENTER_LEFT);
         label2.setFont(Font.font("Arial", 14));
         ArrayList<String> listeLivreurs = Service.getInstance().getListLivreur();
         ComboBox<String> livreurComboBox = new ComboBox<>(FXCollections.observableArrayList(listeLivreurs));
         livreurComboBox.setPromptText("Sélectionnez un livreur");
 
         // Ajoutez les titres et les zones de texte à la grille (une en dessous de l'autre)
-        gridPane.add(label1, 0, 1);
-        gridPane.add(intersectionComboBox, 1, 1);
-        gridPane.add(label2, 0, 2);
-        gridPane.add(livreurComboBox, 1, 2);
+        gridPane.add(label1, 0, 0);
+        gridPane.add(intersectionComboBox, 1, 0);
+        gridPane.add(label2, 0, 1);
+        gridPane.add(livreurComboBox, 1, 1);
 
         // Set column constraints for the labels and text fields
         ColumnConstraints labelColumnConstraints = new ColumnConstraints();
@@ -89,6 +87,7 @@ public class VueLivraison extends Application {
         Button button3 = new Button("10h-11h");
         Button button4 = new Button("11h-12h");
         HBox buttonsRow3 = new HBox(10); // Espace de 10 pixels entre les boutons
+        buttonsRow3.setTranslateX(50);
         buttonsRow3.getChildren().addAll(label3, button1, button2, button3, button4);
         AtomicInteger horaire = new AtomicInteger(0);
 
@@ -131,13 +130,14 @@ public class VueLivraison extends Application {
         });
 
         // Ajoutez les boutons à la grille (alignés dans la même ligne)
-        gridPane.add(buttonsRow3, 0, 3, 2, 1);
+        gridPane.add(buttonsRow3, 0, 2, 2, 1);
         gridPane.setVgap(20);
 
         // Créez un label pour afficher le message d'erreur
         Label erreurLabel = new Label();
-        erreurLabel.setStyle("-fx-text-fill: red; -fx-font-size: 9px;");
-        gridPane.add(erreurLabel, 0, 5, 2, 1);
+        erreurLabel.setStyle("-fx-text-fill: red; -fx-font-size: 13px;");
+        erreurLabel.setTranslateY(10);
+        erreurLabel.setTranslateX(50);
 
         // Row 4: Boutons Valider et Annuler
         Button boutonAnnuler = new Button("Annuler");
@@ -161,8 +161,14 @@ public class VueLivraison extends Application {
                     default: System.out.println("Pas de créneau sélectionné");
                 }
                 boolean reussi = Service.getInstance().essaieAjoutLivraisonAuTour(intersection, creneau, livreur);
-                erreurLabel.setText(reussi ? "" : "Le livreur ne peut pas assurer cette livraison");
-                erreurLabel.setText(!reussi ? "" : "Interstection : "+ intersection+", Livreur : " + livreur +", Creneau : "+ creneau);
+                if(!reussi){
+                    //erreurLabel.setText("Impossible");
+                    //System.out.println("NON");
+                }
+                if(reussi){
+                    erreurLabel.setText("Livraison ajoutée");
+                }
+                Service.getInstance().updateCarte();
             } catch (Exception e) {
                 // En cas d'erreur, mettez à jour le texte de l'erreurLabel
                 erreurLabel.setText("Une erreur est survenue : " + e.getMessage());
@@ -171,8 +177,10 @@ public class VueLivraison extends Application {
             }
         });
 
-        HBox buttonsRow4 = new HBox(10); // Espace de 10 pixels entre les boutons
-        buttonsRow4.getChildren().addAll(boutonAnnuler, boutonValider);
+
+        HBox buttonsRow4 = new HBox(30); // Espace de 10 pixels entre les boutons
+        buttonsRow4.setTranslateX(50);
+        buttonsRow4.getChildren().addAll(boutonValider,boutonAnnuler);
 
         List<Button> boutons = Arrays.asList(boutonAnnuler, boutonValider);
 
@@ -189,8 +197,9 @@ public class VueLivraison extends Application {
             });
         }
 
+        VBox vboxBas=new VBox(buttonsRow4,erreurLabel);
         // Ajoutez les boutons à la grille (alignés dans la même ligne)
-        gridPane.add(buttonsRow4, 0, 4, 2, 1);
+        gridPane.add(vboxBas, 0, 3, 2, 1);
 
         // Set row constraints to take the full page
         RowConstraints row1 = new RowConstraints();

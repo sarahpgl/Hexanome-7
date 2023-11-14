@@ -170,6 +170,7 @@ public class TableauTours extends StackPane {
                         rectangle.setOnMouseEntered(event -> {
                             Color color = (Color) rectangle.getFill();
                             rectangle.setFill(color.darker());
+                            service.getCarte().surlignerLigne(finalJ-1);
                         });
 
                         rectangle.setOnMouseClicked(event -> {
@@ -179,6 +180,7 @@ public class TableauTours extends StackPane {
                         rectangle.setOnMouseExited(event -> {
                             Color color = (Color) rectangle.getFill();
                             rectangle.setFill(color.brighter());
+                            service.getCarte().amincirLigne(finalJ-1);
                         });
 
 
@@ -278,7 +280,7 @@ public class TableauTours extends StackPane {
             boutonCharger.setOnAction(event -> {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers XML", "*.xml"));
-                fileChooser.setInitialDirectory(new File("Delifery/catalogueSauvegarde"));
+                fileChooser.setInitialDirectory(new File("Delifery/catalogueSauvegardeXML"));
                 File selectedFile = fileChooser.showOpenDialog(getScene().getWindow());
                 if (selectedFile != null) {
                     String cheminFichierCatalogueXML = selectedFile.getAbsolutePath();
