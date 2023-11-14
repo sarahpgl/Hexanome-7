@@ -531,6 +531,10 @@ public class Carte extends Pane {
         return nbTours;
     }
 
+    public String getChemin() {
+        return cheminFichier;
+    }
+
     void surlignerLigne(int ligne) {
         if (listeCouleurs.get(ligne).getEtat()) {
             for (Line l : listeCouleurs.get(ligne).getLines()) {

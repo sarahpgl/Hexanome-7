@@ -8,6 +8,7 @@ import Vue.Carte;
 import Vue.DetailsTour;
 import Vue.VueApplication;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -33,7 +34,7 @@ public class Service {
 
 
     public Service() {
-        this.catalogueTours = new CatalogueTours();
+        this.catalogueTours = new CatalogueTours(nomFichierCarte);
     }
 
     /**
@@ -485,6 +486,11 @@ public class Service {
                      updateCarte();
                      updatePanel();
                  } else {
+                     Alert alert = new Alert(Alert.AlertType.WARNING);
+                     alert.setTitle("");
+                     alert.setHeaderText("Impossible d'importer le Catalogue car le CatalogueTour ne correspond pas avec la carte affichée");
+                     alert.showAndWait();
+
                      System.out.println("Impossible d'importer le Catalogue car le CatalogueTour ne correspond pas avec la carte affichée");
                  }
              }

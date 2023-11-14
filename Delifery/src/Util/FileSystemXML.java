@@ -1,6 +1,7 @@
 package Util;
 
 import Donnees.*;
+import Service.Service;
 import Util.Coordonnees;
 
 import java.io.File;
@@ -251,7 +252,10 @@ public class FileSystemXML {
 
             // Créer l'élément racine <catalogue>
             Element catalogue = doc.createElement("catalogue");
-            catalogue.setAttribute("idMap", c.mapName);
+            String filePath = Service.getInstance().getCarte().getChemin();
+            File file2 = new File(filePath);
+            String fileName = file2.getName();
+            catalogue.setAttribute("idMap", fileName);
             doc.appendChild(catalogue);
 
             // Parcourir la liste des tours du catalogue

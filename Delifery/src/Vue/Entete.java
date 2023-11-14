@@ -1,5 +1,6 @@
 package Vue;
 
+import Service.Service;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -23,18 +24,12 @@ public class Entete extends HBox {
         boutonAccueil.setStyle("-fx-background-color: #ffffff; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);");
         boutonAccueil.setOnMouseEntered(e -> boutonAccueil.setStyle("-fx-background-color: #ced4d3; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);"));
         boutonAccueil.setOnMouseExited(e -> boutonAccueil.setStyle("-fx-background-color: #ffffff; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);"));
-        boutonAccueil.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                // Mettez ici le code à exécuter lorsque le bouton "Accueil" est cliqué
-                Stage stage = (Stage) getScene().getWindow();
-                if(stage.getTitle()!= "Fenetre Application"){
-                    stage.close(); // Ferme la fenêtre
-                }
-
-
-            }
+        boutonAccueil.setOnAction(e -> {
+            new FenetreLancement().start(new Stage());
+            ((Stage) boutonAccueil.getScene().getWindow()).close();
+            Service.getInstance().setNbLivreur(0);
         });
+
 
         // Charge l'image à partir d'un fichier
         File file = new File("Delifery/logo.png");
