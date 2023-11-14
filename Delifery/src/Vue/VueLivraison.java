@@ -27,6 +27,9 @@ public class VueLivraison extends Application {
     public Integer windowWidth = 400;
     public Integer windowHeight = 400;
 
+    /**
+     * Fenêtre permettant d'ajouter une livraison à un tour
+     */
     public VueLivraison() {
     }
 

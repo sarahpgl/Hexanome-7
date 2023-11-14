@@ -20,6 +20,10 @@ public class TableauDetailsTour extends StackPane {
 
     Tour tour;
 
+    /**
+     * Classe du tableau qui affiche le détail des tours
+     * @param monTour Tour a afficher en détail
+     */
     public TableauDetailsTour(Tour monTour) {
         this.tour = monTour;
         this.setStyle("-fx-background-color: #ffffff; -fx-padding: 10px;");

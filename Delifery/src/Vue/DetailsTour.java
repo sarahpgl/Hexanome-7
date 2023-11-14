@@ -19,6 +19,13 @@ public class DetailsTour extends Application {
     public Integer windowWidth;
     public Integer windowHeight;
 
+    /**
+     * Constructeur de DetailsTour, la fenêtre affiche un zoom de la carte, et un tableau de détail du tour
+     * @param cheminFichier Chemin vers le fichier de la carte
+     * @param tour Le tour a afficher en détail
+     * @param width Largeur de la fenêtre
+     * @param height Hauteur de la fenêtre
+     */
     public DetailsTour(String cheminFichier, Tour tour, Integer width, Integer height) {
         super();
         this.windowWidth = width;
