@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalogue idMap="">
+    <tour id="0">
+        <livreur nom="Moïse" vitesse="15.0"/>
+        <livraisons>
+            <livraison creneau="HUIT_NEUF" heureArrivee="08:03:34" heureDepart="08:08:34" id="24" idIntersection="26155382"/>
+        </livraisons>
+        <trajet>
+            <intersection id="25303831" latitude="45.74979" longitude="4.87572"/>
+            <intersection id="25303832" latitude="45.749344" longitude="4.876714"/>
+            <intersection id="25303833" latitude="45.748894" longitude="4.877902"/>
+            <intersection id="2365376415" latitude="45.748672" longitude="4.8785987"/>
+            <intersection id="2365376404" latitude="45.748333" longitude="4.879658"/>
+            <intersection id="2365376413" latitude="45.74813" longitude="4.880285"/>
+            <intersection id="434308458" latitude="45.74796" longitude="4.88083"/>
+            <intersection id="26570169" latitude="45.747814" longitude="4.881324"/>
+            <intersection id="26155402" latitude="45.748585" longitude="4.8837514"/>
+            <intersection id="26155382" latitude="45.74932" longitude="4.886111"/>
+            <intersection id="26155373" latitude="45.749924" longitude="4.885727"/>
+            <intersection id="26155372" latitude="45.75055" longitude="4.8853126"/>
+            <intersection id="26155368" latitude="45.750362" longitude="4.884372"/>
+            <intersection id="26155367" latitude="45.750626" longitude="4.8829713"/>
+            <intersection id="1383027249" latitude="45.75098" longitude="4.8811636"/>
+            <intersection id="251171098" latitude="45.751587" longitude="4.8779144"/>
+            <intersection id="25303841" latitude="45.75184" longitude="4.87654"/>
+            <intersection id="25321689" latitude="45.751118" longitude="4.876261"/>
+            <intersection id="25303831" latitude="45.74979" longitude="4.87572"/>
+        </trajet>
+    </tour>
+</catalogue>

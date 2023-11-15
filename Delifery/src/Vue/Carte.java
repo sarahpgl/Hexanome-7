@@ -100,7 +100,7 @@ public class Carte extends Pane {
         this.getChildren().add(entrepotLocation);
 
 
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 6; i++) {
             enleverLigne(String.valueOf(i));
             remettreLigne(String.valueOf(i));
         }
@@ -170,7 +170,7 @@ public class Carte extends Pane {
         Circle entrepotLocation = createNode(entrepot, util, 3, "Entrepot");
         this.getChildren().add(entrepotLocation);
 
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 6; i++) {
             enleverLigne(String.valueOf(i));
             remettreLigne(String.valueOf(i));
         }

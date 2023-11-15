@@ -39,7 +39,7 @@ public class Entete extends HBox {
         imageView.setFitHeight(80); // Ajustez la hauteur de l'image selon vos besoins
         imageView.setPreserveRatio(true); // Garde le ratio de l'image lors du redimensionnement
 
-        boutonQuitter = new Button("Quitter l'application");
+        boutonQuitter = new Button("Quitter la page");
         // On ajoute un effet de survol sur le bouton
         boutonQuitter.setStyle("-fx-background-color: #ffffff; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);");
         boutonQuitter.setOnMouseEntered(e -> boutonQuitter.setStyle("-fx-background-color: #ced4d3; -fx-text-fill: black; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 5, 0.0, 0, 1);"));
